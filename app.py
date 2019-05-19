@@ -5,6 +5,7 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def hello_world():
     return 'Hello from Flask!'
@@ -17,3 +18,7 @@ def testing():
         "status": True
     }
     return jsonify(my_json)
+
+
+if __name__ == '__main__':
+    app.run()
