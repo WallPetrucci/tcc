@@ -18,6 +18,6 @@ def on_disconnect():
     print('disconnected from server')
 
 
-sio.connect('http://localhost:5000')
+sio.connect('http://34.232.109.146:5000')
 sio.start_background_task(send_message, {'success': True})
 sio.wait()
