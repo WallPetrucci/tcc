@@ -7,17 +7,17 @@ app = socketio.WSGIApp(sio, static_files={
 })
 
 
-@sio.on('connect')
+@sio.on('connect', namespace='/whm')
 def connect(sid, environ):
     print('connect ', sid)
 
 
-@sio.on('my message')
+@sio.on('my message', namespace='/whm')
 def message(sid, data):
     print('message in server ', data, sid)
 
 
-@sio.on('disconnect')
+@sio.on('disconnect', namespace='/whm')
 def disconnect(sid):
     print('disconnect ', sid)
 

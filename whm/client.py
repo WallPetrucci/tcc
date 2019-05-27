@@ -19,6 +19,8 @@ def on_disconnect():
     print('disconnected from server')
 
 
-sio.connect('http://localhost:5000')
-sio.wait()
-sio.emit('my message')
+sio.connect('http://34.232.109.146:5000')
+
+while 1:
+    sio.emit('my message', {"message": "Connection TOPPER"}, namespace='/whm')
+    sio.await()
