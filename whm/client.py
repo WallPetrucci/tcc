@@ -3,15 +3,14 @@ import socketio
 sio = socketio.Client()
 
 
+def send_message(data):
+    while True:
+        sio.emit('my response', data, namespace="/whm")
+
+
 @sio.on('connect')
 def on_connect():
     print('connection established')
-
-
-@sio.on('my message')
-def on_message(data):
-    print('message received with ', data)
-    sio.emit('my response', {'response': 'my response'})
 
 
 @sio.on('disconnect')
@@ -20,7 +19,5 @@ def on_disconnect():
 
 
 sio.connect('http://34.232.109.146:5000')
-
-while 1:
-    sio.emit('my message', {"message": "Connection TOPPER"}, namespace='/whm')
-    sio.await()
+sio.start_background_task(send_message, {'success': True})
+sio.wait()
