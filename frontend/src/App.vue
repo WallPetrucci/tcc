@@ -1,9 +1,8 @@
 <template>
   <v-app>
-      <HeaderComponent> </HeaderComponent> 
-      <ContentComponent> </ContentComponent> 
-    <v-footer>
-    </v-footer>
+    <HeaderComponent :drawer="drawer"> </HeaderComponent>
+    <ContentComponent> </ContentComponent> 
+    <FooterComponent ></FooterComponent>
   </v-app>
 </template>
 
@@ -11,20 +10,22 @@
 
   import HeaderComponent from './components/HeaderComponent'
   import ContentComponent from './components/ContentComponent'
+  import FooterComponent from './components/FooterComponent'
 
 
   export default {
     name: 'App',
     components: {
       HeaderComponent,
-      ContentComponent
+      ContentComponent,
+      FooterComponent
 
     },
 
     data () {
       return {
-      //
+        drawer: null
+      }
     }
   }
-}
 </script>

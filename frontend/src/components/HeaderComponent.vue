@@ -1,27 +1,28 @@
 <style scoped src="@/assets/HeaderComponent.css"></style>
 
 <template>
-    <v-toolbar app class="header-content">
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
+  <div>
+    <SideBarAlertComponent> </SideBarAlertComponent>
+    <v-toolbar color="header-content" dark fixed app>
       <v-spacer></v-spacer>
-      <v-btn
-      flat
-      href="https://github.com/vuetifyjs/vuetify/releases/latest"
-      target="_blank"
-      >
-      <span class="mr-2">Latest Release</span>
-    </v-btn>
-  </v-toolbar>
+      <v-toolbar-title>Configuração</v-toolbar-title>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+    </v-toolbar>
+  </div>
 </template>
 
 <script type="text/javascript">
+  import SideBarAlertComponent from './SideBarAlertComponent'
   export default {
     name: 'HeaderComponent',
+    components: {
+      SideBarAlertComponent,
+    },
     data(){
       return {}
+    },
+    props:{
+      drawer: Boolean
     }
   }
 </script>
