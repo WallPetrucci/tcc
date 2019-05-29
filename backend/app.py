@@ -15,7 +15,7 @@ def catch_all(path):
 
 @app.route('/api/v1/foo')
 def api_foo():
-    return jsonify("API V1 FOO"), 200z
+    return jsonify("API V1 FOO"), 200
 
 
 if __name__ == '__main__':
