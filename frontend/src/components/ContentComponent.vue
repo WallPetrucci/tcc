@@ -4,9 +4,9 @@
       <v-layout justify-start>
         <v-flex text-xs-center>
           <v-layout row align-baseline align-start>
-            <CardComponent></CardComponent>
-            <CardComponent></CardComponent>
-            <CardComponent></CardComponent>
+            <CardComponent title="Frequencia Cardiaca" value="45 BPM" icon="mdi-heart-pulse"></CardComponent>
+            <CardComponent title="Oximetria" value="80"></CardComponent>
+            <CardComponent title="Temperatura" value="36º"></CardComponent>
           </v-layout>
         </v-flex>
       </v-layout>

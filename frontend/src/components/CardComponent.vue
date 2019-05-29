@@ -2,9 +2,10 @@
   <v-flex xs12 sm3 offset-sm1>
     <v-card>
       <v-card-title primary-title>
+        <v-icon>{{icon}}</v-icon>
         <div>
-          <div class="headline">Top western road trips</div>
-          <span class="grey--text">1,000 miles of wonder</span>
+          <div class="headline">{{title}}</div>
+          <span class="grey--text">{{value}}</span>
         </div>
       </v-card-title>
 
@@ -27,7 +28,11 @@
 <script type="text/javascript">
 export default {
   name: "CardComponent",
-
+  props: {
+    title: String,
+    value: String,
+    icon: String
+  },
   data() {
     return {};
   }
