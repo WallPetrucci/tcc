@@ -1,11 +1,13 @@
 <template>
   <v-content>
     <v-container fluid fill-height>
-      <v-layout justify-center align-center>
+      <v-layout justify-start>
         <v-flex text-xs-center>
-          <CardComponent></CardComponent>
-          <CardComponent></CardComponent>
-          <CardComponent></CardComponent>
+          <v-layout row align-baseline align-start>
+            <CardComponent></CardComponent>
+            <CardComponent></CardComponent>
+            <CardComponent></CardComponent>
+          </v-layout>
         </v-flex>
       </v-layout>
     </v-container>
