@@ -2,7 +2,7 @@
   <v-flex xs12 sm3 offset-sm1>
     <v-card>
       <v-card-title primary-title>
-        <v-icon>{{icon}}</v-icon>
+        <v-icon>mdi-heart-pulse</v-icon>
         <div>
           <div class="headline">{{title}}</div>
           <span class="grey--text">{{value}}</span>
