@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <HeaderComponent :drawer="drawer"> </HeaderComponent>
+    <HeaderComponent> </HeaderComponent>
     <ContentComponent> </ContentComponent> 
     <FooterComponent ></FooterComponent>
   </v-app>
@@ -8,9 +8,9 @@
 
 <script>
 
-  import HeaderComponent from './components/HeaderComponent'
-  import ContentComponent from './components/ContentComponent'
-  import FooterComponent from './components/FooterComponent'
+  import HeaderComponent from './components/components-template/HeaderComponent'
+  import ContentComponent from './components/components-template/ContentComponent'
+  import FooterComponent from './components/components-template/FooterComponent'
 
 
   export default {
