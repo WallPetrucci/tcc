@@ -1,23 +1,33 @@
-import socketio
+from socketio import Client
+from socketio.exceptions import ConnectionError as WHMConnectionError
+import constants as const
 
-sio = socketio.Client()
-
-
-def send_message(data):
-    while True:
-        sio.emit('my message', data, namespace="/whm")
+sio = Client()
+data_client = list()
 
 
 @sio.on('connect', namespace="/whm")
 def on_connect():
-    print('connection established')
+    print("Connect ON")
 
 
 @sio.on('disconnect', namespace="/whm")
 def on_disconnect():
-    print('disconnected from server')
+    print("Connect OFF")
 
 
-sio.connect('http://34.232.109.146:5000')
-sio.start_background_task(send_message, {'success': True})
-sio.wait()
+class SocketWhm():
+    def __new__(self):
+        sio.connect('http://{}:{}'.format(const.HOST, const.PORT))
+        sio.start_background_task(self.send_message(self))
+        sio.wait()
+
+    def send_message(self):
+        try:
+            while True:
+                sio.emit('my message', 'Salve', namespace="/whm")
+        except WHMConnectionError as e:
+            print("Disconnect Error: ", e)
+
+
+SocketWhm()
