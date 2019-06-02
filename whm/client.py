@@ -74,7 +74,7 @@ class SocketWhm():
             print("Disconnect Error: ", e)
 
 
-socketobj = SocketWhm(const.HOST_LOCAL, const.PORT)
+socketobj = SocketWhm(const.HOST, const.PORT)
 
 try:
     while True:
