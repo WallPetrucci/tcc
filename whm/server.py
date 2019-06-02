@@ -1,33 +1,28 @@
-from socketio import Client
-from socketio.exceptions import ConnectionError as WHMConnectionError
-import constants as const
+import eventlet
+import socketio
 
-sio = Client()
-data_client = list()
+sio = socketio.Server()
+app = socketio.WSGIApp(sio, static_files={
+    '/': {'content_type': 'text/html', 'filename': 'index.html'}
+})
 
 
 @sio.on('connect', namespace="/whm")
-def on_connect():
-    print("Connect ON")
+def connect(sid, environ):
+    print('connect', sid)
+    pass
+
+
+@sio.on('message', namespace="/whm")
+def message(sid, data):
+    print('Servidor Diz: ', data)
+    sio.emit('send_msg', data)
 
 
 @sio.on('disconnect', namespace="/whm")
-def on_disconnect():
-    print("Connect OFF")
+def disconnect(sid):
+    print('disconnect ', sid)
 
 
-class SocketWhm():
-    def __new__(self):
-        sio.connect('http://{}:{}'.format(const.HOST, const.PORT))
-        sio.start_background_task(self.send_message(self))
-        sio.wait()
-
-    def send_message(self):
-        try:
-            while True:
-                sio.emit('my message', 'Salve', namespace="/whm")
-        except WHMConnectionError as e:
-            print("Disconnect Error: ", e)
-
-
-SocketWhm()
+if __name__ == '__main__':
+    eventlet.wsgi.server(eventlet.listen(('', 5000)), app)
