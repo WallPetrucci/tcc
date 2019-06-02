@@ -6,6 +6,7 @@ from threading import Thread
 from json import dump, load
 from datetime import datetime
 import constants as const
+import random
 
 
 conn_status = False
@@ -80,7 +81,9 @@ try:
         current_date = datetime.now()
         if status_message is True:
             sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
-                                                              'fc': 75, 'ox': 100, 'temp': 36.6,
+                                                              'fc': random.randrange(60, 120),
+                                                              'ox': random.randrange(96, 100),
+                                                              'temp': random.randrange(35, 39),
                                                               'date': current_date.strftime('%d/%m/%Y %H:%M')}))
         else:
             escrever_json({'whm_id': "09123901823902", 'fc': 80, 'ox': 98, 'temp': 37,

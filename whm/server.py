@@ -16,7 +16,7 @@ def connect(sid, environ):
 @sio.on('message', namespace="/whm")
 def message(sid, data):
     print('Servidor Diz: ', data)
-    sio.emit('send_msg', data)
+    sio.emit('response_front', data)
 
 
 @sio.on('disconnect', namespace="/whm")

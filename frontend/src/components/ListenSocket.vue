@@ -1,32 +1,38 @@
 <template>
   <div>
-    <input type="text" v-model="message"/>
-    <button @click="emitEvent">emit</button>
+    <div><h5>Conexão com Servidor</h5> <p> {{status_conn}} </p> </div>
+    <div class="dados">{{data_client[0][type]}} {{measure}}</div>
+    <div>Ultima alteração: {{data_client[0]['date']}}</div>
   </div>
 </template>
 
 <script>
+  var socket = null
   export default {
     name: "ListenSocket",
+    props: {
+      type: String,
+      measure: String
+    },
     data () {
       return {
-        message: ''
+        data_client: [],
+        status_conn: ''
       }
+    },
+    created() {      
+      socket = this.$socket
     },
     sockets:{
       connect(){
-        console.log("Connect Socket")
-        this.$socket.emit('response_socket');
+        this.status_conn = "Conectado"
+      },
+      response_front(data) {
+         this.data_client = data
       },
       disconnect(){
-        console.log("Disconnect Socket")
-      }
+        this.status_conn = "Desconectado"
+      },
     },
-    methods: {
-      emitEvent () {
-        console.log("Foi")
-        this.$socket.emit('my message', {msg: this.message})
-      }
-    }
   }
 </script>
