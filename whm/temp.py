@@ -1,4 +1,5 @@
 import smbus
+from time import sleep
 
 
 class MLX90614():
@@ -44,5 +45,7 @@ class MLX90614():
 
 if __name__ == "__main__":
     sensor = MLX90614()
-    print(sensor.get_amb_temp())
-    print(sensor.get_obj_temp())
+    while True:
+        print(sensor.get_amb_temp())
+        print(sensor.get_obj_temp())
+        sleep(2)
