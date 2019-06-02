@@ -46,6 +46,6 @@ class MLX90614():
 if __name__ == "__main__":
     sensor = MLX90614()
     while True:
-        print(sensor.get_amb_temp())
-        print(sensor.get_obj_temp())
+        print("Ambiente ", sensor.get_amb_temp())
+        print("Pessoa ", sensor.get_obj_temp())
         sleep(2)
