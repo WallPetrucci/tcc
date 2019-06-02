@@ -5,7 +5,7 @@ import VueRouter from 'vue-router'
 import VueSocketio from 'vue-socket.io';
 import io from 'socket.io-client';
 
-const SocketInstance = io.connect('http://localhost:5000');
+const SocketInstance = io.connect('http://34.232.109.146:5000');
 
 Vue.use(new VueSocketio({
 	debug: false, 
