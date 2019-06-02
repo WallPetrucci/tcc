@@ -1,10 +1,12 @@
-from socketio import Client
 from socketio.exceptions import ConnectionError as WHMConnectionError
+from temp import MLX90614
+from socketio import Client
 from time import sleep
 from os import remove
 from threading import Thread
 from json import dump, load
 from datetime import datetime
+
 import constants as const
 import random
 
@@ -14,6 +16,7 @@ status_message = False
 
 sio = Client()
 data_client = list()
+sensor_temperatura = MLX90614()
 
 
 class ThreadWhm(Thread):
@@ -83,7 +86,7 @@ try:
             sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
                                                               'fc': random.randrange(60, 120),
                                                               'ox': random.randrange(96, 100),
-                                                              'temp': random.randrange(35, 39),
+                                                              'temp': sensor_temperatura.get_obj_temp(),
                                                               'date': current_date.strftime('%d/%m/%Y %H:%M')}))
         else:
             escrever_json({'whm_id': "09123901823902", 'fc': 80, 'ox': 98, 'temp': 37,
