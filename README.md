@@ -7,12 +7,16 @@ Orientador: Diego Negretto<br>
 Agradecimentos e Ajuda:<br>
 Orlando Saraiva, Lucas Brandani Custódio
 
+===================================================
+
 ### Descrição do projeto
 Sistema de monitoramento remoto. Sensores de Temperatura, Frequência Cardiaca e Oximetria.<br>
 Projeto criado com uma placa Raspberry Pi w Zero v1.1, processando os dados dos sensores e enviando para um servidor
 em cloud via Socket.<br>
 Ao receber os dados o servidor dispara eles em um evento chamado "response_front".<br>
 Dentro do painel, um socket é aberto com o servidor escutando o evento "response_front", pegando os dados que o servidor dispara para o evento.
+
+===================================================
 
 ### Não tem Raspberry? - Simulando o envio de dados localmente.
 Para simular o projeto geral é necessário rodar 2 scripts e o servidor local do vue.js.<br>
@@ -32,7 +36,8 @@ script responsável por simular o servidor.<br>
 Obs: O script será iniciado com um servidor local na porta 5000. Ele estará esperando algum evento ser disparado por algum cliente, para apresentar algo na tela.
 host: localhost:5000
 
-<br><br>
+------------------------
+
 #### client.py<br>
 Script responsável por enviar os dados.
 
@@ -50,3 +55,5 @@ socketobj = SocketWhm(const.HOST, const.PORT)
 ```
 
 Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após isso será iniciado o laço de envio de informações
+
+===================================================
