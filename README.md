@@ -90,6 +90,7 @@ Agora para visualizarmos os dados sendo apresentado em tempo real na página. Va
 # npm install
 ```
 Será instalado automaticamente todas as dependências necessárias para rodar o projeto.
+
 4- acesse a pasta /tcc/frontend/src
 5- Abra o arquivo main.js com seu editor de preferência.
 6- Na linha abaixo troque o servidor '34.232.109.146', para 'localhost' ficando assim:
