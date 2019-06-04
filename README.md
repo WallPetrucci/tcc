@@ -33,7 +33,7 @@ script responsável por simular o servidor.<br>
 # python server.py
 ```
 <br>
-Obs: O script será iniciado com um servidor local na porta 5000. Ele estará esperando algum evento ser disparado por algum cliente, para apresentar algo na tela.
+Obs: O script será iniciado com um servidor local na porta 5000. Ele estará esperando algum evento ser disparado por algum cliente.
 host: localhost:5000
 
 ------------------------
@@ -47,13 +47,36 @@ socketobj = SocketWhm(const.HOST, const.PORT)
 ```
 - Mude a constante const.HOST para const.HOST_LOCAL
 - Mude a constante const.PORT para const.PORT_LOCAL
-- Salve o arquivo
 
-2 - Para rodar o cliente, digite no terminal:
+2 - Agora vamos remover no cdigo as chamadas para os pacotes do raspberry, como  uma simulação sem a placa, então no será necessário eles.
+
+*Remova ou comente essa linha.
+```
+from temp import MLX90614
+```
+
+*Remova ou comente essa linha.
+```
+sensor_temperatura = MLX90614()
+```
+
+* Neste bloco de código altere somente o cóigo "sensor_temperatura.get_obj_temp" para "random.randrange(35, 39)" , ficará assim:
+```
+sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
+                                                              'fc': random.randrange(60, 120),
+                                                              'ox': random.randrange(96, 100),
+                                                              'temp': random.randrange(35, 39),
+                                                              'date': current_date.strftime('%d/%m/%Y %H:%M')}))
+```
+
+
+
+3 - Pronto, após as alteraçes para rodar o cliente, digite no terminal:
+
 ```
 # python client.py
 ```
 
-Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após isso será iniciado o laço de envio de informações
+Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após isso será iniciado o laço de envio de informações. <b>Lembrando que o servidor da etapa anterior precisa estar conectado</b>
 
 ===================================================
