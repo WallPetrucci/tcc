@@ -1,5 +1,5 @@
 # Web Monitoring Health (WHM)
-Trabalho de Concluso de Curso.<br>
+Trabalho de Conclusão de Curso.<br>
 Universidade: Fundação Herminio Ometto - Uniararas<br>
 Curso: Sistemas da Informação<br>
 Alunos: Higor Freitas de Oliveira e Wallace Petrucci Neves<br>
@@ -13,8 +13,8 @@ Orlando Saraiva, Lucas Brandani Custódio
 Sistema de monitoramento remoto. Sensores de Temperatura, Frequência Cardiaca e Oximetria.<br>
 Projeto criado com uma placa Raspberry Pi w Zero v1.1, processando os dados dos sensores e enviando para um servidor
 em cloud via Socket.<br>
-Ao receber os dados o servidor dispara eles em um evento chamado "response_front".<br>
-Dentro do painel, um socket é aberto com o servidor escutando o evento "response_front", pegando os dados que o servidor dispara para o evento.
+Ao receber os dados o servidor dispara em evento chamado "response_front".<br>
+Dentro do painel web, um socket é aberto com o servidor assinando e 'escutando' o evento "response_front", pegando os dados que o servidor dispara para o evento.
 
 ===================================================
 
@@ -60,7 +60,7 @@ from temp import MLX90614
 sensor_temperatura = MLX90614()
 ```
 
-* Neste bloco de código altere somente o cóigo "sensor_temperatura.get_obj_temp" para "random.randrange(35, 39)" , ficará assim:
+* Neste bloco de código altere somente o código "sensor_temperatura.get_obj_temp" para "random.randrange(35, 39)" , ficará assim:
 ```
 sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
                                                               'fc': random.randrange(60, 120),
