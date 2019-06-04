@@ -84,25 +84,34 @@ Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após 
 Agora para visualizarmos os dados sendo apresentado em tempo real na página. Vamos subir o servidor local do Vue.JS.
 
 1- Vá até a pasta /tcc/frontend
+
 2- Confirme se existe o arquivo chamado 'package.json'.
+
 3- Digite o comando no terminal:
+
 ``` 
 # npm install
 ```
 Será instalado automaticamente todas as dependências necessárias para rodar o projeto.
 
 4- acesse a pasta /tcc/frontend/src
+
 5- Abra o arquivo main.js com seu editor de preferência.
+
 6- Na linha abaixo troque o servidor '34.232.109.146', para 'localhost' ficando assim:
+
 ```
 const SocketInstance = io.connect('http://localhost:5000');
 ```
 
 7- Salve o arquivo e volte para a pasta 'frontend'
+
 8- Execute o comando no terminal:
+
 ```
 # npm run serve
 ```
+
 Com esse comando irá subir o servidor local do Vue.JS, por padrão irá subir nas portas 8080. Abra seu navegador e acesse
 http://localhost:8080 , irá aparecer a tela padrão do painel com os 3 cards simulando os dados dos sensores, e pegando informação em tempo real.
 
