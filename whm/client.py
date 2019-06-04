@@ -2,8 +2,6 @@ from socketio.exceptions import ConnectionError as WHMConnectionError
 from temp import MLX90614
 from socketio import Client
 from time import sleep
-from os import remove
-from threading import Thread
 from json import dump, load
 from datetime import datetime
 
@@ -17,21 +15,6 @@ status_message = False
 sio = Client()
 data_client = list()
 sensor_temperatura = MLX90614()
-
-
-class ThreadWhm(Thread):
-    def __init__(self):
-        Thread.__init__(self)
-
-    def run(self, conn):
-        if conn:
-            print("Run True")
-            remove('sensor.json')
-        while conn is not True:
-            data_client.append
-
-
-whmcontrol = ThreadWhm()
 
 
 # Methods for Controller sensor when connect off #
@@ -64,10 +47,10 @@ def on_disconnect():
 
 
 class SocketWhm():
-    def __init__(self, host, port):
+    def __call__(host, port):
         sio.connect('http://{}:{}'.format(host, port))
 
-    def send_message(self, sensor_data):
+    def send_message(sensor_data):
         try:
             print('Chega aqui')
             data_client.append(sensor_data)
@@ -86,7 +69,7 @@ try:
             sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
                                                               'fc': random.randrange(60, 120),
                                                               'ox': random.randrange(96, 100),
-                                                              'temp': sensor_temperatura.get_obj_temp(),
+                                                              'temp': random.randrange(35, 40),
                                                               'date': current_date.strftime('%d/%m/%Y %H:%M')}))
         else:
             escrever_json({'whm_id': "09123901823902", 'fc': 80, 'ox': 98, 'temp': 37,
