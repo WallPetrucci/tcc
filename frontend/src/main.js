@@ -4,17 +4,23 @@ import App from './App.vue'
 import VueRouter from 'vue-router'
 import VueSocketio from 'vue-socket.io';
 import io from 'socket.io-client';
+import router_components from './components/RouterComponent.js'
 
-const SocketInstance = io.connect('http://34.232.109.146:5000');
+
+const SocketInstance = io.connect('http://localhost:5000');
 
 Vue.use(new VueSocketio({
-	debug: false, 
-	connection: SocketInstance
+    debug: false, 
+    connection: SocketInstance
 }))
-
-Vue.config.productionTip = false
 Vue.use(VueRouter)
 
+
+const router = new VueRouter({routes: router_components, mode: 'history'});
+
+
+Vue.config.productionTip = false
 new Vue({
-  render: h => h(App),
+    router,
+    render: h => h(App),
 }).$mount('#app')

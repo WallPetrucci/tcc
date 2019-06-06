@@ -1,5 +1,5 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
-from temp import MLX90614
+# from temp import MLX90614
 from socketio import Client
 from time import sleep
 from json import dump, load
@@ -14,7 +14,7 @@ status_message = False
 
 sio = Client()
 data_client = list()
-sensor_temperatura = MLX90614()
+# sensor_temperatura = MLX90614()
 
 
 # Methods for Controller sensor when connect off #
@@ -47,10 +47,10 @@ def on_disconnect():
 
 
 class SocketWhm():
-    def __call__(host, port):
+    def __init__(self, host, port):
         sio.connect('http://{}:{}'.format(host, port))
 
-    def send_message(sensor_data):
+    def send_message(self, sensor_data):
         try:
             print('Chega aqui')
             data_client.append(sensor_data)
@@ -60,7 +60,7 @@ class SocketWhm():
             print("Disconnect Error: ", e)
 
 
-socketobj = SocketWhm(const.HOST, const.PORT)
+socketobj = SocketWhm(const.HOST_LOCAL, const.PORT_LOCAL)
 
 try:
     while True:

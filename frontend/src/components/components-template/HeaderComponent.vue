@@ -4,6 +4,11 @@
   <div>
     <SideBarAlertComponent> </SideBarAlertComponent>
     <v-toolbar color="header-content" dark fixed app>
+      <nav>
+        <router-link to='/'>Home</router-link>
+        <router-link to='/register'  >Register</router-link>
+        <router-link to='/login' >Login</router-link>
+    </nav>
       <v-spacer></v-spacer>
       <v-toolbar-title>Configuração</v-toolbar-title>
       <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>

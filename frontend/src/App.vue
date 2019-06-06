@@ -1,13 +1,13 @@
 <template>
   <v-app>
     <HeaderComponent> </HeaderComponent>
-    <ContentComponent> </ContentComponent> 
-    <FooterComponent ></FooterComponent>
+    <ContentComponent> </ContentComponent>
+    <FooterComponent> </FooterComponent>
+    <router-view> </router-view>
   </v-app>
 </template>
 
-<script>
-
+<script>  
   import HeaderComponent from './components/components-template/HeaderComponent'
   import ContentComponent from './components/components-template/ContentComponent'
   import FooterComponent from './components/components-template/FooterComponent'
@@ -19,12 +19,10 @@
       HeaderComponent,
       ContentComponent,
       FooterComponent
-
     },
-
-    data () {
-      return {
-        drawer: null
+    methods: {
+      clickPage(){
+        console.log('clicou')
       }
     }
   }
