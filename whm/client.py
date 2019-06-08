@@ -56,7 +56,7 @@ def send_message(sensor_data):
 if __name__ == '__main__':
     try:
         while True:
-            sleep(2)
+            sleep(5)
             current_date = datetime.now()
             if conn_status is not True:
                 connect_socket(const.HOST, const.PORT)
