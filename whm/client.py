@@ -59,7 +59,7 @@ if __name__ == '__main__':
                 sio.start_background_task(send_message({'whm_id': mac,
                                                         'fc': random.randrange(60, 120),
                                                         'ox': random.randrange(96, 100),
-                                                        'temp': random.randrange(35, 40),
+                                                        'temp': sensor_temperatura.get_obj_temp(),
                                                         'date': current_date.strftime('%d/%m/%Y %H:%M')}))
             else:
                 print("Save in Database Local: ", {'whm_id': mac,
