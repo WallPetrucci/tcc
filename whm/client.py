@@ -4,10 +4,11 @@ from socketio import Client
 from time import sleep
 from datetime import datetime
 from uuid import getnode as get_mac
-
-
 import constants as const
 import random
+
+
+# Objects and Variables for using in Main
 
 sio = Client()
 data_client = []
@@ -18,6 +19,7 @@ mac = get_mac()
 
 
 # Callbacks SocketIO
+
 @sio.on('connect', namespace="/whm")
 def on_connect():
     global status_message, conn_status
@@ -49,9 +51,12 @@ def send_message(sensor_data):
         print("Disconnect Error: ", e)
 
 
+# WHM - Application
+
 if __name__ == '__main__':
     try:
         while True:
+            sleep(2)
             current_date = datetime.now()
             if conn_status is not True:
                 connect_socket(const.HOST, const.PORT)
@@ -68,6 +73,5 @@ if __name__ == '__main__':
                                                    'temp': sensor_temperatura.get_obj_temp(),
                                                    'date': current_date.strftime('%d/%m/%Y %H:%M')})
 
-            sleep(2)
     except:
         print("Module not function")
