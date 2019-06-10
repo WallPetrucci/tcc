@@ -19,11 +19,6 @@
       HeaderComponent,
       ContentComponent,
       FooterComponent
-    },
-    methods: {
-      clickPage(){
-        console.log('clicou')
-      }
     }
   }
 </script>
