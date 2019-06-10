@@ -71,3 +71,4 @@ if __name__ == '__main__':
                                                'ox': random.randrange(96, 100),
                                                'temp': random.randrange(34, 39),
                                                'date': current_date.strftime('%d/%m/%Y %H:%M')})
+
