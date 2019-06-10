@@ -58,7 +58,7 @@ if __name__ == '__main__':
         sleep(2)
         current_date = datetime.now()
         if conn_status is not True:
-            connect_socket()
+            connect_socket(const.HOST, const.PORT)
         if status_message is True:
             sio.start_background_task(send_message({'whm_id': mac,
                                                     'fc': random.randrange(60, 120),
