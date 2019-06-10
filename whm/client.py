@@ -54,24 +54,20 @@ def send_message(sensor_data):
 # WHM - Application
 
 if __name__ == '__main__':
-    try:
-        while True:
-            sleep(5)
-            current_date = datetime.now()
-            if conn_status is not True:
-                connect_socket(const.HOST, const.PORT)
-            if status_message is True:
-                sio.start_background_task(send_message({'whm_id': mac,
-                                                        'fc': random.randrange(60, 120),
-                                                        'ox': random.randrange(96, 100),
-                                                        'temp': sensor_temperatura.get_obj_temp(),
-                                                        'date': current_date.strftime('%d/%m/%Y %H:%M')}))
-            else:
-                print("Save in Database Local: ", {'whm_id': mac,
-                                                   'fc': random.randrange(60, 120),
-                                                   'ox': random.randrange(96, 100),
-                                                   'temp': sensor_temperatura.get_obj_temp(),
-                                                   'date': current_date.strftime('%d/%m/%Y %H:%M')})
-
-    except:
-        print("Module not function")
+    while True:
+        sleep(2)
+        current_date = datetime.now()
+        if conn_status is not True:
+            connect_socket()
+        if status_message is True:
+            sio.start_background_task(send_message({'whm_id': mac,
+                                                    'fc': random.randrange(60, 120),
+                                                    'ox': random.randrange(96, 100),
+                                                    'temp': random.randrange(34, 39),
+                                                    'date': current_date.strftime('%d/%m/%Y %H:%M')}))
+        else:
+            print("Save in Database Local: ", {'whm_id': mac,
+                                               'fc': random.randrange(60, 120),
+                                               'ox': random.randrange(96, 100),
+                                               'temp': random.randrange(34, 39),
+                                               'date': current_date.strftime('%d/%m/%Y %H:%M')})
