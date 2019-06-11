@@ -1,5 +1,5 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
-# from temp import MLX90614
+from temp import MLX90614
 from adafruit import Melexis
 from socketio import Client
 from time import sleep
@@ -13,7 +13,7 @@ import random
 
 sio = Client()
 data_client = []
-sensor_temperatura = Melexis()
+sensor_temperatura = MLX90614()
 status_message = False
 conn_status = False
 mac = get_mac()
