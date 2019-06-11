@@ -1,6 +1,5 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
 from temp import MLX90614
-from adafruit import Melexis
 from socketio import Client
 from time import sleep
 from datetime import datetime
