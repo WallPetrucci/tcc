@@ -9,13 +9,13 @@ class Melexis:
         self._i2c = I2C.Device(address, busnum=1)
 
     def readAmbient(self):
-        return self._readTemp(0x06)
+        return self._readTemp(0x5A)
 
     def readObject1(self):
-        return self._readTemp(0x07)
+        return self._readTemp(0x5A)
 
     def readObject2(self):
-        return self._readTemp(0x08)
+        return self._readTemp(0x5A)
 
     def _readTemp(self, reg):
         temp = self._i2c.readS16(reg)
