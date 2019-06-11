@@ -1,5 +1,6 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
-from temp import MLX90614
+# from temp import MLX90614
+from adafruit import Melexis
 from socketio import Client
 from time import sleep
 from datetime import datetime
@@ -12,7 +13,7 @@ import random
 
 sio = Client()
 data_client = []
-sensor_temperatura = MLX90614()
+sensor_temperatura = Melexis()
 status_message = False
 conn_status = False
 mac = get_mac()
@@ -63,12 +64,11 @@ if __name__ == '__main__':
             sio.start_background_task(send_message({'whm_id': mac,
                                                     'fc': random.randrange(60, 120),
                                                     'ox': random.randrange(96, 100),
-                                                    'temp': sensor_temperatura.get_obj_temp(),
+                                                    'temp': sensor_temperatura.readObject1(),
                                                     'date': current_date.strftime('%d/%m/%Y %H:%M')}))
         else:
             print("Save in Database Local: ", {'whm_id': mac,
                                                'fc': random.randrange(60, 120),
                                                'ox': random.randrange(96, 100),
-                                               'temp': sensor_temperatura.get_obj_temp(),
+                                               'temp': sensor_temperatura.readObject1(),
                                                'date': current_date.strftime('%d/%m/%Y %H:%M')})
-
