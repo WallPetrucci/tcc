@@ -1,5 +1,5 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
-from temp import MLX90614
+# from temp import MLX90614
 from socketio import Client
 from time import sleep
 from datetime import datetime
@@ -12,7 +12,7 @@ import random
 
 sio = Client()
 data_client = []
-sensor_temperatura = MLX90614()
+# sensor_temperatura = MLX90614()
 status_message = False
 conn_status = False
 mac = get_mac()
@@ -58,16 +58,16 @@ if __name__ == '__main__':
         sleep(2)
         current_date = datetime.now()
         if conn_status is not True:
-            connect_socket(const.HOST, const.PORT)
+            connect_socket(const.HOST_LOCAL, const.PORT_LOCAL)
         if status_message is True:
             sio.start_background_task(send_message({'whm_id': mac,
                                                     'fc': random.randrange(60, 120),
                                                     'ox': random.randrange(96, 100),
-                                                    'temp': sensor_temperatura.get_obj_temp(),
+                                                    'temp': random.randrange(35, 40),
                                                     'date': current_date.strftime('%d/%m/%Y %H:%M')}))
         else:
             print("Save in Database Local: ", {'whm_id': mac,
                                                'fc': random.randrange(60, 120),
                                                'ox': random.randrange(96, 100),
-                                               'temp': sensor_temperatura.get_obj_temp(),
+                                               'temp': random.randrange(35, 40),
                                                'date': current_date.strftime('%d/%m/%Y %H:%M')})

@@ -5,7 +5,11 @@
     <div>Ultima alteração: {{data_client[0]['date']}}</div>
   </div>
 </template>
-
+<style type="text/css">
+  .dados{
+    font-size:25px;
+  }
+</style>
 <script>
   var socket = null
   export default {
