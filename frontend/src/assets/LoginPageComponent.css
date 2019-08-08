@@ -16,6 +16,13 @@ main.v-content[data-v-04419a29] {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
 }
 
-.esqueceusenha{
-    background:none;
+button.esqueceusenha.v-btn.theme--light.primary{
+    background: none !important;
+    box-shadow: none;
+    color: #468881;
+    font-size: 12px;
+}
+
+.v-picker__title.primary {
+    height: 50px;
 }

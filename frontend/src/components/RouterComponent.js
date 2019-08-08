@@ -7,7 +7,7 @@ const router_components = [
     { path: '/', component: Home },
     { path: '/register', component: Register },
     { path: '/login', component: Login },
-    { path: '*', component: {template: "<div> Teste </div>"} },
+    { path: '*', component:  Page404 },
 ];
 
 
