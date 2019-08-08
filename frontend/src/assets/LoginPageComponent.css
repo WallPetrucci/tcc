@@ -1,0 +1,21 @@
+.logo_login{
+	width: 78%;
+    margin: 0 auto 30px;
+    display: block;
+	
+}
+main.v-content[data-v-04419a29] {
+    /* background: url(http://getwallpapers.com/wallpaper/full/3/6/3/1520348-popular-medical-wallpaper-backgrounds-1920x1080.jpg); */
+    background: rgba(255,255,255,1);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 25%, rgba(255,255,255,1) 51%, rgba(237,237,237,1) 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, rgba(255,255,255,1)), color-stop(25%, rgba(246,246,246,1)), color-stop(51%, rgba(255,255,255,1)), color-stop(100%, rgba(237,237,237,1)));
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 25%, rgba(255,255,255,1) 51%, rgba(237,237,237,1) 100%);
+    background: -o-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 25%, rgba(255,255,255,1) 51%, rgba(237,237,237,1) 100%);
+    background: -ms-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 0%, rgba(246,246,246,1) 25%, rgba(255,255,255,1) 51%, rgba(237,237,237,1) 100%);
+    background: radial-gradient(ellipse at center, rgb(255, 255, 255) 0%, rgb(249, 249, 249) 25%, rgb(243, 243, 243) 51%, rgb(216, 216, 216) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed', GradientType=1 );
+}
+
+.esqueceusenha{
+    background:none;
+}

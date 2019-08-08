@@ -2,6 +2,6 @@
 	background: #00b9b4;
 	color:#fff;
 }
-footer.v-footer.v-footer--fixed.theme--light.footer-content {
+footer.v-footer{
     padding: 20px;
 }

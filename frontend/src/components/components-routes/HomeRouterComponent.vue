@@ -5,12 +5,12 @@
 </template>
 
 <script type="text/javascript">
-	import Header from "../components-template/HeaderComponent"
+	// import Header from "../components-template/HeaderComponent"
 	export default {
 		name: "Home",
-		components: {
-			Header
-		},
+		// components: {
+		// 	Header
+		// },
 		data() {
 			return{
 				content: "Home Page"
