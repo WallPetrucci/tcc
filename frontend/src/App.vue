@@ -1,11 +1,7 @@
 <template>
-  <v-app>
-    <!-- <HeaderComponent> </HeaderComponent> -->
-    <!-- <ContentComponent> </ContentComponent> -->
-    <router-view> </router-view>
-    <FooterComponent> </FooterComponent>
-    <!-- <FooterComponent> </FooterComponent> -->
-  </v-app>
+  <v-app >
+    <router-view> </router-view> 
+  </v-app>  
 </template>
 
 <script>  
@@ -16,20 +12,17 @@
 
   export default {
     name: 'App',
+    data: () => ({
+      verifyUser: false,
+    }),
     components: {
       HeaderComponent,
       ContentComponent,
       FooterComponent
     },
-    created(){
-      this.currentUserLogado = false;
-    },
-    mounted(){
-
-    },
     methods: {
       clickPage(){
-        console.log('clicou')
+        // console.log('clicou')
       }
     }
   }

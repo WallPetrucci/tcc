@@ -5,7 +5,9 @@ import VueRouter from 'vue-router'
 import VueSocketio from 'vue-socket.io';
 import Vuetify from 'vuetify'
 import io from 'socket.io-client';
-import router_components from './components/RouterComponent.js'
+import router from './components/RouterComponent.js'
+import VueSession from 'vue-session'
+
 
 // Helpers
 import colors from 'vuetify/es5/util/colors'
@@ -24,9 +26,7 @@ Vue.use(Vuetify,{
 	},
 	iconfont: 'fas'
 })
-
-const router = new VueRouter({routes: router_components, mode: 'history'});
-
+Vue.use(VueSession)
 
 Vue.config.productionTip = false
 new Vue({

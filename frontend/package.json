@@ -15,6 +15,7 @@
     "vue": "^2.6.10",
     "vue-native-websocket": "^2.0.13",
     "vue-router": "^3.0.6",
+    "vue-session": "^1.0.0",
     "vue-socket.io": "^3.0.7",
     "vuetify": "^1.5.5"
   },

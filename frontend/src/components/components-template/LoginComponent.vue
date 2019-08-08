@@ -177,12 +177,13 @@
 	
 	export default {
 		name: "LoginComponent",
-		data: () => ({
+		data() { 
+			return {
 			step: 1,
 			displayRegister: false,
 			date: null,
 			menu: false
-		}),
+		}},
 		mounted(){
 			this.displayRegister = false
 		},

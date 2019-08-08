@@ -1,14 +1,18 @@
+import Vue from 'vue'
+import VueRouter from 'vue-router'
+import VueSession from 'vue-session'
+
 import Home from './components-routes/HomeRouterComponent.vue';
-import Register from './components-routes/RegisterRouterComponent';
 import Login from './components-routes/LoginRouterComponent';
 import Page404 from './components-routes/Page404Component';
 
+Vue.use(VueRouter)
+
 const router_components = [
-    { path: '/', component: Home },
-    { path: '/register', component: Register },
-    { path: '/login', component: Login },
+    { path: '/login', component: Login },    
+    { path: '/', component: Home},
     { path: '*', component:  Page404 },
 ];
 
 
-export default router_components;
+export default new VueRouter({mode: 'history', routes: router_components})
