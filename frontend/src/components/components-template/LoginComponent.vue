@@ -25,7 +25,7 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-spacer></v-spacer> 
-						<v-btn color="primary" class="esqueceusenha">
+						<v-btn color="primary" class="esqueceusenha" @click="abrirEsqueciSenha()">
 							Esqueceu a Senha <v-icon style="font-size: 13px; top:-1px; position:relative;margin-left:5px">fas fa-question</v-icon>
 						</v-btn>
 						<v-btn color="primary">Acessar</v-btn>
@@ -113,6 +113,18 @@
 					<span class="caption grey--text">Cadastro efetuado com sucesso</span>
 				</div>
 			</v-window-item>
+ 
+			<v-window-item :value="6">
+				<div class="pa-3 text-xs-center">
+					<v-card-text>
+						<v-text-field
+						label="Email"
+						value=""
+						></v-text-field>
+					</v-card-text>
+					<span class="caption grey--text">Verifique sua caixa de entrada, e clique no link informado.</span>
+				</div>
+			</v-window-item>
 		</v-window>
 		
 		<v-divider></v-divider>
@@ -122,6 +134,14 @@
 			:disabled="step === 1 || step === 5"
 			flat
 			@click="step--"
+			v-if="step !== 6"
+			>
+			Voltar
+		</v-btn>
+		<v-btn
+			v-if="step === 6"
+			flat
+			@click="step = 1"
 			>
 			Voltar
 		</v-btn>
@@ -131,16 +151,23 @@
 		color="primary"
 		depressed
 		@click="step++"
-		v-if="step !== 4"
+		v-if="step < 4"
 		>
 		Avançar
 	</v-btn>
 	<v-btn		
 	color="primary"
 	@click="registerUser()"
-	v-else
+	v-if="step == 4"
 	>
 	Cadastrar
+</v-btn>
+<v-btn		
+	color="primary"
+	@click="enviarEsqueceuSenha()"
+	v-if="step == 6"
+	>
+	Enviar
 </v-btn>
 </v-card-actions>
 </template>
@@ -166,6 +193,7 @@
 					case 2: return 'Registrar'
 					case 3: return 'Registrar'
 					case 4: return 'Registrar'
+					case 6: return 'Recuperar a senha'
 					default: return 'Registrado com Sucesso'
 				}
 			}
@@ -179,6 +207,9 @@
 			displayRegisterMethod() {
 				this.step = 2
 				this.displayRegister = true
+			},
+			abrirEsqueciSenha(){
+				this.step = 6
 			},
 			registerUser() {
 				this.step = 4
