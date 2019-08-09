@@ -5,54 +5,16 @@
       <v-spacer></v-spacer>
       <v-tooltip bottom>
         <template v-slot:activator="{ on }">
-          <v-btn icon large target="_blank" v-on="on" @click="displayRegisterMethod()">
-            <v-icon>fas fa-user-plus</v-icon>
+          <v-btn icon large target="_blank" v-on="on">
+            <v-icon>fas fa-times</v-icon>
           </v-btn>
         </template>
-        <span>Novo Cadastro</span>
+        <span>Fechar</span>
       </v-tooltip>
     </v-toolbar>
     <template>
       <v-window v-model="step">
         <v-window-item :value="1">
-          <v-card-text>
-            <v-form>
-              <v-text-field prepend-icon="person" name="login" label="Email" type="text"></v-text-field>
-              <v-text-field
-                id="password"
-                prepend-icon="lock"
-                name="password"
-                label="Senha"
-                type="password"
-              ></v-text-field>
-            </v-form>
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="primary" class="esqueceusenha" @click="abrirEsqueciSenha()">
-              Esqueceu a Senha
-              <v-icon
-                style="font-size: 13px; top:-1px; position:relative;margin-left:5px"
-              >fas fa-question</v-icon>
-            </v-btn>
-            <v-btn color="primary">Acessar</v-btn>
-          </v-card-actions>
-        </v-window-item>
-        <v-window-item :value="2">
-          <v-card-text>
-            <v-text-field label="Email" value></v-text-field>
-          </v-card-text>
-        </v-window-item>
-
-        <v-window-item :value="3">
-          <v-card-text>
-            <v-text-field label="Senha" type="password"></v-text-field>
-            <v-text-field label="Confirmar Senha" type="password"></v-text-field>
-            <span class="caption grey--text text--darken-1">Entre com sua senha</span>
-          </v-card-text>
-        </v-window-item>
-
-        <v-window-item :value="4">
           <v-card-text>
             <v-text-field label="Nome Completo" required></v-text-field>
             <v-menu
@@ -84,7 +46,7 @@
           </v-card-text>
         </v-window-item>
 
-        <v-window-item :value="5">
+        <v-window-item :value="2">
           <div class="pa-3 text-xs-center">
             <v-icon>fas fa-check-circle</v-icon>
             <h3 class="title font-weight-light mb-2">Seja bem vindo!</h3>
@@ -92,7 +54,7 @@
           </div>
         </v-window-item>
 
-        <v-window-item :value="6">
+        <v-window-item :value="3">
           <div class="pa-3 text-xs-center">
             <v-card-text>
               <v-text-field label="Email" value></v-text-field>
@@ -106,13 +68,12 @@
 
       <v-divider></v-divider>
 
+        <v-btn color="primary" depressed @click="step++" v-if="step < 4">Avançar</v-btn>
       <v-card-actions v-if="step > 1">
         <v-btn :disabled="step === 1 || step === 5" flat @click="step--" v-if="step !== 6">Voltar</v-btn>
         <v-btn v-if="step === 6" flat @click="step = 1">Voltar</v-btn>
         <v-spacer></v-spacer>
-        <v-btn color="primary" depressed @click="step++" v-if="step < 4">Avançar</v-btn>
-        <v-btn color="primary" @click="registerUser()" v-if="step == 4">Cadastrar</v-btn>
-        <v-btn color="primary" @click="enviarEsqueceuSenha()" v-if="step == 6">Enviar</v-btn>
+        <v-btn color="primary" @click="enviarEsqueceuSenha()" v-if="step == 6">Salvar</v-btn>
       </v-card-actions>
     </template>
   </v-card>

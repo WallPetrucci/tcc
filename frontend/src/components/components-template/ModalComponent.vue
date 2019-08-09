@@ -5,7 +5,7 @@
     </template>
 
     <v-card>
-      <v-slot></v-slot>
+      <slot></slot>
     </v-card>
   </v-dialog>
 </template>
@@ -19,11 +19,5 @@ export default {
     menu: false
   }),
 
-  props: {
-    component: {
-      type: Object,
-      default: {}
-    }
-  }
 };
 </script>
