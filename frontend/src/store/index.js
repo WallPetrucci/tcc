@@ -14,6 +14,11 @@ const ModuleSession = {
             }
         }
     },
+    actions: {
+        registrySession({commit}, session) {
+            commit('changeSession', session)
+        }
+    },
     getters: {
         hasSession(state) {
             return state.existSession

@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 const router_components = [
 { path: '/login', component: Login},
-{ path: '/painel', component: Painel },    
+{ path: '/painel', component: Painel},    
 { path: '/', redirect: '/painel' },
 { path: '*', component:  Page404 },
 ];

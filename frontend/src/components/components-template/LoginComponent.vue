@@ -175,7 +175,6 @@
 </template>
 <script type="text/javascript">
 	import VueRouter from 'vue-router'
-	var router = new VueRouter() ;
 	export default {
 		name: "LoginComponent",
 		data() { 
@@ -189,6 +188,11 @@
 		}},
 		mounted(){
 			this.displayRegister = false
+		},
+		beforeCreate: function () {
+			if (this.$session.exists()) {
+				this.$router.push('/painel')
+			}
 		},
 		computed: {
 			currentTitle () {
@@ -233,8 +237,8 @@
 				// console.log(jsonUser.senha + this.senhaLogin)
 				// this.$router.push('/')
 				if(jsonUser.senha == this.senhaLogin && jsonUser.email == this.emailLogin){
-					this.$store.commit('changeSession', '12345678910')
-					router.go('/painel');
+					this.$session.start()
+					this.$router.push('/painel')
 				}
 			}
 		}
