@@ -1,6 +1,5 @@
 <style scoped src="@/assets/LoginPageComponent.css"></style>
 <template>
-	<v-content>
 		<v-container fluid fill-height>
 			<v-layout align-center justify-center>
 				<v-flex xs12 sm8 md4>
@@ -9,15 +8,17 @@
 				</v-flex>
 			</v-layout>
 		</v-container>
-	</v-content>
 </template>
 
 <script type="text/javascript">
 	import LoginComponent from '../components-template/LoginComponent.vue'
+	import FooterComponent from '../components-template/FooterComponent.vue'
+
 	export default {
 		name: "Login",
 		components: {
-			LoginComponent
+			LoginComponent,
+			FooterComponent
 		}
 	}
 

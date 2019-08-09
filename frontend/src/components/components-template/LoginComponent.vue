@@ -221,6 +221,17 @@
 				var datereverse = reversed.join("-")
 				this.date = datereverse
 				this.$refs.menu.save(datereverse)
+			},
+			doLogin() {
+				jsonUser = {
+					'email': 'wallacepetrucci@gmail.com',
+					'senha': '123456'
+				}
+
+				if(jsonUser.senha == this.senhaLogin && jsonUser.email == this.emailLogin){
+					this.$session.set('user_session', '12345678910')
+					next('/painel')
+				}
 			}
 		}
 		

@@ -1,12 +1,11 @@
 <template>
-  <v-app >
-    <router-view> </router-view> 
+  <v-app>
+    <router-view> </router-view>
+    <FooterComponent />
   </v-app>  
 </template>
 
-<script>  
-  import HeaderComponent from './components/components-template/HeaderComponent'
-  import ContentComponent from './components/components-template/ContentComponent'
+<script> 
   import FooterComponent from './components/components-template/FooterComponent'
 
 
@@ -16,8 +15,6 @@
       verifyUser: false,
     }),
     components: {
-      HeaderComponent,
-      ContentComponent,
       FooterComponent
     },
     methods: {
