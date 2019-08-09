@@ -25,7 +25,7 @@
 					</v-card-text>
 					<v-card-actions>
 						<v-spacer></v-spacer> 
-						<v-btn color="primary" class="esqueceusenha" @click="abrirEsqueciSenha()">
+						<v-btn color="primary" class="esqueceusenha" @click="displayAbrirEsqueciSenha()">
 							Esqueceu a Senha <v-icon style="font-size: 13px; top:-1px; position:relative;margin-left:5px">fas fa-question</v-icon>
 						</v-btn>
 						<v-btn color="primary" @click="doLogin()">Acessar</v-btn>
@@ -87,7 +87,7 @@
 						v-model="date"
 						:max="new Date().toISOString().substr(0, 10)"
 						min="1950-01-01"
-						@change="save"
+						@change="displaySaveDate"
 						></v-date-picker>
 					</v-menu>
 					<v-text-field
@@ -157,7 +157,7 @@
 	</v-btn>
 	<v-btn		
 	color="primary"
-	@click="registerUser()"
+	@click="displayRegisterUser()"
 	v-if="step == 4"
 	>
 	Cadastrar
@@ -216,13 +216,13 @@
 				this.step = 2
 				this.displayRegister = true
 			},
-			abrirEsqueciSenha(){
+			displayAbrirEsqueciSenha(){
 				this.step = 6
 			},
-			registerUser() {
+			displayRegisterUser() {
 				this.step = 4
 			},
-			save (date) {
+			displaySaveDate (date) {
 				var split = date.split("-")
 				var reversed = split.reverse()
 				var datereverse = reversed.join("-")

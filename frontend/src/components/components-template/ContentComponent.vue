@@ -22,7 +22,7 @@
 
 <script type="text/javascript">
   import CardComponent from "./CardComponent";
-  import ListenSocket from '../ListenSocket'
+  import ListenSocket from '../components-helpers/ListenSocket'
   export default {
     name: "ContentComponent",
     components: {

@@ -1,6 +1,6 @@
 <template>
 	<v-content>
-		<Header />
+		<Header></Header>
 		<v-container fluid fill-height>
 			<v-layout justify-start>
 				<v-flex text-xs-center>
@@ -33,7 +33,7 @@
 			}
 		},
 		mounted() {
-			alert("Montou "+this.content);
+			// alert("Montou "+this.content);
 		}
 	}
 	
