@@ -19,8 +19,8 @@
 				<v-window-item :value="1">
 					<v-card-text>
 						<v-form>
-							<v-text-field prepend-icon="person" name="login" label="Email" type="text"></v-text-field>
-							<v-text-field id="password" prepend-icon="lock" name="password" label="Senha" type="password"></v-text-field>
+							<v-text-field prepend-icon="person" name="login" label="Email" type="text" v-model="emailLogin"></v-text-field>
+							<v-text-field id="password" prepend-icon="lock" name="password" label="Senha" type="password" v-model="senhaLogin"></v-text-field>
 						</v-form>
 					</v-card-text>
 					<v-card-actions>
@@ -28,7 +28,7 @@
 						<v-btn color="primary" class="esqueceusenha" @click="abrirEsqueciSenha()">
 							Esqueceu a Senha <v-icon style="font-size: 13px; top:-1px; position:relative;margin-left:5px">fas fa-question</v-icon>
 						</v-btn>
-						<v-btn color="primary">Acessar</v-btn>
+						<v-btn color="primary" @click="doLogin()">Acessar</v-btn>
 					</v-card-actions>
 				</v-window-item>
 				<v-window-item :value="2">
@@ -174,7 +174,8 @@
 </v-card>	
 </template>
 <script type="text/javascript">
-	
+	import VueRouter from 'vue-router'
+	var router = new VueRouter() ;
 	export default {
 		name: "LoginComponent",
 		data() { 
@@ -182,7 +183,9 @@
 			step: 1,
 			displayRegister: false,
 			date: null,
-			menu: false
+			menu: false,
+			emailLogin: '',
+			senhaLogin: ''
 		}},
 		mounted(){
 			this.displayRegister = false
@@ -223,14 +226,15 @@
 				this.$refs.menu.save(datereverse)
 			},
 			doLogin() {
-				jsonUser = {
+				const jsonUser = {
 					'email': 'wallacepetrucci@gmail.com',
 					'senha': '123456'
 				}
-
+				// console.log(jsonUser.senha + this.senhaLogin)
+				// this.$router.push('/')
 				if(jsonUser.senha == this.senhaLogin && jsonUser.email == this.emailLogin){
-					this.$session.set('user_session', '12345678910')
-					next('/painel')
+					this.$store.commit('changeSession', '12345678910')
+					router.go('/painel');
 				}
 			}
 		}

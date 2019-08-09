@@ -1,5 +1,6 @@
 <template>
   <v-content>
+	  <Header />
     <v-container fluid fill-height>
       <v-layout justify-start>
         <v-flex text-xs-center>
@@ -15,12 +16,12 @@
 </template>
 
 <script type="text/javascript">
-	// import Header from "../components-template/HeaderComponent"
+	import Header from "../components-template/HeaderComponent"
 	export default {
-		name: "Home",
-		// components: {
-		// 	Header
-		// },
+		name: "Painel",
+		components: {
+			Header
+		},
 		data() {
 			return{
 				content: "Home Page"

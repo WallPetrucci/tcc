@@ -5,3 +5,6 @@
 footer.v-footer{
     padding: 20px;
 }
+.v-footer{
+	z-index:5
+}

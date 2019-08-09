@@ -5,10 +5,13 @@ Vue.use(Vuex)
 
 
 const ModuleSession = {
-    state: {existSession: true, tokenSession: '123123123'},
+    state: {existSession: false, tokenSession: ''},
     mutations: {
-        changeSession(state) {
-            state.existSession = true
+        changeSession(state, payload) {
+            if(payload){
+                state.existSession = true
+                state.tokenSession = payload
+            }
         }
     },
     getters: {
