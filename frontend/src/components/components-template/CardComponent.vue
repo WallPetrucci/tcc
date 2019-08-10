@@ -4,8 +4,8 @@
       <v-card-title primary-title>
         <v-icon>mdi-heart-pulse</v-icon>
         <div>
-          <div class="headline">{{title}}</div>
-          <span class="grey--text" v-model="value">{{value}}</span>
+          <!-- <div class="headline">{{title}}</div>
+          <div class="grey--text" v-model="value">{{value}}</div> -->
           <slot></slot>
         </div>
       </v-card-title>
@@ -17,10 +17,22 @@
 export default {
   name: "CardComponent",
   props: {
-    title: String,
-    value: String,
-    icon: String,
-    medida: String
+    title: {
+      type: String,
+      default: ''
+    },
+    value: {
+      type: String,
+      default: ''
+    },
+    icon: {
+      type: String,
+      default: ''
+    },
+    medida: {
+      type: String,
+      default: ''
+    }
   },
   data() {
     return {};

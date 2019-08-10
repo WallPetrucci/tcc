@@ -9,7 +9,7 @@ import Page404 from './components-routes/Page404Component';
 Vue.use(VueRouter)
 
 const router_components = [
-{ path: '/', redirect: '/painel' },
+{ path: '/', redirect: '/panel' },
 { path: '/monitoring/:monitorToken', component: Monitoring, props:true},
 { path: '/login', component: Login},
 { path: '/panel', component: Panel},    

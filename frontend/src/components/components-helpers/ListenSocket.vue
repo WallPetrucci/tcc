@@ -15,7 +15,7 @@
   }
 </style>
 <script>
-  var socket = null
+  // var socket = null
   export default {
     name: "ListenSocket",
     props: {
@@ -35,7 +35,7 @@
       }
     },
     created() {      
-      var socket = this.$socket
+      // var socket = this.$socket
     },
     sockets:{
       connect(){
