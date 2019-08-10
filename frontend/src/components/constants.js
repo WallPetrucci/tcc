@@ -5,3 +5,5 @@ export const APP_ROUTERS = {
 	'panel': '/panel',
 	'notFound': '*'
 }
+
+export const BASE_URL_LOCAL = "http://localhost:8080/"

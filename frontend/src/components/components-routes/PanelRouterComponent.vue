@@ -17,6 +17,7 @@
 
 <script type="text/javascript">
 	import Header from "../components-template/HeaderComponent"
+	import {APP_ROUTERS} from '../constants.js'
 	export default {
 		name: "Panel",
 		components: {
@@ -24,7 +25,7 @@
 		},
 		beforeCreate: function () {
 			if (!this.$session.exists()) {
-				this.$router.push('/login')
+				this.$router.push(APP_ROUTERS.login)
 			}
 		},
 		data() {
