@@ -14,7 +14,6 @@
       <ModalComponent>
         <SettingsComponent />
       </ModalComponent>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
     </v-toolbar>
   </div>
 </template>
@@ -30,11 +29,8 @@ export default {
     ModalComponent,
     SettingsComponent
   },
-  data() {
-    return {};
-  },
-  props: {
-    drawer: Boolean
+  data (){
+    return{}
   }
 };
 </script>

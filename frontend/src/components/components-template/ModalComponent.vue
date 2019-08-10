@@ -4,19 +4,16 @@
       <v-toolbar-title v-on="on">Configurações</v-toolbar-title>
     </template>
 
-    <v-card>
-      <slot></slot>
-    </v-card>
+
+    <slot></slot>
+
   </v-dialog>
 </template>
 <script type="text/javascript">
 export default {
   name: "ModalComponent",
   data: () => ({
-    step: 1,
-    displayRegister: false,
-    date: null,
-    menu: false
+    dialog:false
   }),
 
 };
