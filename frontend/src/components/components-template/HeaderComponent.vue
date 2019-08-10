@@ -2,32 +2,35 @@
 
 <template>
   <div>
-    <SideBarAlertComponent> </SideBarAlertComponent>
+    <SideBarAlertComponent></SideBarAlertComponent>
     <v-toolbar color="header-content" dark fixed app>
       <nav>
-        <router-link to='/'>Home</router-link>
-        <router-link to='/register'  >Register</router-link>
-        <router-link to='/login' >Login</router-link>
-    </nav>
+        <router-link to="/">Home</router-link>
+        <router-link to="/register">Register</router-link>
+        <router-link to="/login">Login</router-link>
+      </nav>
       <v-spacer></v-spacer>
-      <v-toolbar-title>Configuração</v-toolbar-title>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+
+      <ModalComponent>
+        <SettingsComponent />
+      </ModalComponent>
     </v-toolbar>
   </div>
 </template>
 
 <script type="text/javascript">
-  import SideBarAlertComponent from './SideBarAlertComponent'
-  export default {
-    name: 'HeaderComponent',
-    components: {
-      SideBarAlertComponent,
-    },
-    data(){
-      return {}
-    },
-    props:{
-      drawer: Boolean
-    }
+import SideBarAlertComponent from "./SideBarAlertComponent";
+import ModalComponent from "./ModalComponent";
+import SettingsComponent from "./SettingsComponent";
+export default {
+  name: "HeaderComponent",
+  components: {
+    SideBarAlertComponent,
+    ModalComponent,
+    SettingsComponent
+  },
+  data (){
+    return{}
   }
+};
 </script>

@@ -8,7 +8,6 @@
 <script> 
   import FooterComponent from './components/components-template/FooterComponent'
 
-
   export default {
     name: 'App',
     data: () => ({
@@ -19,8 +18,8 @@
     },
     methods: {
       clickPage(){
-        // console.log('clicou')
-      }
+        // console.log('clicou')      
     }
   }
+};
 </script>

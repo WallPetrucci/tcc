@@ -19,3 +19,4 @@ const router_components = [
 
 
 export default new VueRouter({mode: 'history', routes: router_components})
+
