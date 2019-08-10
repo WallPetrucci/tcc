@@ -12,13 +12,11 @@
 
 <script type="text/javascript">
 	import LoginComponent from '../components-template/LoginComponent.vue'
-	import FooterComponent from '../components-template/FooterComponent.vue'
 
 	export default {
 		name: "Login",
 		components: {
-			LoginComponent,
-			FooterComponent
+			LoginComponent
 		}
 	}
 

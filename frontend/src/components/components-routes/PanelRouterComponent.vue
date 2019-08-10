@@ -18,7 +18,7 @@
 <script type="text/javascript">
 	import Header from "../components-template/HeaderComponent"
 	export default {
-		name: "Painel",
+		name: "Panel",
 		components: {
 			Header
 		},
@@ -29,7 +29,7 @@
 		},
 		data() {
 			return{
-				content: "Home Page"
+				content: "Panel Page"
 			}
 		},
 		mounted() {

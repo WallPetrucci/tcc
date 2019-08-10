@@ -1,8 +1,12 @@
 <template>
   <div>
-    <div><h5>Conexão com Servidor</h5> <p> {{status_conn}} </p> </div>
-    <div class="dados">{{data_client[0][type]}} {{measure}}</div>
-    <div>Ultima alteração: {{data_client[0]['date']}}</div>
+    <div>
+      <h5>Conexão com Servidor</h5> 
+      <div v-if="this.status_conn"> <v-icon color="green">fas fa-check-circle</v-icon> </div> 
+      <div v-else> <v-icon color="red">fas fa-times-circle</v-icon> </div> 
+    </div>
+   <!--  <div class="dados">{{data_client[0][type]}} {{measure}}</div>
+    <div>Ultima alteração: {{data_client[0]['date']}}</div> -->
   </div>
 </template>
 <style type="text/css">
@@ -15,27 +19,37 @@
   export default {
     name: "ListenSocket",
     props: {
-      type: String,
-      measure: String
+      type: {
+        type: String,
+        default: ''
+      },
+      measure: {
+        type: String,
+        default: ''
+      }
     },
     data () {
       return {
         data_client: [],
-        status_conn: ''
+        status_conn: false
       }
     },
     created() {      
-      socket = this.$socket
+      var socket = this.$socket
     },
     sockets:{
       connect(){
-        this.status_conn = "Conectado"
+        this.status_conn = true
       },
       response_front(data) {
+        if(data.length > 0){
          this.data_client = data
+        }else{
+          this.data_client = []
+        }
       },
       disconnect(){
-        this.status_conn = "Desconectado"
+        this.status_conn = false
       },
     },
   }
