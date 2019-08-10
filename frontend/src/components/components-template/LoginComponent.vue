@@ -174,7 +174,8 @@
 </v-card>	
 </template>
 <script type="text/javascript">
-	import VueRouter from 'vue-router'
+	import {APP_ROUTERS} from '../constants.js';
+
 	export default {
 		name: "LoginComponent",
 		data() { 
@@ -234,11 +235,9 @@
 					'email': 'wallacepetrucci@gmail.com',
 					'senha': '123456'
 				}
-				// console.log(jsonUser.senha + this.senhaLogin)
-				// this.$router.push('/')
 				if(jsonUser.senha == this.senhaLogin && jsonUser.email == this.emailLogin){
 					this.$session.start()
-					this.$router.push('/painel')
+					this.$router.push(APP_ROUTERS.panel)
 				}
 			}
 		}
