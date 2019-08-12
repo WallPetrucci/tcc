@@ -1,22 +1,16 @@
-# A very simple Flask Hello World app for you to get started with...
-
-from flask import Flask, jsonify, render_template
-
+from flask import Flask
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
+api = Api(app)
 
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    print("Path: {}".format(path))
-    return render_template("vue/index.html")
+class HelloWorld(Resource):
+    def get(self):
+        return {'hello': 'world'}
 
 
-@app.route('/api/v1/foo')
-def api_foo():
-    return jsonify("API V1 FOO"), 200
-
+api.add_resource(HelloWorld, '/')
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5050)
+    app.run(debug=True)
