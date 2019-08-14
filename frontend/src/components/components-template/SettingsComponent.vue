@@ -13,14 +13,17 @@
             <SliderComponent
               title="Frequência Cardíaca" 
               v-bind:minMaxRange="[0,160]"
+              v-bind:step="0.5"
             />
             <SliderComponent 
               title="Oximetria"  
               v-bind:minMaxRange="[0,100]" 
+              v-bind:step="1" 
             />
             <SliderComponent
               title="Temperatura Corporal"  
               v-bind:minMaxRange="[20, 40]" 
+              v-bind:step="0.5" 
             />
           </v-card-text>
         </v-window-item>
