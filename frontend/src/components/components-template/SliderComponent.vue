@@ -33,7 +33,7 @@
       },
       minMaxRange:{
         type: Array,
-        default: () => {return [0,10]}
+        default:[0,10]
       },
     }
 

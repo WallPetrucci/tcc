@@ -5,7 +5,9 @@
 			<v-layout justify-start>
 				<v-flex text-xs-center>
 					<v-layout row align-baseline align-start>
+						<div>
 							<ReportsComponents> </ReportsComponents>
+						</div>
 					</v-layout>
 				</v-flex>
 			</v-layout>

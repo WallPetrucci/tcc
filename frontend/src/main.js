@@ -9,7 +9,7 @@ import router from './components/RouterComponent.js'
 import VueSession from 'vue-session'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import HighchartsVue from 'highcharts-vue'
+
 
 
 // Helpers
@@ -26,7 +26,6 @@ Vue.use(Vuetify,{
 	},
 	iconfont: 'fas'
 })
-Vue.use(HighchartsVue)
 Vue.use(VueSession)
 Vue.use(VueRouter)
 Vue.use(VueAxios, axios)
