@@ -23,8 +23,7 @@
       <v-spacer></v-spacer>
 
       <ModalComponent>
-        <v-toolbar-title v-on="on" v-slot:header>
-          <v-icon>fas fa-chart-area </v-icon>
+        <v-toolbar-title v-on="on" v-slot:top>
           <span class="">Configurações</span>
         </v-toolbar-title>
         <SettingsComponent />
