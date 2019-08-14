@@ -8,8 +8,12 @@
           :thumb-size="26"
           :max="minMaxRange[1]"
           :min="minMaxRange[0]"
-          :step="0.5">
+          :step="0.5"
+          >
         </v-range-slider>
+        <!-- <span class="caption grey--text text--darken-1" >
+         Você receberá um alerta quando sua {{this.title}} estiver abaixo de {{this.minMaxAux[0]}} ou acima de {{this.minMaxAux[1]}}
+        </span> -->
       </v-flex>
     </v-layout>
   </v-card-text>
@@ -20,7 +24,8 @@
   export default {
     name: 'SliderComponent',
     data:() =>({
-      minMaxModel: []
+      minMaxModel: [],
+      message: '',
     }),
 
     mounted(){
@@ -35,7 +40,13 @@
         type: Array,
         default:[0,10]
       },
-    }
+    },
 
+    // watch:{
+    //   minMaxModel: function(newMinMax){
+    //     console.log('Cheguei')
+    //     this.minMaxAux = newMinMax
+    //   }
+    // }
   }
 </script>

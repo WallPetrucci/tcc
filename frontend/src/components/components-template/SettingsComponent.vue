@@ -10,9 +10,18 @@
           <v-card-text>
             <v-text-field label="Código do Dispositivo" required></v-text-field>
             <v-spacer></v-spacer>
-            <SliderComponent title="Frequência Cardíaca"  v-bind:minMaxRange="[0,160]"/>
-            <SliderComponent title="Oximetria"  v-bind:minMaxRange="[0,100]"/>
-            <SliderComponent title="TemperaturaCorporal"  v-bind:minMaxRange="[20, 40]"/>
+            <SliderComponent
+              title="Frequência Cardíaca" 
+              v-bind:minMaxRange="[0,160]"
+            />
+            <SliderComponent 
+              title="Oximetria"  
+              v-bind:minMaxRange="[0,100]" 
+            />
+            <SliderComponent
+              title="Temperatura Corporal"  
+              v-bind:minMaxRange="[20, 40]" 
+            />
           </v-card-text>
         </v-window-item>
       </v-window>
