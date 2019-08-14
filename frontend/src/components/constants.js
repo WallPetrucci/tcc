@@ -3,6 +3,7 @@ export const APP_ROUTERS = {
 	'login': '/login',
 	'monitoring': '/monitoring',
 	'panel': '/panel',
+	'reports': '/reports',
 	'notFound': '*'
 }
 

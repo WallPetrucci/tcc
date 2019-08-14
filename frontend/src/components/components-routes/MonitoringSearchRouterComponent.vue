@@ -1,7 +1,7 @@
 <template>
 	<v-content>
 		<v-container fluid fill-height>
-			<Header v-if="this.headerShow"></Header>
+			<Header></Header>
 			<v-layout align-center justify-center>
 				<v-flex xs12 sm8 md4>
 					<MonitoringSearch> </MonitoringSearch>
@@ -22,13 +22,7 @@ export default {
 	},
 	data(){
 		return {
-			headerShow: false
 		}
 	},
-	beforeMount(){
-		if (this.$session.exists()) {
-			this.headerShow = true
-		}	
-	}
 }
 </script>

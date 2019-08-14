@@ -1,7 +1,7 @@
 <style scoped src="@/assets/MonitoringComponent.css"></style>
 <template>
 	<v-content>
-		<Header v-if="this.headerShow"></Header>
+		<Header></Header>
 		<v-container fluid grid-list-md align-center justify-center>
 			<MonitoringComponent></MonitoringComponent>
 		</v-container>
@@ -60,9 +60,6 @@ export default {
 		if(this.monitorToken !== 'wallacetoken'){
 			this.$router.push(APP_ROUTERS.monitoring)
 		}
-		if (this.$session.exists()) {
-			this.headerShow = true
-		}	
 	},
 	props: {
 		monitorToken: {

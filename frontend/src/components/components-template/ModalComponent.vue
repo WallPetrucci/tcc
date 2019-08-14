@@ -1,11 +1,11 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-toolbar-title v-on="on">Configurações</v-toolbar-title>
+      <slot name="top"> </slot>
     </template>
 
 
-    <slot></slot>
+    <slot ></slot>
 
   </v-dialog>
 </template>
