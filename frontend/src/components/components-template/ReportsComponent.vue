@@ -32,23 +32,29 @@
 		value="fc"
 		>
 		<v-card>
-			<v-card-text><highcharts :options="chartOptionsFc"></highcharts></v-card-text>
+			<v-card-text><highcharts :options="chartOptionsFc">
+				{{text}}
+			</highcharts></v-card-text>
 		</v-card>
 	</v-tab-item>
 	<v-tab-item
-	value="temp"
-	>
-	<v-card>
-		<v-card-text><highcharts :options="chartOptionsTemp"></highcharts></v-card-text>
-	</v-card>
-</v-tab-item>
-<v-tab-item
-value="ox"
->
-<v-card>
-	<v-card-text><highcharts :options="chartOptionsOx"></highcharts></v-card-text>
-</v-card>
-</v-tab-item>
+		value="temp"
+		>
+		<v-card>
+			<v-card-text><highcharts :options="chartOptionsTemp">
+				{{text}}
+			</highcharts></v-card-text>
+		</v-card>
+	</v-tab-item>
+	<v-tab-item
+		value="ox"
+		>
+		<v-card>
+			<v-card-text><highcharts :options="chartOptionsOx">
+				{{text}}
+			</highcharts></v-card-text>
+		</v-card>
+	</v-tab-item>
 </v-tabs-items>
 </v-flex>
 </template>
