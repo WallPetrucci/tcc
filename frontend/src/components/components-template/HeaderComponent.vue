@@ -25,11 +25,7 @@
       </nav>
       <v-spacer></v-spacer>
 
-      <ModalComponent>
-        <v-toolbar-title v-on="on" v-slot:header>
-          <v-icon>fas fa-chart-area </v-icon>
-          <span class="">Configurações</span>
-        </v-toolbar-title>
+      <ModalComponent>     
         <SettingsComponent />
       </ModalComponent>
     </v-toolbar>

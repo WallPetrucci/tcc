@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <slot name="top"> </slot>
+      <v-icon v-on="on">fas fa-chart-area </v-icon>
     </template>
 
 
