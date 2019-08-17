@@ -1,14 +1,11 @@
 <template>
-	<v-content>
-		<Header></Header>
-		<v-container fluid fill-height style="padding:10px">
-			<v-layout justify-start>
-				<v-flex text-xs-center>
-					<v-layout row align-baseline align-start>
-						<PanelComponent>
-						</PanelComponent>
-					</v-layout>
-				</v-flex>
+<v-content>
+		<v-container fluid fill-height>
+			<Header></Header>
+			<v-layout justify-center>
+				<v-flex ms12>				
+					<MonitorContent> </MonitorContent>	
+				</v-flex>	
 			</v-layout>
 		</v-container>
 	</v-content>	
@@ -16,13 +13,13 @@
 
 <script type="text/javascript">
 	import Header from "../components-template/HeaderComponent"
-	import PanelComponent from "../components-template/PanelComponent"
+	import MonitorContent from '../components-template/MonitorComponent'
 	import {APP_ROUTERS} from '../constants.js'
 	export default {
-		name: "Panel",
+		name: "Monitor",
 		components: {
 			Header,
-			PanelComponent
+			MonitorContent
 		},
 		beforeCreate: function () {
 			if (!this.$session.exists()) {
@@ -31,7 +28,7 @@
 		},
 		data() {
 			return{
-				content: "Panel Page"
+				content: "Monitor Page"
 			}
 		},
 		mounted() {

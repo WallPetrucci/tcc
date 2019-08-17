@@ -13,7 +13,10 @@
             <router-link to="/panel"> <v-icon>fas fa-home</v-icon> Painel</router-link>
           </li>
           <li>            
-            <router-link to="/monitoring"> <v-icon>fas fa-eye</v-icon> Monitorar Usuário</router-link>
+            <router-link to="/monitor"> <v-icon>fas fa-users</v-icon> Monitores</router-link>
+          </li>
+          <li>            
+            <router-link to="/monitoring"> <v-icon>fas fa-eye</v-icon> Monitorar</router-link>
           </li>
           <li>            
             <router-link to="/reports"> <v-icon>fas fa-chart-area </v-icon> Relatórios</router-link>

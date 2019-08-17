@@ -1,0 +1,28 @@
+.logo_monitoring {
+	width:300px;
+	float: right;
+}
+.flex.inner-monitoring {
+	margin: 0 auto;
+}
+
+div.inner-monitoring {
+	margin: 0 auto;
+	box-shadow: 0px 0px 20px 4px rgba(0, 0, 0, 0.16);
+	padding: 20px;
+	background: #4db6ac;
+	color: white;
+}
+
+.container.grid-list-md .top-monitoring.row {
+	margin-bottom: 30px;
+}
+.title-monitoring {
+	margin-bottom: 20px;
+	font-weight: 500;
+	font-size: 40px;
+}
+
+.inner-monitoring  .v-card.v-sheet.theme--light {
+	width: 97%
+}
