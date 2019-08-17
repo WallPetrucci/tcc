@@ -1,5 +1,6 @@
 export const APP_ROUTERS = {
 	'base': '/',
+	'monitor': '/monitor',
 	'login': '/login',
 	'monitoring': '/monitoring',
 	'panel': '/panel',

@@ -103,7 +103,7 @@
 					<span class="caption grey--text text--darken-1">
 						Insira seus Dados Pessoais
 					</span>
-				</v-card-text>
+				</v-card-text>				
 			</v-window-item>
 			
 			<v-window-item :value="5">
@@ -171,6 +171,7 @@
 </v-btn>
 </v-card-actions>
 </template>
+<v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
 </v-card>	
 </template>
 <script type="text/javascript">
@@ -185,10 +186,12 @@
 			date: null,
 			menu: false,
 			emailLogin: '',
-			senhaLogin: ''
+			senhaLogin: '',
+			progressLinear: false
 		}},
 		mounted(){
 			this.displayRegister = false
+			this.progressLinear = false
 		},
 		beforeCreate: function () {
 			if (this.$session.exists()) {
@@ -215,13 +218,14 @@
 		methods : {
 			displayRegisterMethod() {
 				this.step = 2
-				this.displayRegister = true
+				this.displayRegister = true				
 			},
 			displayAbrirEsqueciSenha(){
 				this.step = 6
 			},
 			displayRegisterUser() {
 				this.step = 4
+				this.progressLinear = true
 			},
 			displaySaveDate (date) {
 				var split = date.split("-")
