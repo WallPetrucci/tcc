@@ -1,4 +1,3 @@
-
 <template>
 	<v-container>
 		<v-layout row wrap>
@@ -6,11 +5,11 @@
 				<Monitoring>
 				</Monitoring>
 			</v-flex>
-			<v-flex xs6>
+			<v-flex xs12 sm12 md6 lg6 mb-2>
 				<Monitor>
 				</Monitor>
 			</v-flex>
-			<v-flex xs6>
+			<v-flex xs12 sm12 md6 lg6>
 				<Reports>
 				</Reports>
 			</v-flex>

@@ -4,7 +4,7 @@
 		<slot></slot>
 		<slot name="header"></slot>		
 		<v-layout row class="bottom-monitoring">
-			<v-layout>
+			<v-layout row wrap >
 				<CardComponent title="Frequência Cardiaca" icon="fas fa-heartbeat" colorIcons="red">
 					<ListenSocket type="89" measure="bpm" >
 					</ListenSocket>	

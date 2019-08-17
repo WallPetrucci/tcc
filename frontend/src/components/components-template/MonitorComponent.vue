@@ -1,5 +1,5 @@
 <template>
-	<v-flex xs11>
+	<v-flex xs12 sm12 md11 lg11 >
 		<v-toolbar flat color="white">
 			<v-toolbar-title>Monitores</v-toolbar-title>
 			<v-spacer></v-spacer>
