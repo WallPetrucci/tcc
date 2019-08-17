@@ -21,11 +21,16 @@
           <li>            
             <router-link to="/reports"> <v-icon>fas fa-chart-area </v-icon> Relatórios</router-link>
           </li>
+          <li>
+            <ModalComponent icone='fas fa-edit' title='Editar Meus Dados' v-bind:showTitle=true>     
+              <EditDataComponent />
+            </ModalComponent>
+          </li>
         </ul>
       </nav>
       <v-spacer></v-spacer>
 
-      <ModalComponent>     
+      <ModalComponent icone='fas fa-sliders-h' title='Configurar WHM'>     
         <SettingsComponent />
       </ModalComponent>
     </v-toolbar>
@@ -50,12 +55,14 @@
 import SideBarAlertComponent from "./SideBarAlertComponent";
 import ModalComponent from "./ModalComponent";
 import SettingsComponent from "./SettingsComponent";
+import EditDataComponent from "./EditDataComponent";
 export default {
   name: "HeaderComponent",
   components: {
     SideBarAlertComponent,
     ModalComponent,
-    SettingsComponent
+    SettingsComponent,
+    EditDataComponent
   },
   beforeMount(){
     if (this.$session.exists()) {

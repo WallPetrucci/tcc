@@ -38,6 +38,28 @@
     </template>
   </v-card>
 </template>
+<style>
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4db6ac; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #4db6ac; 
+}
+</style>
 <script type="text/javascript">
 import SliderComponent from "./SliderComponent";
 export default {
