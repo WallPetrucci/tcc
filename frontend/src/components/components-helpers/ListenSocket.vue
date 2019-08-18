@@ -5,7 +5,7 @@
       <div v-if="this.status_conn"> <v-icon color="green">fas fa-check-circle</v-icon> </div> 
       <div v-else> <v-icon color="red">fas fa-times-circle</v-icon> </div> 
     </div>
-    <div class="dados">{{type}} {{measure}}</div>
+    <div class="dados">{{data_client[0][type]}} {{measure}}</div>
    <!--  
    <div class="dados">{{data_client[0][type]}} {{measure}}</div>
     <div>Ultima alteração: {{data_client[0]['date']}}</div> -->
@@ -42,7 +42,7 @@
       }
     },
     created() {      
-      // var socket = this.$socket
+      var socket = this.$socket
     },
     sockets:{
       connect(){
@@ -50,6 +50,7 @@
       },
       response_front(data) {
         if(data.length > 0){
+          console.log(data)
          this.data_client = data
         }else{
           this.data_client = []
