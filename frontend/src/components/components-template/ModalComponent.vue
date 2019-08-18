@@ -1,9 +1,10 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-icon v-on="on">fas fa-sliders-h
-      <span>Configurar WHM</span></v-icon> 
-
+      <v-icon  v-on="on">{{icone}}<span>{{title}}</span></v-icon> 
+      <a href="#"  v-on="on">
+        <span v-if="showTitle">{{title}}</span>
+      </a>
     </template>
 
 
@@ -17,6 +18,21 @@ export default {
   data: () => ({
     dialog:false
   }),
+
+  props:{
+    icone:{
+      type: String,
+      default: 'fas fa-sliders-h'
+    },
+    title:{
+      type: String,
+      default: ''
+    },
+    showTitle:{
+      type: Boolean,
+      default: false,
+    }
+  }
 
 };
 </script>
