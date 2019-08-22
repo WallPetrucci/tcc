@@ -17,28 +17,28 @@
             </v-list-tile>
             
             <div class="info-usuario">
-                <v-divider class="separador-full" ></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-title class="nome-usuario">Wallace Petrucci Neves</v-list-tile-title>
+              <v-divider class="separador-full"></v-divider>
+              <v-list-item>
+                <v-list-tile-content class="user-data">
+                  <v-list-tile-title class="user-name">Wallace Petrucci Neves</v-list-tile-title>
                   <v-list-tile-sub-title>Data: 14/08/2019</v-list-tile-sub-title>
-                  <v-list-tile-sub-title>Horas: 00:00</v-list-tile-sub-title>
+                  <v-list-tile-sub-title class="date-hour">Horas: 00:00</v-list-tile-sub-title>
                 </v-list-tile-content>
-              </v-list-tile>
+              </v-list-item>
               
-              <v-list-tile>
-                <v-list-tile-content>
+              <v-list-item class="user-data">
+                <v-list-tile-content >
                   <v-list-tile-sub-title>Problema</v-list-tile-sub-title>
-                  <v-list-tile-sub-title>Frequência Cardíaca Muito alta</v-list-tile-sub-title>
+                  <v-list-tile-sub-title class="cause">Frequência Cardíaca Muito alta</v-list-tile-sub-title>
                 </v-list-tile-content>
-              </v-list-tile>
-              <v-list-tile>
+              </v-list-item>
+              <v-list-item class="user-data">
                 <v-list-tile-content>
                   <v-list-tile-sub-title>FC: 130bpm</v-list-tile-sub-title>
                   <v-list-tile-sub-title>Oxi: 100saO2</v-list-tile-sub-title>
                   <v-list-tile-sub-title>TC: 40°C</v-list-tile-sub-title>
                 </v-list-tile-content>
-              </v-list-tile>
+              </v-list-item>
               <v-divider class="separador"></v-divider>
             </div>
 
