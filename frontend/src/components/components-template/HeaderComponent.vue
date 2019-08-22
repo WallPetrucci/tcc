@@ -21,15 +21,13 @@
           <li>            
             <router-link to="/reports"> <v-icon>fas fa-chart-area </v-icon> Relatórios</router-link>
           </li>
-          <li>
-            <ModalComponent icone='fas fa-edit' title='Editar Meus Dados' v-bind:showTitle=true>     
-              <EditDataComponent />
-            </ModalComponent>
-          </li>
         </ul>
       </nav>
       <v-spacer></v-spacer>
 
+      <ModalComponent icone='fas fa-user-cog' title='Editar Meus Dados' :showTitle=falses>     
+        <EditDataComponent />
+      </ModalComponent>
       <ModalComponent icone='fas fa-sliders-h' title='Configurar WHM'>     
         <SettingsComponent />
       </ModalComponent>
@@ -48,6 +46,13 @@
   list-style: none;
   float: left;
   padding: 10px;
+}
+i.v-icon.v-icon--link.fas.fa-user-cog.theme--dark {
+    margin-right: 15px;
+}
+
+.navigation-header ul li a:hover, i.v-icon.v-icon--link:hover{
+  color: #03504c;
 }
 
 </style>
