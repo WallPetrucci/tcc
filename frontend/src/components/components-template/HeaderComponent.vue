@@ -31,6 +31,12 @@
       <ModalComponent icone='fas fa-sliders-h' title='Configurar WHM'>     
         <SettingsComponent />
       </ModalComponent>
+      <template>
+        <div>
+          <v-icon @click="logOut">fas fa-sign-out-alt</v-icon>         
+        </div>
+      </template>
+
     </v-toolbar>
   </div>
 </template>
@@ -47,12 +53,16 @@
   float: left;
   padding: 10px;
 }
-i.v-icon.v-icon--link.fas.fa-user-cog.theme--dark {
-    margin-right: 15px;
+i.v-icon.v-icon--link.fas.fa-user-cog.theme--dark, i.v-icon.v-icon--link.fas.fa-sliders-h.theme--dark {
+  margin-right: 15px;
 }
 
-.navigation-header ul li a:hover, i.v-icon.v-icon--link:hover{
+.navigation-header ul li a:hover, i.v-icon.v-icon--link:hover, i.v-icon.fa-sign-out-alt:hover{
   color: #03504c;
+}
+
+i.v-icon.fa-sign-out-alt{
+  cursor: pointer;
 }
 
 </style>
@@ -61,6 +71,8 @@ import SideBarAlertComponent from "./SideBarAlertComponent";
 import ModalComponent from "./ModalComponent";
 import SettingsComponent from "./SettingsComponent";
 import EditDataComponent from "./EditDataComponent";
+import {APP_ROUTERS} from "../constants.js";
+
 export default {
   name: "HeaderComponent",
   components: {
@@ -77,6 +89,12 @@ export default {
   data (){
     return{
       show: false,
+    }
+  },
+  methods: {
+    logOut()  {
+      this.$session.destroy()
+      this.$router.go()  
     }
   }
 };

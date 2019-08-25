@@ -196,6 +196,8 @@
 		beforeCreate: function () {
 			if (this.$session.exists()) {
 				this.$router.push('/painel')
+			}else{
+      			this.$session.destroy()
 			}
 		},
 		computed: {
