@@ -1,7 +1,7 @@
 from flask.views import MethodView
 
 
-class RecoverPasswordController(MethodView):
+class HealthCheck(MethodView):
 
     def get(self):
         return {'status': 'live'}

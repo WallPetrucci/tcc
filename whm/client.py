@@ -12,7 +12,7 @@ import random
 
 sio = Client()
 data_client = []
-# sensor_temperatura = MLX90614()
+sensor_temperatura = MLX90614()
 status_message = False
 conn_status = False
 mac = get_mac()

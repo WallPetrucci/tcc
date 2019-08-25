@@ -5,7 +5,7 @@
 			<v-layout justify-start>
 				<v-flex text-xs-center>
 					<v-layout row align-baseline align-start>
-							<ReportsComponents> </ReportsComponents>
+						<ReportsComponents> </ReportsComponents>
 					</v-layout>
 				</v-flex>
 			</v-layout>
@@ -22,7 +22,12 @@ export default {
 	components: {
 		ReportsComponents,
 		Header
-	}
+	},
+	beforeCreate: function () {
+		if (!this.$session.exists()) {
+			this.$router.push(APP_ROUTERS.login)
+		}
+	},
 }
-	
+
 </script>

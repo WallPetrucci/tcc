@@ -2,3 +2,7 @@
 	background: #00b9b4;
 	color:#fff;
 }
+
+i.v-icon.v-icon--link.fas.fa-edit.theme--dark {
+    margin-right: 15px;
+}

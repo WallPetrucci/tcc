@@ -1,9 +1,9 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-icon  v-on="on">{{icone}}<span>{{title}}</span></v-icon> 
-      <a href="#"  v-on="on">
-        <span v-if="showTitle">{{title}}</span>
+      <v-icon  v-on="on">{{icone}}</v-icon> 
+      <a href="#"  v-on="on" v-if="showTitle">
+        <span>{{title}}</span>
       </a>
     </template>
 
