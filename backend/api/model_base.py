@@ -74,6 +74,9 @@ class RecoverPasswordBase(db.Model):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 
+    def __repr__(self):
+        return "<RecoverPassword%r>" % self.idRecoverPassoword
+
 
 class ResultMetricsBase(db.Model):
     idResultsMetrics = db.Column(db.Integer, primary_key=True)
@@ -102,18 +105,36 @@ class SensorBase(db.Model):
 
 
 class UserBase(db.Model):
+
+    __tablename__ = 'User'
+
     idUser = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), unique=True, nullable=False)
     dateBirth = db.Column(db.String(120), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(10))
     cel = db.Column(db.String(15))
-    Devices_idDevices = db.Column(db.Integer)
-    UserSettings_idUserSettings = db.Column(db.Integer)
-    Address_idAddress = db.Column(db.Integer)
+    Devices_idDevices = db.Column(db.Integer, db.ForeignKey('Devices.idDevices'))
+    UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
+    Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
+
+    Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+    UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+    Address = db.relationship('Address', foreign_keys=Address_idAddress)
+
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
+
+    def __repr__(self):
+        return "<User%r>" % self.name
 
 
 class UserSettingsBase(db.Model):
-    my_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
+    idUserSettings = db.Column(db.Integer, primary_key=True)
+    heartRate = db.Column(JSON, nullable=False)
+    oximetry = db.Column(db.String(120), nullable=False)
+    temperature = db.Column(db.String(120), nullable=False)
+    acitveAlertOximetry = db.Column(db.String(120), nullable=False)
+    activeAlertHeartRate = db.Column(db.String(120), nullable=False)
+    activeAlertBTemperature = db.Column(db.String(120), nullable=False)
