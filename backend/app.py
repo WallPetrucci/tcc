@@ -2,7 +2,7 @@
 from flask import Flask
 from flask_cors import CORS
 from flask_restful import Api
-from flask_sqlalchemy import SQLAlchemy
+
 
 # Controllers Imports
 from api.User.Controller.UserController import UserController
@@ -18,6 +18,7 @@ from api.HealthCheck import HealthCheck
 # Locals Imports
 import constants as const
 import config as conf
+from database import DataBase
 
 
 app = Flask(__name__)
@@ -40,5 +41,4 @@ if __name__ == '__main__':
             host=const.HOST_DEFAULT,
             port=const.PORT_DEFAULT)
     app.config['SQLALCHEMY_DATABASE_URI'] = conf.CONNECT_DB
-    global db
-    db = SQLAlchemy(app)
+    DataBase(app)
