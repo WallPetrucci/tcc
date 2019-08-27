@@ -1,6 +1,7 @@
 from flask.views import MethodView
+from flask import request
 
-from api.User.Model.UserModel import UserModel
+from backend.api.User.Model.UserModel import UserModel
 
 
 class UserController(MethodView):
@@ -12,3 +13,13 @@ class UserController(MethodView):
             return result
         else:
             pass
+
+    def post(self):
+        data_client = request.get_json()
+
+        if data_client:
+            user_model = UserModel(data_client)
+            user_model.insert_user()
+            return user_model
+
+        return "Passa a porra do JSON!"
