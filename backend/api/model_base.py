@@ -36,6 +36,7 @@ class DevicesBase(db.Model):
     #     return "<Devices%r>" % self.idDevices
 
 
+
 class MonitorBase(db.Model):
 
     __tablename__ = 'Monitor'
@@ -90,6 +91,7 @@ class SensorBase(db.Model):
 
     __tablename__ = 'Sensor'
 
+
     idSensor = db.Column(db.Integer, primary_key=True)
     sensorType = db.Column(db.String(45))
 
@@ -114,6 +116,7 @@ class UserBase(db.Model):
     Devices_idDevices = db.Column(db.Integer, db.ForeignKey('Devices.idDevices'))
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
+
 
     # Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
     # UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
