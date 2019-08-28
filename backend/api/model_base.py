@@ -1,6 +1,4 @@
-from backend.database import DataBase
-
-db = DataBase()
+from backend import db
 
 
 class AlertsBase(db.Model):
@@ -29,13 +27,14 @@ class DevicesBase(db.Model):
     Sensor_idSensor = db.Column(db.Integer, db.ForeignKey('Sensor.idSensor'))
     Sensor = db.relationship('SensorBase', foreign_keys=Sensor_idSensor)
 
-    def __init__(self, idDevices, idHardware, Sensor_idSensor):
-        self.idDevices = idDevices
-        self.idHardware = idHardware
-        self.Sensor_idSensor = Sensor_idSensor
+    # def __init__(self, idDevices, idHardware, Sensor_idSensor):
+    #     self.idDevices = idDevices
+    #     self.idHardware = idHardware
+    #     self.Sensor_idSensor = Sensor_idSensor
 
-    def __repr__(self):
-        return "<Devices%r>" % self.idDevices
+    # def __repr__(self):
+    #     return "<Devices%r>" % self.idDevices
+
 
 
 class MonitorBase(db.Model):
@@ -47,8 +46,7 @@ class MonitorBase(db.Model):
     email = db.Column(db.String(45))
     cel = db.Column(db.String(45))
 
-    def __init__(self, idMonitor, name, email, cel):
-        self.idMonitor = idMonitor
+    def __init__(self, name, email, cel):
         self.name = name
         self.email = email
         self.cel = cel
@@ -93,7 +91,8 @@ class SensorBase(db.Model):
 
     __tablename__ = 'Sensor'
 
-    idSensor = db.Column(db.Integer)
+
+    idSensor = db.Column(db.Integer, primary_key=True)
     sensorType = db.Column(db.String(45))
 
     def __init__(self, idSensor, sensorType):
@@ -118,11 +117,12 @@ class UserBase(db.Model):
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
 
-    Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
-    UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
-    Address = db.relationship('Address', foreign_keys=Address_idAddress)
 
-    def __init__(self, **kwargs):
+    # Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+    # UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+    # Address = db.relationship('Address', foreign_keys=Address_idAddress)
+
+    def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 
@@ -132,7 +132,7 @@ class UserBase(db.Model):
 
 class UserSettingsBase(db.Model):
     idUserSettings = db.Column(db.Integer, primary_key=True)
-    heartRate = db.Column(JSON, nullable=False)
+    heartRate = db.Column(db.JSON, nullable=False)
     oximetry = db.Column(db.String(120), nullable=False)
     temperature = db.Column(db.String(120), nullable=False)
     acitveAlertOximetry = db.Column(db.String(120), nullable=False)

@@ -1,30 +1,18 @@
-# Packages Imports
-from flask import Flask
-from flask_cors import CORS
-from flask_restful import Api
-
+from backend import app, api
 
 # Controllers Imports
-from api.User.Controller.UserController import UserController
-from api.Alerts.Controller.AlertsController import AlertsController
-from api.Devices.Controller.DevicesController import DevicesController
-from api.Monitor.Controller.MonitorController import MonitorController
-from api.RecoverPassword.Controller.RecoverPasswordController import RecoverPasswordController
-from api.ResultsMetrics.Controller.ResultsMetricsController import ResultsMetricsController
-from api.Sensor.Controller.SensorController import SensorController
-from api.UserSettings.Controller.UserSettingsController import UserSettingsController
-from api.HealthCheck import HealthCheck
+from backend.api.User.Controller.UserController import UserController
+from backend.api.Alerts.Controller.AlertsController import AlertsController
+from backend.api.Devices.Controller.DevicesController import DevicesController
+from backend.api.Monitor.Controller.MonitorController import MonitorController
+from backend.api.RecoverPassword.Controller.RecoverPasswordController import RecoverPasswordController
+from backend.api.ResultsMetrics.Controller.ResultsMetricsController import ResultsMetricsController
+from backend.api.Sensor.Controller.SensorController import SensorController
+from backend.api.UserSettings.Controller.UserSettingsController import UserSettingsController
+from backend.api.HealthCheck import HealthCheck
 
 # Locals Imports
-import constants as const
-import config as conf
-from database import DataBase
-
-
-app = Flask(__name__)
-CORS(app)
-api = Api(app)
-
+import backend.constants as const
 
 api.add_resource(AlertsController, '/api/alerts/')
 api.add_resource(DevicesController, '/api/devices/')
@@ -40,5 +28,3 @@ if __name__ == '__main__':
     app.run(debug=False,
             host=const.HOST_DEFAULT,
             port=const.PORT_DEFAULT)
-    app.config['SQLALCHEMY_DATABASE_URI'] = conf.CONNECT_DB
-    DataBase(app)
