@@ -9,10 +9,9 @@ class AlertsBase(db.Model):
     messages = db.Column(db.String(100), nullable=True)
     typeAlerts = db.Column(db.String(45), nullable=True)
 
-    def __init__(self, idAlerts, messages, typeAlerts):
-        self.idAlerts = idAlerts
-        self.messages = messages
-        self.typeAlerts = typeAlerts
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
     def __repr__(self):
         return "<Alerts%r>" % self.idAlerts
@@ -27,14 +26,12 @@ class DevicesBase(db.Model):
     Sensor_idSensor = db.Column(db.Integer, db.ForeignKey('Sensor.idSensor'))
     Sensor = db.relationship('SensorBase', foreign_keys=Sensor_idSensor)
 
-    # def __init__(self, idDevices, idHardware, Sensor_idSensor):
-    #     self.idDevices = idDevices
-    #     self.idHardware = idHardware
-    #     self.Sensor_idSensor = Sensor_idSensor
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
-    # def __repr__(self):
-    #     return "<Devices%r>" % self.idDevices
-
+    def __repr__(self):
+        return "<Devices%r>" % self.idDevices
 
 
 class MonitorBase(db.Model):
@@ -46,10 +43,9 @@ class MonitorBase(db.Model):
     email = db.Column(db.String(45))
     cel = db.Column(db.String(45))
 
-    def __init__(self, name, email, cel):
-        self.name = name
-        self.email = email
-        self.cel = cel
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
     def __repr__(self):
         return "<Monitor%r>" % self.name
@@ -86,21 +82,27 @@ class ResultMetricsBase(db.Model):
     User_Devices_idDevices = db.Column(db.Integer)
     User_UserSettings_idUserSettings = db.Column(db.Integer)
 
+    def __init__(self, *args, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
+
+    def __repr__(self):
+        return "<ResultMetrics%r>" % self.idResultsMetrics
+
 
 class SensorBase(db.Model):
 
     __tablename__ = 'Sensor'
 
-
     idSensor = db.Column(db.Integer, primary_key=True)
     sensorType = db.Column(db.String(45))
 
-    def __init__(self, idSensor, sensorType):
-        self.idSensor = idSensor
-        self.sensorType = sensorType
+    def __init__(self, *args, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
     def __repr__(self):
-        return "<Monitor%r>" % self.idSensor
+        return "<Sensor%r>" % self.idSensor
 
 
 class UserBase(db.Model):
@@ -117,10 +119,9 @@ class UserBase(db.Model):
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
 
-
-    # Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
-    # UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
-    # Address = db.relationship('Address', foreign_keys=Address_idAddress)
+    Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+    UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+    Address = db.relationship('Address', foreign_keys=Address_idAddress)
 
     def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -138,3 +139,10 @@ class UserSettingsBase(db.Model):
     acitveAlertOximetry = db.Column(db.String(120), nullable=False)
     activeAlertHeartRate = db.Column(db.String(120), nullable=False)
     activeAlertBTemperature = db.Column(db.String(120), nullable=False)
+
+    def __init__(self, *args, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
+
+    def __repr__(self):
+        return "<UserSettings%r>" % self.idUserSettings
