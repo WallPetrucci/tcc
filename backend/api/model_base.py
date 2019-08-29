@@ -41,7 +41,7 @@ class MonitorBase(db.Model):
     idMonitor = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(45))
     email = db.Column(db.String(45))
-    cel = db.Column(db.String(45))
+    telephone = db.Column(db.String(45))
 
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -119,9 +119,9 @@ class UserBase(db.Model):
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
 
-    Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
-    UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
-    Address = db.relationship('Address', foreign_keys=Address_idAddress)
+    # Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+    # UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+    # Address = db.relationship('Address', foreign_keys=Address_idAddress)
 
     def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
