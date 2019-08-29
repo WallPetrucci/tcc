@@ -6,7 +6,7 @@ from backend.api.Monitor.Model.MonitorModel import MonitorModel
 
 class MonitorController(MethodView):
     def get(self):
-        return {'status': 'live'}
+        return MonitorModel.query.all()
 
     def post(self):
         data_monitor = request.get_json()
