@@ -51,7 +51,6 @@ class DevicesBase(db.Model):
     def __repr__(self):
         return "<Devices%r>" % self.idDevices
 
-
 class MonitorBase(db.Model):
 
     __tablename__ = 'Monitor'
@@ -61,9 +60,16 @@ class MonitorBase(db.Model):
     email = db.Column(db.String(45))
     telephone = db.Column(db.String(45))
 
+<<<<<<< Updated upstream
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
+=======
+    def __init__(self, name, email, telephone):
+        self.name = name
+        self.email = email
+        self.telephone = telephone
+>>>>>>> Stashed changes
 
     def __repr__(self):
         return "<Monitor%r>" % self.name
@@ -164,6 +170,13 @@ class UserBase(db.Model):
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
 
+<<<<<<< Updated upstream
+=======
+    # Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+    # UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+    # Address = db.relationship('Address', foreign_keys=Address_idAddress)
+
+>>>>>>> Stashed changes
     def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
