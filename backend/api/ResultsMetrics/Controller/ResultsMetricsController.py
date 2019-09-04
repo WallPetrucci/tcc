@@ -1,8 +1,8 @@
 from flask.views import MethodView
 from flask import request
 
-from backend.api.Monitor.Model.ResultsMetricsModel import ResultsMetricsModel
-from constants import constants as const
+from backend.api.ResultsMetrics.Model.ResultsMetricsModel import ResultsMetricsModel
+from backend.api.ResultsMetrics import constants as const
 
 
 class ResultsMetricsController(MethodView):
@@ -14,11 +14,10 @@ class ResultsMetricsController(MethodView):
         results_metrics = request.get_json()
 
         if all(item in results_metrics for item in const.LIST_KEYS_VALIDATIONS_RESULTS):
-            ResultsMetricsModel(oximetry=results_metrics.get('ox'),
-                                heart=results_metrics.get('fc'),
-                                temperature=results_metrics.get('temp'),
-                                date_results=results_metrics.get('date'),
-                                whm=results_metrics.get('whm')
-                                )
+            model_results = ResultsMetricsModel(oximetry=results_metrics.get('ox'),
+                                                heart=results_metrics.get('fc'),
+                                                temperature=results_metrics.get('temp'),
+                                                date_results=results_metrics.get('date')
+                                                )
 
-            return ResultsMetricsModel.insert_results_metrics()
+            model_results.insert_results_metrics()

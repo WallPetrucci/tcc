@@ -1,6 +1,6 @@
 from flask.views import MethodView
 from flask import request
-from backend.api.Monitor.MonitorModel import MonitorModel
+from backend.api.Monitor.Model.MonitorModel import MonitorModel
 
 
 class MonitorController(MethodView):
