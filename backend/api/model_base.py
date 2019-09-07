@@ -11,6 +11,7 @@ class AddressBase(db.Model):
     country = db.Column(db.String(100), nullable=True)
     state = db.Column(db.String(100), nullable=True)
     neighborhood = db.Column(db.String(100), nullable=True)
+    User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
 
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -42,7 +43,7 @@ class DevicesBase(db.Model):
 
     idDevices = db.Column(db.Integer, primary_key=True)
     idHardware = db.Column(db.String(255))
-    Sensor_idSensor = db.Column(db.Integer, db.ForeignKey('Sensor.idSensor'))
+    User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
 
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -61,10 +62,9 @@ class MonitorBase(db.Model):
     email = db.Column(db.String(45))
     telephone = db.Column(db.String(45))
 
-    def __init__(self, name, email, telephone):
-        self.name = name
-        self.email = email
-        self.telephone = telephone
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
     def __repr__(self):
         return "<Monitor%r>" % self.name
@@ -79,8 +79,6 @@ class RecoverPasswordBase(db.Model):
     codeConfirm = db.Column(db.String(120))
     expiration = db.Column(db.String(120))
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
-    User_Devices_idDevices = db.Column(db.Integer, db.ForeignKey('User.Devices_idDevices'))
-    User_UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('User.UserSettings.idUserSettings'))
 
     def __init__(self, **kwargs):
 
@@ -102,16 +100,9 @@ class ResultsMetricsBase(db.Model):
     date_results = db.Column(db.DateTime(), nullable=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
 
-    # def __init__(self, *args, **kwargs):
-    #     for (attr_name, value) in kwargs.items():
-    #         setattr(self, attr_name, value)
-
-    def __init__(self, oximetry, heart, temperature, date_results, User_idUser):
-        self.oximetry = oximetry
-        self.heart = heart
-        self.temperature = temperature
-        self.date_results = date_results
-        self.User_idUser = User_idUser
+    def __init__(self, **kwargs):
+        for (attr_name, value) in kwargs.items():
+            setattr(self, attr_name, value)
 
     def __repr__(self):
         return "<ResultsMetrics%r>" % self.idResultsMetrics
@@ -121,40 +112,18 @@ class ResultsMetricsHasAlertsBase(db.Model):
 
     __tablename__ = 'ResultsMetrics_has_Alerts'
 
-    idResultsMetricsAlerts = db.Column(db.Integer, primary_key=True)
-    ResultMetrics_idResultsMetrics = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.idResultsMetrics'))
-    ResultsMetrics_User_idUser = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.User_idUSer'))
-    ResultsMetrics_User_Devices_idDevices = db.Column(db.Integer,
-                                                      db.ForeignKey('ResultsMetrics.User_Devices_idDevices'))
-
-    ResultMetrics_User_UserSettings_idUserSettings = db.Column(
-        db.Integer, db.ForeignKey('ResultsMetrics.User_UserSettings_idUserSettings'))
-
+    IdResultsMetrics_has_Alerts = db.Column(db.Integer, db.ForeignKey(
+        'ResultsMetrics.idResultsMetrics'), primary_key=True)
+    ResultsMetrics_idResultsMetrics = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.idResultsMetrics'))
+    ResultsMetrics_User_idUser = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.User_idUser'))
     Alerts_idAlerts = db.Column(db.Integer, db.ForeignKey('User.idUser'))
-    sendAlert = db.Column(db.Integer, nullable=True)
-    dateTimeLastSend = db.Column(db.DateTime(), nullable=True)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 
     def __repr__(self):
         return "<ResultsMetricsHasAlerts%r>" % self.idResultsMetrics
-
-
-class SensorBase(db.Model):
-
-    __tablename__ = 'Sensor'
-
-    idSensor = db.Column(db.Integer, primary_key=True)
-    sensorType = db.Column(db.String(45))
-
-    def __init__(self, *args, **kwargs):
-        for (attr_name, value) in kwargs.items():
-            setattr(self, attr_name, value)
-
-    def __repr__(self):
-        return "<Sensor%r>" % self.idSensor
 
 
 class UserBase(db.Model):
@@ -167,14 +136,6 @@ class UserBase(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(10))
     cel = db.Column(db.String(15))
-    Devices_idDevices = db.Column(db.Integer, db.ForeignKey('Devices.idDevices'))
-    UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
-    Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
-
-
-# Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
-# UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
-# Address = db.relationship('Address', foreign_keys=Address_idAddress)
 
     def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -195,8 +156,9 @@ class UserSettingsBase(db.Model):
     acitveAlertOximetry = db.Column(db.Integer, nullable=False)
     activeAlertHeartRate = db.Column(db.Integer, nullable=False)
     activeAlertBTemperature = db.Column(db.Integer, nullable=False)
+    User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 
@@ -208,13 +170,11 @@ class UserHasMonitorBase(db.Model):
 
     __tablename__ = 'User_has_Monitor'
 
-    idUserMonitor = db.Column(db.Integer, primary_key=True)
+    IdUser_has_Monitor = db.Column(db.Integer, primary_key=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
-    User_Devices_idDevices = db.Column(db.Integer, db.ForeignKey('User.Devices_idDevices'))
     Monitor_idMonitor = db.Column(db.Integer, db.ForeignKey('Monitor.idMonitor'))
-    token = db.Column(db.String(45), nullable=False)
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 

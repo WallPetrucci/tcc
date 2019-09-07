@@ -15,11 +15,16 @@ class UserController(MethodView):
             pass
 
     def post(self):
-        data_client = request.get_json()
+        user_data = request.get_json()
 
-        if data_client:
-            user_model = UserModel(data_client)
+        if user_data:
+            user_model = UserModel(name=user_data.get('name'),
+                                   dateBirth=user_data.get('dateBirth'),
+                                   email=user_data.get('email'),
+                                   password=user_data.get('password'),
+                                   cel=user_data.get('cel'),
+                                   )
             user_model.insert_user()
-            return user_model
+            return user_model.insert_user()
 
-        return "Passa a porra do JSON!"
+        return {'sucesso': False}, 400
