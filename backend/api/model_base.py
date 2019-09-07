@@ -137,7 +137,7 @@ class UserBase(db.Model):
     password = db.Column(db.String(10))
     cel = db.Column(db.String(15))
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
 
