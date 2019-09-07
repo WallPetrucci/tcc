@@ -61,9 +61,10 @@ class MonitorBase(db.Model):
     email = db.Column(db.String(45))
     telephone = db.Column(db.String(45))
 
-    def __init__(self, **kwargs):
-        for (attr_name, value) in kwargs.items():
-            setattr(self, attr_name, value)
+    def __init__(self, name, email, telephone):
+        self.name = name
+        self.email = email
+        self.telephone = telephone
 
     def __repr__(self):
         return "<Monitor%r>" % self.name
@@ -100,12 +101,17 @@ class ResultsMetricsBase(db.Model):
     temperature = db.Column(db.String(45), nullable=True)
     date_results = db.Column(db.DateTime(), nullable=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
-    User_Devices_idDevices = db.Column(db.Integer, db.ForeignKey('User.Devices_idDevices'))
-    User_UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('User.UserSettings.idUserSettings'))
 
-    def __init__(self, *args, **kwargs):
-        for (attr_name, value) in kwargs.items():
-            setattr(self, attr_name, value)
+    # def __init__(self, *args, **kwargs):
+    #     for (attr_name, value) in kwargs.items():
+    #         setattr(self, attr_name, value)
+
+    def __init__(self, oximetry, heart, temperature, date_results, User_idUser):
+        self.oximetry = oximetry
+        self.heart = heart
+        self.temperature = temperature
+        self.date_results = date_results
+        self.User_idUser = User_idUser
 
     def __repr__(self):
         return "<ResultsMetrics%r>" % self.idResultsMetrics
@@ -115,6 +121,7 @@ class ResultsMetricsHasAlertsBase(db.Model):
 
     __tablename__ = 'ResultsMetrics_has_Alerts'
 
+    idResultsMetricsAlerts = db.Column(db.Integer, primary_key=True)
     ResultMetrics_idResultsMetrics = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.idResultsMetrics'))
     ResultsMetrics_User_idUser = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.User_idUSer'))
     ResultsMetrics_User_Devices_idDevices = db.Column(db.Integer,
@@ -164,6 +171,11 @@ class UserBase(db.Model):
     UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('UserSettings.idUserSettings'))
     Address_idAddress = db.Column(db.Integer, db.ForeignKey('Address.idAddress'))
 
+
+# Devices = db.relationship('Devices', foreign_keys=Devices_idDevices)
+# UserSettings = db.relationship('UserSettings', foreign_keys=UserSettings_idUserSettings)
+# Address = db.relationship('Address', foreign_keys=Address_idAddress)
+
     def __init__(self, *args, **kwargs):
         for (attr_name, value) in kwargs.items():
             setattr(self, attr_name, value)
@@ -196,6 +208,7 @@ class UserHasMonitorBase(db.Model):
 
     __tablename__ = 'User_has_Monitor'
 
+    idUserMonitor = db.Column(db.Integer, primary_key=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
     User_Devices_idDevices = db.Column(db.Integer, db.ForeignKey('User.Devices_idDevices'))
     Monitor_idMonitor = db.Column(db.Integer, db.ForeignKey('Monitor.idMonitor'))

@@ -4,7 +4,7 @@ from backend import db
 
 class MonitorModel(MonitorBase):
 
-    def __init__(self):
+    def __init__(self, name, email, telephone):
         self.base = MonitorBase()
 
     def insert_monitor(self):
