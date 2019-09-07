@@ -101,18 +101,17 @@ class ResultsMetricsBase(db.Model):
     temperature = db.Column(db.String(45), nullable=True)
     date_results = db.Column(db.DateTime(), nullable=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
-    User_Devices_idDevices = db.Column(db.Integer, db.ForeignKey('User.Devices_idDevices'))
-    User_UserSettings_idUserSettings = db.Column(db.Integer, db.ForeignKey('User.UserSettings.idUserSettings'))
 
     # def __init__(self, *args, **kwargs):
     #     for (attr_name, value) in kwargs.items():
     #         setattr(self, attr_name, value)
 
-    def __init__(self, oximetry, heart, temperature, date_results):
+    def __init__(self, oximetry, heart, temperature, date_results, User_idUser):
         self.oximetry = oximetry
         self.heart = heart
         self.temperature = temperature
         self.date_results = date_results
+        self.User_idUser = User_idUser
 
     def __repr__(self):
         return "<ResultsMetrics%r>" % self.idResultsMetrics

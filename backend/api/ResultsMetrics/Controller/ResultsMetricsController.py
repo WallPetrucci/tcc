@@ -17,7 +17,8 @@ class ResultsMetricsController(MethodView):
             model_results = ResultsMetricsModel(oximetry=results_metrics.get('ox'),
                                                 heart=results_metrics.get('fc'),
                                                 temperature=results_metrics.get('temp'),
-                                                date_results=results_metrics.get('date')
+                                                date_results=results_metrics.get('date'),
+                                                User_idUser=results_metrics.get('User_idUser')
                                                 )
 
             model_results.insert_results_metrics()
