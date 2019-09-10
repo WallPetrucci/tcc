@@ -32,6 +32,12 @@ class MonitorController(MethodView):
 
     def post(self):
         data_monitor = request.get_json()
-        if data_monitor:
-            monitor_model = MonitorModel(data_monitor.get('name'), data_monitor.get('email'), data_monitor.get('telephone'))
-            monitor_model.insert_monitor()
+
+        try:
+            if data_monitor:
+                monitor_model = MonitorModel(name=data_monitor.get('name'), email=data_monitor.get('email'),
+                                             telephone=data_monitor.get('telephone'))
+
+                return monitor_model.insert_monitor()
+        except Exception as e:
+            return {'msg': e}, 400
