@@ -1,6 +1,7 @@
 from backend import app, api
 
 # Controllers Imports
+from backend.api.Address.Controller.AddressController import AddressController
 from backend.api.User.Controller.UserController import UserController
 from backend.api.Alerts.Controller.AlertsController import AlertsController
 from backend.api.Devices.Controller.DevicesController import DevicesController
@@ -13,6 +14,7 @@ from backend.api.HealthCheck import HealthCheck
 # Locals Imports
 import backend.constants as const
 
+api.add_resource(AddressController, '/api/address/')
 api.add_resource(AlertsController, '/api/alerts/')
 api.add_resource(DevicesController, '/api/devices/')
 api.add_resource(MonitorController, '/api/monitor/')
