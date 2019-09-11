@@ -153,9 +153,9 @@ class UserSettingsBase(db.Model):
     heartRate = db.Column(db.JSON, nullable=False)
     oximetry = db.Column(db.JSON, nullable=False)
     temperature = db.Column(db.JSON, nullable=False)
-    acitveAlertOximetry = db.Column(db.Integer, nullable=False)
+    activeAlertOximetry = db.Column(db.Integer, nullable=False)
     activeAlertHeartRate = db.Column(db.Integer, nullable=False)
-    activeAlertBTemperature = db.Column(db.Integer, nullable=False)
+    activeAlertTemperature = db.Column(db.Integer, nullable=False)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
 
     def __init__(self, **kwargs):

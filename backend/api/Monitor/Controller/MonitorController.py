@@ -1,43 +1,66 @@
 from flask.views import MethodView
 from flask import request
 from backend.api.Monitor.Model.MonitorModel import MonitorModel
+from backend.api.Monitor.Schema import schemas
+from voluptuous import MultipleInvalid, Invalid
 
 
 class MonitorController(MethodView):
     def get(self):
-        json_monitors = []
         args_dict = request.args
 
         try:
             if not bool(args_dict):
-                monitor_model = MonitorModel.query.all()
-                for monitor in monitor_model:
-                    json_monitors.append({
-                        'name': monitor.name,
-                        'email': monitor.email,
-                        'telephone': monitor.telephone
-                    })
-
+                monitors = MonitorModel.query.all()
+                json_monitors = list(map(lambda monitor: {'name': monitor.name, 'email': monitor.email,
+                                                          'telephone': monitor.telephone}, monitors))
                 return json_monitors
             else:
-                monitor_model = MonitorModel.query.get(args_dict.get('id'))
+                model = MonitorModel.query.get(args_dict.get('id'))
 
-            return {
-                'name': monitor_model.name,
-                'email': monitor_model.email,
-                'telephone': monitor_model.telephone
-            }
+            return {'name': model.name, 'email': model.email, 'telephone': model.telephone}
         except Exception as e:
-            return {e}
+            return {'sucesso': False, 'msg': str(e)}, 400
 
     def post(self):
-        data_monitor = request.get_json()
 
         try:
-            if data_monitor:
-                monitor_model = MonitorModel(name=data_monitor.get('name'), email=data_monitor.get('email'),
-                                             telephone=data_monitor.get('telephone'))
+            monitor_data = request.get_json()
+            schemas.schema_insert_monitor(monitor_data)
 
-                return monitor_model.insert_monitor()
+            monitor_model = MonitorModel(name=monitor_data.get('name'),
+                                         email=monitor_data.get('email'),
+                                         telephone=monitor_data.get('telephone'))
+
+            return monitor_model.insert_monitor(monitor_data.get('id_user'))
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
         except Exception as e:
-            return {'msg': e}, 400
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+    def put(self, id_monitor):
+
+        try:
+            monitor_data = request.get_json()
+            schemas.schema_update_monitor(monitor_data)
+
+            return MonitorModel.update_monitor(id_monitor, monitor_data)
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+    def delete(self, id_monitor):
+
+        try:
+            return MonitorModel.delete_monitor(id_monitor)
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400

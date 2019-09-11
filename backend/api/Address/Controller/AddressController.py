@@ -2,7 +2,7 @@ from flask.views import MethodView
 from flask import request
 
 from backend.api.Address.Model.AddressModel import AddressModel
-from backend.api.Address.Schema.schemas import schema_insert_address, schema_update_address
+from backend.api.Address.Schema import schemas
 from voluptuous import MultipleInvalid, Invalid
 
 
@@ -28,7 +28,7 @@ class AddressController(MethodView):
         try:
             address_data = request.get_json()
 
-            schema_insert_address(address_data)
+            schemas.schema_insert_address(address_data)
 
             address_model = AddressModel(street=address_data.get('street'),
                                          number=address_data.get('number'),
@@ -54,7 +54,7 @@ class AddressController(MethodView):
         try:
             address_data = request.get_json()
 
-            schema_update_address(address_data)
+            schemas.schema_update_address(address_data)
 
             return AddressModel.update_address(id_Address, address_data)
         except MultipleInvalid as e:
