@@ -12,3 +12,16 @@ class AddressModel(AddressBase):
         db.session.commit()
 
         return {'id_Address': self.idAddress}
+
+    @staticmethod
+    def update_address(id_Address, address_data):
+        AddressModel.query.filter_by(idAddress=id_Address).update(address_data)
+        db.session.commit()
+
+        return {'id_Address': id_Address, 'msg': 'Endereço atualizado com sucesso'}
+
+    @staticmethod
+    def delete_address(id_Address):
+        db.session.delete(AddressModel.query.filter_by(idAddress=id_Address).first())
+        db.session.commit()
+        return {'msg': 'Endereço excluído com sucesso'}

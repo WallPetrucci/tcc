@@ -14,7 +14,8 @@ from backend.api.HealthCheck import HealthCheck
 # Locals Imports
 import backend.constants as const
 
-api.add_resource(AddressController, '/api/address/')
+api.add_resource(AddressController, '/api/address/', '/api/address/<int:id_user>',
+                 '/api/address/update/<int:id_Address>', '/api/address/delete/<int:id_Address>')
 api.add_resource(AlertsController, '/api/alerts/')
 api.add_resource(DevicesController, '/api/devices/')
 api.add_resource(MonitorController, '/api/monitor/')

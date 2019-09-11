@@ -2,26 +2,23 @@ from flask.views import MethodView
 from flask import request
 
 from backend.api.Address.Model.AddressModel import AddressModel
-from backend.api.Address.Schema.schemas import schema_insert_address
+from backend.api.Address.Schema.schemas import schema_insert_address, schema_update_address
 from voluptuous import MultipleInvalid, Invalid
 
 
 class AddressController(MethodView):
 
-    def get(self, id_User):
-        pass
+    def get(self, id_user):
         try:
-            settings = AddressModel.query.filter_by(User_idUser=id_User).first()
-
-            return {
-                'id_Settings': settings.idAddress,
-                'heartRate': settings.heartRate,
-                'oximetry': settings.oximetry,
-                'temperature': settings.temperature,
-                'acitveAlertOximetry': settings.acitveAlertOximetry,
-                'activeAlertHeartRate': settings.activeAlertHeartRate,
-                'activeAlertBTemperature': settings.activeAlertBTemperature,
-                'User_idUser': settings.User_idUser
+            address = AddressModel.query.filter_by(User_idUser=id_user).first()
+            return{
+                "street": address.street,
+                "number": address.number,
+                "city": address.city,
+                "country": address.country,
+                "state": address.state,
+                "neighborhood": address.neighborhood,
+                "User_idUser": address.User_idUser
             }
         except Exception as e:
             return {'msg': e}
@@ -43,6 +40,36 @@ class AddressController(MethodView):
                                          )
 
             return address_model.insert_address()
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+    def put(self, id_Address):
+
+        try:
+            address_data = request.get_json()
+
+            schema_update_address(address_data)
+
+            return AddressModel.update_address(id_Address, address_data)
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+    def delete(self, id_Address):
+
+        try:
+            return AddressModel.delete_address(id_Address)
         except MultipleInvalid as e:
             return {'sucesso': False, 'msg': str(e)}, 400
 
