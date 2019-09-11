@@ -14,7 +14,7 @@ import HighchartsVue from 'highcharts-vue'
 
 // Helpers
 import colors from 'vuetify/es5/util/colors'
-const SocketInstance = io.connect('http://34.232.109.146:5000');
+const SocketInstance = io.connect('http://localhost:5050');
 
 Vue.use(new VueSocketio({
 	debug: false, 

@@ -44,11 +44,14 @@
     created() {      
       var socket = this.$socket
     },
+    mounted() {
+    },
     sockets:{
       connect(){
         this.status_conn = true
       },
       response_front(data) {
+        this.status_conn = true
         if(data.length > 0){
           console.log(data)
          this.data_client = data

@@ -4,9 +4,10 @@ from backend import db
 
 class ResultsMetricsModel(ResultsMetricsBase):
 
-    def __init__(self, oximetry, heart, temperature, date_results, User_idUser):
-        self.base = ResultsMetricsBase(oximetry, heart, temperature, date_results, User_idUser)
+    def __init__(self, **kwargs):
+        super(ResultsMetricsModel, self).__init__(**kwargs)
 
-    def insert_results_metrics(self):
-        db.session.add(self.base)
-        db.session.commit()
+    def insert_results_metrics(self, list_objects):
+        # db.session.
+        # db.session.commit()
+        db.engine.execute(self.__table__.insert(), list_objects)
