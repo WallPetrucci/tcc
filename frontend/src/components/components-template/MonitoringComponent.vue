@@ -6,15 +6,15 @@
 		<v-layout row class="bottom-monitoring">
 			<v-layout row wrap >
 				<CardComponent title="Frequência Cardiaca" icon="fas fa-heartbeat" colorIcons="red">
-					<ListenSocket type="89" measure="bpm" >
+					<ListenSocket type="heart" measure="bpm" >
 					</ListenSocket>	
 				</CardComponent>
 				<CardComponent title="Temperatura" icon="fas fa-thermometer-quarter" colorIcons="orange">
-					<ListenSocket type="temp" measure="C">
+					<ListenSocket type="temperature" measure="C">
 					</ListenSocket>	
 				</CardComponent>
 				<CardComponent title="Oximetria" icon="fas fa-tint" colorIcons="blue">
-					<ListenSocket type="100" measure="%">
+					<ListenSocket type="oximetry" measure="%">
 					</ListenSocket>	
 				</CardComponent>
 			</v-layout>

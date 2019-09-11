@@ -7,7 +7,6 @@ from backend.api.Devices.Controller.DevicesController import DevicesController
 from backend.api.Monitor.Controller.MonitorController import MonitorController
 from backend.api.RecoverPassword.Controller.RecoverPasswordController import RecoverPasswordController
 from backend.api.ResultsMetrics.Controller.ResultsMetricsController import ResultsMetricsController
-from backend.api.Sensor.Controller.SensorController import SensorController
 from backend.api.UserSettings.Controller.UserSettingsController import UserSettingsController
 from backend.api.HealthCheck import HealthCheck
 
@@ -19,10 +18,9 @@ api.add_resource(DevicesController, '/api/devices/')
 api.add_resource(MonitorController, '/api/monitor/')
 api.add_resource(RecoverPasswordController, '/api/recoverpassword/')
 api.add_resource(ResultsMetricsController, '/api/resultsmetrics/')
-api.add_resource(SensorController, '/api/sensor/')
 api.add_resource(HealthCheck, '/api/')
 api.add_resource(UserController, '/api/user/', '/api/user/<int:id_cliente>')
-api.add_resource(UserSettingsController, '/api/usersettings/')
+api.add_resource(UserSettingsController, '/api/usersettings/', '/api/usersettings/<int:id_User>')
 
 if __name__ == '__main__':
     app.run(debug=False,
