@@ -17,14 +17,14 @@ def connect(sid, environ):
 
 @sio.on('message_db', namespace="/whm")
 def message_db(sid, data):
-    print("DB DATA")
+    print("DB DATA DB")
     print(data)
     post('http://localhost:5000' + '/api/resultsmetrics/', json=data)
 
 
 @sio.on('message', namespace="/whm")
 def message(sid, data):
-    print("DB DATA")
+    print("DB DATA ONLINE")
     print(data)
     sio.emit('response_front', data)
 

@@ -7,20 +7,22 @@ from uuid import getnode as get_mac
 import constants as const
 import random
 import sqlite3
+import json
 
 
 # Objects and Variables for using in Main
-
 sio = Client()
+
 # sensor_temperatura = MLX90614()
 status_message = False
 conn_status = False
 mac = get_mac()
 conn_local = sqlite3.connect(const.DB_LOCAL)
+c = conn_local.cursor()
 
 # Create table
 conn_local.execute('''CREATE TABLE IF NOT EXISTS `whm_local`
-             (date text, trans text, symbol text, qty real, price real)''')
+             (data_whm text)''')
 
 
 # Callbacks SocketIO
@@ -43,25 +45,22 @@ def on_disconnect():
 # Functions call socket.IO
 
 def connect_socket(host=const.HOST_LOCAL, port=const.PORT_LOCAL):
-    sio.connect('http://{}:{}'.format(host, port))
+    try:
+        sio.connect('http://{}:{}'.format(host, port))
+    except WHMConnectionError:
+        pass
 
 
 def send_message(sensor_data):
     try:
-        data_client = []
-        data_client.append(sensor_data)
-        sio.emit('message', data_client, namespace="/whm")
-        data_client.clear()
+        sio.emit('message', sensor_data, namespace="/whm")
     except WHMConnectionError as e:
         print("Disconnect Error: ", e)
 
 
 def send_message_db(sensor_data):
     try:
-        data_client = []
-        data_client.append(sensor_data)
-        sio.emit('message_db', data_client, namespace="/whm")
-        data_client.clear()
+        sio.emit('message_db', sensor_data, namespace="/whm")
     except WHMConnectionError as e:
         print("Disconnect Error: ", e)
 
@@ -78,20 +77,33 @@ if __name__ == '__main__':
 
         if status_message is True:
 
-            sio.start_background_task(send_message({'User_idUser': 1,
-                                                    'heart': random.randrange(60, 120),
-                                                    'oximetry': random.randrange(96, 100),
-                                                    'temperature': random.randrange(35, 40),
-                                                    'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}))
-            sio.start_background_task(send_message_db({'User_idUser': 1,
-                                                       'heart': random.randrange(60, 120),
-                                                       'oximetry': random.randrange(96, 100),
-                                                       'temperature': random.randrange(35, 40),
-                                                       'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}))
+            c.execute('SELECT * FROM whm_local')
+            data_db_local = c.fetchall()
+
+            if len(data_db_local):
+                print("Send Database Local for Server")
+                sio.start_background_task(send_message_db(data_db_local))
+                c.execute("DELETE FROM whm_local")
+
+            else:
+                print("Send Data Online DB and Real Time")
+                sio.start_background_task(send_message([{'User_idUser': 1,
+                                                         'heart': random.randrange(60, 120),
+                                                         'oximetry': random.randrange(96, 100),
+                                                         'temperature': random.randrange(35, 40),
+                                                         'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
+                sio.start_background_task(send_message_db([{'User_idUser': 1,
+                                                            'heart': random.randrange(60, 120),
+                                                            'oximetry': random.randrange(96, 100),
+                                                            'temperature': random.randrange(35, 40),
+                                                            'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
         else:
 
-            print("Save in Database Local: ", {'whm_id': mac,
-                                               'fc': random.randrange(60, 120),
-                                               'ox': random.randrange(96, 100),
-                                               'temp': random.randrange(35, 40),
-                                               'date': current_date.strftime('%Y-%m-%d %H:%M')})
+            print("Save in Database Local")
+
+            conn_local.execute(''' INSERT INTO whm_local VALUES(?)''', (json.dumps({'whm_id': mac,
+                                                                                    'fc': random.randrange(60, 120),
+                                                                                    'ox': random.randrange(96, 100),
+                                                                                    'temp': random.randrange(35, 40),
+                                                                                    'date': current_date.strftime('%Y-%m-%d %H:%M')}),))
+            conn_local.commit()
