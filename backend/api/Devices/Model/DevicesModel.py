@@ -12,3 +12,7 @@ class DevicesModel(DevicesBase):
         db.session.commit()
 
         return {'id_device': self.idDevices}
+
+    def get_device(self, whm_id):
+        device = self.query.filter_by(idHardware=whm_id).first()
+        return device

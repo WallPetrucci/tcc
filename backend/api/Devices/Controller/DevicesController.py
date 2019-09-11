@@ -6,7 +6,7 @@ from backend.api.Devices.Model.DevicesModel import DevicesModel
 class DevicesController(MethodView):
 
     def get(self):
-        return {'status': 'live'}
+        return 
 
     def post(self):
         device_data = request.get_json()
