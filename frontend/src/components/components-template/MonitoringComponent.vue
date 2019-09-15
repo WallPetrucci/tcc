@@ -10,7 +10,7 @@
 					</ListenSocket>	
 				</CardComponent>
 				<CardComponent title="Temperatura" icon="fas fa-thermometer-quarter" colorIcons="orange">
-					<ListenSocket type="temperature" measure="C">
+					<ListenSocket type="temperature" measure="ºC">
 					</ListenSocket>	
 				</CardComponent>
 				<CardComponent title="Oximetria" icon="fas fa-tint" colorIcons="blue">

@@ -1,11 +1,11 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
-# from temp import MLX90614
+from temp import MLX90614
+from max30100 import MAX30100
 from socketio import Client
 from time import sleep
 from datetime import datetime
 from uuid import getnode as get_mac
 import constants as const
-import random
 import sqlite3
 import json
 
@@ -13,9 +13,14 @@ import json
 # Objects and Variables for using in Main
 sio = Client()
 
-# sensor_temperatura = MLX90614()
+sensor_temperatura = MLX90614()
+sensor_fc_ox = MAX30100()
+
+
 status_message = False
 conn_status = False
+
+
 mac = get_mac()
 conn_local = sqlite3.connect(const.DB_LOCAL)
 c = conn_local.cursor()
@@ -64,13 +69,16 @@ def send_message_db(sensor_data):
     except WHMConnectionError as e:
         print("Disconnect Error: ", e)
 
+
 # WHM - Application
-
-
 if __name__ == '__main__':
     while True:
         sleep(2)
         current_date = datetime.now()
+
+        # Controll Buffer Sensor
+        for i in range(1, 1000):
+            sensor_fc_ox.read_sensor()
 
         if conn_status is not True:
             connect_socket(const.HOST_LOCAL, const.PORT_LOCAL)
@@ -87,23 +95,23 @@ if __name__ == '__main__':
 
             else:
                 print("Send Data Online DB and Real Time")
-                sio.start_background_task(send_message([{'User_idUser': 1,
-                                                         'heart': random.randrange(60, 120),
-                                                         'oximetry': random.randrange(96, 100),
-                                                         'temperature': random.randrange(35, 40),
+                sio.start_background_task(send_message([{'whm_id': mac,
+                                                         'heart': str(sensor_fc_ox.red())[:3],
+                                                         'oximetry': str(sensor_fc_ox.ir())[:3],
+                                                         'temperature': sensor_temperatura.get_obj_temp(),
                                                          'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
-                sio.start_background_task(send_message_db([{'User_idUser': 1,
-                                                            'heart': random.randrange(60, 120),
-                                                            'oximetry': random.randrange(96, 100),
-                                                            'temperature': random.randrange(35, 40),
+
+                sio.start_background_task(send_message_db([{'whm_id': mac,
+                                                            'heart': str(sensor_fc_ox.red())[:3],
+                                                            'oximetry': str(sensor_fc_ox.ir())[:3],
+                                                            'temperature': sensor_temperatura.get_obj_temp(),
                                                             'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
         else:
 
             print("Save in Database Local")
 
             conn_local.execute(''' INSERT INTO whm_local VALUES(?)''', (json.dumps({'whm_id': mac,
-                                                                                    'fc': random.randrange(60, 120),
-                                                                                    'ox': random.randrange(96, 100),
-                                                                                    'temp': random.randrange(35, 40),
-                                                                                    'date': current_date.strftime('%Y-%m-%d %H:%M')}),))
+                                                                                    'heart': str(sensor_fc_ox.red())[:3],
+                                                                                    'temperature': sensor_temperatura.get_obj_temp(),
+                                                                                    'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}),))
             conn_local.commit()
