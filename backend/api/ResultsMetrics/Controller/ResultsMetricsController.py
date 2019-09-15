@@ -22,6 +22,6 @@ class ResultsMetricsController(MethodView):
         results_metrics = request.get_json()
         results_model = ResultsMetricsModel()
 
-        print(results_metrics)
+        return results_metrics
 
         results_model.insert_results_metrics(results_metrics)
