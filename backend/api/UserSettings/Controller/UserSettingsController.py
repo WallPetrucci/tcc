@@ -2,6 +2,8 @@ from flask.views import MethodView
 from flask import request
 
 from backend.api.UserSettings.Model.UserSettingsModel import UserSettingsModel
+from voluptuous import MultipleInvalid, Invalid
+from backend.api.UserSettings.Schema import schemas
 
 
 class UserSettingsController(MethodView):
@@ -15,28 +17,54 @@ class UserSettingsController(MethodView):
                 'heartRate': settings.heartRate,
                 'oximetry': settings.oximetry,
                 'temperature': settings.temperature,
-                'acitveAlertOximetry': settings.acitveAlertOximetry,
+                'activeAlertOximetry': settings.activeAlertOximetry,
                 'activeAlertHeartRate': settings.activeAlertHeartRate,
-                'activeAlertBTemperature': settings.activeAlertBTemperature,
+                'activeAlertTemperature': settings.activeAlertTemperature,
                 'User_idUser': settings.User_idUser
             }
         except Exception as e:
             return {'msg': e}
 
     def post(self):
-        user_settings_data = request.get_json()
+        try:
+            user_settings_data = request.get_json()
 
-        if user_settings_data:
-            user_settings_model = UserSettingsModel(heartRate=user_settings_data.get('heartRate'),
-                                                    oximetry=user_settings_data.get('oximetry'),
-                                                    temperature=user_settings_data.get('temperature'),
-                                                    acitveAlertOximetry=user_settings_data.get('acitveAlertOximetry'),
-                                                    activeAlertHeartRate=user_settings_data.get('activeAlertHeartRate'),
-                                                    activeAlertBTemperature=user_settings_data.get(
-                                                        'activeAlertBTemperature'),
-                                                    User_idUser=user_settings_data.get('User_idUser'),
-                                                    )
+            schemas.schema_insert_settings(user_settings_data)
+
+            user_settings_model = UserSettingsModel(
+                heartRate=user_settings_data.get('heartRate'),
+                oximetry=user_settings_data.get('oximetry'),
+                temperature=user_settings_data.get('temperature'),
+                activeAlertOximetry=user_settings_data.get('activeAlertOximetry'),
+                activeAlertHeartRate=user_settings_data.get('activeAlertHeartRate'),
+                activeAlertTemperature=user_settings_data.get('activeAlertTemperature'),
+                User_idUser=user_settings_data.get('User_idUser'),
+            )
 
             return user_settings_model.insert_settings()
 
-        return {'sucesso': False}, 400
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+    def put(self, id_Settings):
+        try:
+            user_settings_data = request.get_json()
+
+            schemas.schema_update_settings(user_settings_data)
+
+            return UserSettingsModel.update_settings(id_Settings, user_settings_data)
+
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
