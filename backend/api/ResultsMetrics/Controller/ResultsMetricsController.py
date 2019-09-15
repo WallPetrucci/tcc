@@ -8,8 +8,15 @@ from backend.api.ResultsMetrics.Model.ResultsMetricsModel import ResultsMetricsM
 
 class ResultsMetricsController(MethodView):
 
-    def get(self):
-        return {'status': 'live'}
+    def get(self, id_user):
+
+        try:
+
+            results_metrics = ResultsMetricsModel.get_result_metrics(id_user)
+
+            return results_metrics
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
 
     def post(self):
         results_metrics = request.get_json()
