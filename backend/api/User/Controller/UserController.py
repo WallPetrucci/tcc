@@ -2,6 +2,8 @@ from flask.views import MethodView
 from flask import request
 
 from backend.api.User.Model.UserModel import UserModel
+from voluptuous import MultipleInvalid, Invalid
+from backend.api.User.Schema import schemas
 
 
 class UserController(MethodView):
@@ -15,16 +17,20 @@ class UserController(MethodView):
             pass
 
     def post(self):
-        user_data = request.get_json()
+        try:
+            user_data = request.get_json()
+            schemas.schema_insert_user(user_data)
+            user_model = UserModel(name=user_data.get('nomeRegistro'), dateBirth=user_data.get('niverRegistro'),
+                                   email=user_data.get('emailRegistro'), password=user_data.get('senhaRegistro'),
+                                   cel=user_data.get('celRegistro'))
 
-        if user_data:
-            user_model = UserModel(name=user_data.get('nomeRegistro'),
-                                   dateBirth=user_data.get('niverRegistro'),
-                                   email=user_data.get('emailRegistro'),
-                                   password=user_data.get('senhaRegistro'),
-                                   cel=user_data.get('celRegistro'),
-                                   )
-            user_model.insert_user()
             return user_model.insert_user()
 
-        return {'sucesso': False}, 400
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
