@@ -36,6 +36,7 @@
 						<v-text-field
 						label="Email"
 						value=""
+						v-model="dataRegister.emailRegistro"
 						></v-text-field>
 					</v-card-text>
 				</v-window-item>
@@ -45,10 +46,12 @@
 						<v-text-field
 						label="Senha"
 						type="password"
+						v-model="dataRegister.senhaRegistro"
 						></v-text-field>
 						<v-text-field
 						label="Confirmar Senha"
 						type="password"
+						v-model="dataRegister.senhaConfirmaRegistro"
 						></v-text-field>
 						<span class="caption grey--text text--darken-1">
 							Entre com sua senha
@@ -61,6 +64,7 @@
 						<v-text-field
 						label="Nome Completo"
 						required
+						v-model="dataRegister.nomeRegistro"
 						></v-text-field>
 						<v-menu
 						ref="menu"
@@ -76,7 +80,7 @@
 						>
 						<template v-slot:activator="{ on }">
 							<v-text-field
-							v-model="date"
+							v-model="dataRegister.niverRegistro"
 							label="Data de Nascimento"
 							readonly
 							v-on="on"
@@ -84,21 +88,17 @@
 						</template>
 						<v-date-picker
 						ref="picker"
-						v-model="date"
+						v-model="dataRegister.niverRegistro"
 						:max="new Date().toISOString().substr(0, 10)"
 						min="1950-01-01"
 						@change="displaySaveDate"
 						></v-date-picker>
 					</v-menu>
 					<v-text-field
-					label="Telefone"
-					placeholder="(99) 9999-9999"
-					mask="(##) ####-####"
-					></v-text-field>
-					<v-text-field
 					label="Celular"
 					placeholder="(99) 99999-9999"
 					mask="(##) ####-#####"
+					v-model="dataRegister.celRegistro"
 					></v-text-field>
 					<span class="caption grey--text text--darken-1">
 						Insira seus Dados Pessoais
@@ -113,7 +113,7 @@
 					<span class="caption grey--text">Cadastro efetuado com sucesso</span>
 				</div>
 			</v-window-item>
- 
+
 			<v-window-item :value="6">
 				<div class="pa-3 text-xs-center">
 					<v-card-text>
@@ -139,55 +139,81 @@
 			Voltar
 		</v-btn>
 		<v-btn
-			v-if="step === 6"
-			flat
-			@click="step = 1"
-			>
-			Voltar
-		</v-btn>
-		<v-spacer></v-spacer>
-		<v-btn
-		
-		color="primary"
-		depressed
-		@click="step++"
-		v-if="step < 4"
+		v-if="step === 6"
+		flat
+		@click="step = 1"
 		>
-		Avançar
+		Voltar
 	</v-btn>
-	<v-btn		
+	<v-spacer></v-spacer>
+	<v-btn
+
 	color="primary"
-	@click="displayRegisterUser()"
-	v-if="step == 4"
+	depressed
+	@click="step++"
+	v-if="step < 4"
 	>
-	Cadastrar
+	Avançar
+</v-btn>
+<v-btn
+
+color="primary"
+depressed
+@click="step = 1"
+v-if="step == 5"
+>
+Entrar no painel
 </v-btn>
 <v-btn		
-	color="primary"
-	@click="enviarEsqueceuSenha()"
-	v-if="step == 6"
-	>
-	Enviar
+color="primary"
+@click="displayRegisterUser()"
+v-if="step == 4"
+>
+Cadastrar
+</v-btn>
+<v-btn		
+color="primary"
+@click="enviarEsqueceuSenha()"
+v-if="step == 6"
+>
+Enviar
 </v-btn>
 </v-card-actions>
 </template>
+<v-alert
+:value="error_message"
+color="error"
+icon="warning"
+outline
+>
+{{error_message}}
+</v-alert>
 <v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
 </v-card>	
 </template>
 <script type="text/javascript">
-	import {APP_ROUTERS} from '../constants.js';
-
-	export default {
-		name: "LoginComponent",
-		data() { 
-			return {
+import {APP_ROUTERS} from '../constants.js';
+import axios from 'axios';
+export default {
+	name: "LoginComponent",
+	data() { 
+		return {
 			step: 1,
 			displayRegister: false,
 			date: null,
 			menu: false,
 			emailLogin: '',
 			senhaLogin: '',
-			progressLinear: false
+			dataRegister: {
+				nomeRegistro: '',
+				emailRegistro: '',
+				senhaRegistro: '',
+				niverRegistro: '',
+				celRegistro: ''
+			},		
+			progressLinear: false,
+			error_message: ''
+
 		}},
 		mounted(){
 			this.displayRegister = false
@@ -197,7 +223,7 @@
 			if (this.$session.exists()) {
 				this.$router.push('/painel')
 			}else{
-      			this.$session.destroy()
+				this.$session.destroy()
 			}
 		},
 		computed: {
@@ -207,6 +233,7 @@
 					case 2: return 'Registrar'
 					case 3: return 'Registrar'
 					case 4: return 'Registrar'
+					case 5: return 'Cadastro Concluido!'
 					case 6: return 'Recuperar a senha'
 					default: return 'Registrado com Sucesso'
 				}
@@ -225,9 +252,46 @@
 			displayAbrirEsqueciSenha(){
 				this.step = 6
 			},
-			displayRegisterUser() {
-				this.step = 4
+			displayRegisterUser() {								
 				this.progressLinear = true
+				if(this.dataRegister.senhaRegistro != this.dataRegister.senhaConfirmaRegistro){
+					this.error_message = "Senha e Confirmar Senha não sao iguais"
+					this.progressLinear = false
+					return true
+				}
+				if(this.dataRegister.senhaRegistro == ""){
+					this.error_message = "Senha em branco"
+					this.progressLinear = false
+					return true
+				}
+				if(this.dataRegister.senhaConfirmaRegistro == ""){
+					this.error_message = "Confirmar Senha em branco"
+					this.progressLinear = false
+					return true
+				}
+				if(this.dataRegister.emailRegistro == ""){
+					this.error_message = "Email em Branco"
+					this.progressLinear = false
+					return true
+				}
+				axios.post("http://localhost:5000/api/user/", this.dataRegister)
+				.then((response) => {
+					if(response.data.sucesso == false || response.data.sucesso){
+						this.progressLinear = false
+						this.error_message = "Ocorreu algum problema tente novamente."
+						this.step = 1						
+					}else{
+						this.dataRegister = {
+							nomeRegistro: '',
+							emailRegistro: '',
+							senhaRegistro: '',
+							niverRegistro: '',
+							celRegistro: ''
+						}
+						this.progressLinear = false
+						this.step = 5
+					}
+				})
 			},
 			displaySaveDate (date) {
 				var split = date.split("-")
@@ -237,18 +301,11 @@
 				this.$refs.menu.save(datereverse)
 			},
 			doLogin() {
-				const jsonUser = {
-					'email': 'wallacepetrucci@gmail.com',
-					'senha': '123456'
-				}
-				if(jsonUser.senha == this.senhaLogin && jsonUser.email == this.emailLogin){
-					this.$session.start()
-					this.$router.push(APP_ROUTERS.panel)
-				}
+				
 			}
 		}
-		
+
 	}
-	
-	
-</script>
+
+
+	</script>

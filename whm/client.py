@@ -1,6 +1,6 @@
 from socketio.exceptions import ConnectionError as WHMConnectionError
 from temp import MLX90614
-from max30100 import MAX30100
+from max30100 import MAX30100, MODE_SPO2
 from socketio import Client
 from time import sleep
 from datetime import datetime
@@ -15,6 +15,7 @@ sio = Client()
 
 sensor_temperatura = MLX90614()
 sensor_fc_ox = MAX30100()
+sensor_fc_ox
 
 
 status_message = False
@@ -96,14 +97,14 @@ if __name__ == '__main__':
             else:
                 print("Send Data Online DB and Real Time")
                 sio.start_background_task(send_message([{'whm_id': mac,
-                                                         'heart': str(sensor_fc_ox.red)[:3],
-                                                         'oximetry': str(sensor_fc_ox.ir)[:3],
+                                                         'heart': sensor_fc_ox.red,
+                                                         'oximetry': sensor_fc_ox.ir,
                                                          'temperature': sensor_temperatura.get_obj_temp(),
                                                          'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
 
                 sio.start_background_task(send_message_db([{'whm_id': mac,
-                                                            'heart': str(sensor_fc_ox.red)[:3],
-                                                            'oximetry': str(sensor_fc_ox.ir)[:3],
+                                                            'heart': sensor_fc_ox.red,
+                                                            'oximetry': sensor_fc_ox.ir,
                                                             'temperature': sensor_temperatura.get_obj_temp(),
                                                             'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
         else:
@@ -111,8 +112,8 @@ if __name__ == '__main__':
             print("Save in Database Local")
 
             conn_local.execute(''' INSERT INTO whm_local VALUES(?)''', (json.dumps({'whm_id': mac,
-                                                                                    'heart': str(sensor_fc_ox.red)[:3],
-                                                                                    'oximetry': str(sensor_fc_ox.ir)[:3],
+                                                                                    'heart': sensor_fc_ox.red,
+                                                                                    'oximetry': sensor_fc_ox.ir,
                                                                                     'temperature': sensor_temperatura.get_obj_temp(),
                                                                                     'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}),))
             conn_local.commit()
