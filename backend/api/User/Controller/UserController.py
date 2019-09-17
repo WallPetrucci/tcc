@@ -18,11 +18,11 @@ class UserController(MethodView):
         user_data = request.get_json()
 
         if user_data:
-            user_model = UserModel(name=user_data.get('name'),
-                                   dateBirth=user_data.get('dateBirth'),
-                                   email=user_data.get('email'),
-                                   password=user_data.get('password'),
-                                   cel=user_data.get('cel'),
+            user_model = UserModel(name=user_data.get('nomeRegistro'),
+                                   dateBirth=user_data.get('niverRegistro'),
+                                   email=user_data.get('emailRegistro'),
+                                   password=user_data.get('senhaRegistro'),
+                                   cel=user_data.get('celRegistro'),
                                    )
             user_model.insert_user()
             return user_model.insert_user()
