@@ -24,7 +24,7 @@ api.add_resource(RecoverPasswordController, '/api/recoverpassword/')
 api.add_resource(ResultsMetricsController, '/api/resultsmetrics/<int:id_user>', '/api/resultsmetrics/')
 api.add_resource(HealthCheck, '/api/')
 api.add_resource(UserController, '/api/user/', '/api/user/<int:id_cliente>')
-api.add_resource(LoginController, '/api/login')
+api.add_resource(LoginController, '/api/login/')
 api.add_resource(UserSettingsController, '/api/usersettings/', '/api/usersettings/<int:id_User>',
                  '/api/usersettings/update/<int:id_Settings>')
 
