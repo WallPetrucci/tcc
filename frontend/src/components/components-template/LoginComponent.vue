@@ -301,7 +301,25 @@ export default {
 				this.$refs.menu.save(datereverse)
 			},
 			doLogin() {
-				
+				const dataLogin = {
+					email: this.emailLogin,
+					password: this.senhaLogin
+				}
+				this.progressLinear = true
+				this.error_message = ""
+				axios.post("http://localhost:5000/api/login/", dataLogin)
+				.then((response) => {
+					this.progressLinear = false
+					if(response.data.id){
+						this.$session.start()
+						this.$router.push(APP_ROUTERS.panel)
+						
+					}
+				})
+				.catch(()=> {
+					this.progressLinear = false
+					this.error_message = "Email ou Senha inválido."
+				})
 			}
 		}
 
