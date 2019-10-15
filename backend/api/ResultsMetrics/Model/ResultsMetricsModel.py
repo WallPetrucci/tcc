@@ -19,10 +19,8 @@ class ResultsMetricsModel(ResultsMetricsBase):
         today_date = datetime.now()
 
         database_result_metrics = db.session.query(
-            ResultsMetricsModel.date_results,
-            db.func.avg(ResultsMetricsModel.oximetry),
-            db.func.avg(ResultsMetricsModel.heart),
-            db.func.avg(ResultsMetricsModel.temperature)
+            ResultsMetricsModel.date_results, db.func.avg(ResultsMetricsModel.oximetry),
+            db.func.avg(ResultsMetricsModel.heart), db.func.avg(ResultsMetricsModel.temperature)
         ).filter(
             ResultsMetricsModel.date_results.between(today_date - timedelta(days=const.RESULT_METRICS_DAY), today_date)
         ).filter_by(User_idUser=id_user).group_by(db.func.cast(ResultsMetricsModel.date_results, db.Date)).all()
