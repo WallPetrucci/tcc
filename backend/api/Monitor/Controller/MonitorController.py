@@ -12,13 +12,18 @@ class MonitorController(MethodView):
         try:
             if not bool(args_dict):
                 monitors = MonitorModel.query.all()
-                json_monitors = list(map(lambda monitor: {'name': monitor.name, 'email': monitor.email,
+                json_monitors = list(map(lambda monitor: {'id': monitor.idMonitor,
+                                                          'name': monitor.name,
+                                                          'email': monitor.email,
                                                           'telephone': monitor.telephone}, monitors))
                 return json_monitors
             else:
-                model = MonitorModel.query.get(args_dict.get('id'))
+                monitor = MonitorModel.query.get(args_dict.get('id'))
 
-            return {'name': model.name, 'email': model.email, 'telephone': model.telephone}
+            return {'id': monitor.idMonitor,
+                    'name': monitor.name,
+                    'email': monitor.email,
+                    'telephone': monitor.telephone}
         except Exception as e:
             return {'sucesso': False, 'msg': str(e)}, 400
 
