@@ -22,7 +22,7 @@ class UserController(MethodView):
             schemas.schema_insert_user(user_data)
             user_model = UserModel(name=user_data.get('nomeRegistro'), dateBirth=user_data.get('niverRegistro'),
                                    email=user_data.get('emailRegistro'), password=user_data.get('senhaRegistro'),
-                                   cel=user_data.get('celRegistro'))
+                                   cel=user_data.get('celRegistro'), is_loggedin=0)
 
             return user_model.insert_user()
 
