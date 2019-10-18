@@ -1,5 +1,5 @@
 from backend.api.User.Model.UserModel import UserModel
-from flask import session
+from flask import g
 
 
 class LoginModel:

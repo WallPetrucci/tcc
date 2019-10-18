@@ -72,7 +72,7 @@ import ModalComponent from "./ModalComponent";
 import SettingsComponent from "./SettingsComponent";
 import EditDataComponent from "./EditDataComponent";
 import {APP_ROUTERS} from "../constants.js";
-
+import axios from 'axios';
 export default {
   name: "HeaderComponent",
   components: {
@@ -93,8 +93,23 @@ export default {
   },
   methods: {
     logOut()  {
-      this.$session.destroy()
-      this.$router.go()  
+      var dataLogOut = {
+        user_name: this.$session.get('name'),
+        user_email: this.$session.get('email')
+      }
+      axios.put("http://localhost:5000/api/login/", dataLogOut)
+        .then((response) => {
+          this.progressLinear = false
+          console.log(response.data)
+          if(response.data.id){
+            this.$session.destroy()
+            this.$router.push(APP_ROUTERS.panel)         
+          }
+        })
+        .catch(()=> {
+          this.progressLinear = false
+          this.error_message = "Email ou Senha inválido."
+        })     
     }
   }
 };

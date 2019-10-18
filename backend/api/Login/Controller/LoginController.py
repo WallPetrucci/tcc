@@ -28,8 +28,6 @@ class LoginController(MethodView):
         try:
             user_data = request.get_json()
 
-            schemas.schema_logout(user_data)
-
             return LoginModel.do_logout(user_email=user_data.get('user_email'), user_name=user_data.get('user_name'))
 
         except MultipleInvalid as e:
