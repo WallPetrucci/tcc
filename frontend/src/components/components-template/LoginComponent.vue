@@ -310,7 +310,10 @@ export default {
 				axios.post("http://localhost:5000/api/login/", dataLogin)
 				.then((response) => {
 					this.progressLinear = false
+					console.log(response.data)
 					if(response.data.id){
+						this.$session.set('name', response.data.name)
+						this.$session.set('email', response.data.email)
 						this.$session.start()
 						this.$router.push(APP_ROUTERS.panel)
 						

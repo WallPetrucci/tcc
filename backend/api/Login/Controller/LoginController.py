@@ -23,3 +23,18 @@ class LoginController(MethodView):
 
         except Exception as e:
             return {'sucesso': False, 'msg': str(e)}, 400
+
+    def put(self):
+        try:
+            user_data = request.get_json()
+
+            return LoginModel.do_logout(user_email=user_data.get('user_email'), user_name=user_data.get('user_name'))
+
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400

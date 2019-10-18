@@ -136,6 +136,7 @@ class UserBase(db.Model):
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(10))
     cel = db.Column(db.String(15))
+    is_loggedin = db.Column(db.Integer, nullable=False)
 
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
@@ -173,6 +174,7 @@ class UserHasMonitorBase(db.Model):
     IdUser_has_Monitor = db.Column(db.Integer, primary_key=True)
     User_idUser = db.Column(db.Integer, db.ForeignKey('User.idUser'))
     Monitor_idMonitor = db.Column(db.Integer, db.ForeignKey('Monitor.idMonitor'))
+    token = db.Column(db.String(16), nullable=False)
 
     def __init__(self, **kwargs):
         for (attr_name, value) in kwargs.items():
