@@ -4,9 +4,13 @@ from flask import request
 from backend.api.ResultsMetrics.Model.ResultsMetricsModel import ResultsMetricsModel
 # from backend.api.Devices.Model.DevicesModel import DevicesModel
 # from backend.api.ResultsMetrics import constants as const
+from voluptuous import MultipleInvalid, Invalid
 
 
 class ResultsMetricsController(MethodView):
+
+    def __init__(self):
+        self.__results_model = ResultsMetricsModel()
 
     def get(self, id_user):
 
@@ -19,9 +23,17 @@ class ResultsMetricsController(MethodView):
             return {'sucesso': False, 'msg': str(e)}, 400
 
     def post(self):
-        results_metrics = request.get_json()
-        results_model = ResultsMetricsModel()
+        try:
+            metrics_data = request.get_json()
+            # self.__results_model.insert_results_metrics(metrics_data)
 
-        return results_metrics
+            return ResultsMetricsModel.has_alert(metrics_data)
 
-        results_model.insert_results_metrics(results_metrics)
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400

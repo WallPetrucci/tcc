@@ -1,4 +1,6 @@
 from backend.api.model_base import MonitorBase, UserHasMonitorBase
+from backend.api.User.Model.UserModel import UserModel
+from backend.api.Devices.Model.DevicesModel import DevicesModel
 from backend import db
 import random
 import string
@@ -13,14 +15,14 @@ class MonitorModel(MonitorBase):
         db.session.add(self)
         db.session.commit()
 
-        hash_monitor = "{}{}{}".format(id_user, ''.join(random.choices(string.ascii_letters + string.digits, k=16)),
-                                       self.idMonitor)
+        token = "{}{}{}".format(id_user, ''.join(random.choices(string.ascii_letters + string.digits, k=16)),
+                                self.idMonitor)
 
-        user_has_monitor = UserHasMonitorBase(User_idUser=id_user, Monitor_idMonitor=self.idMonitor, token=hash_monitor)
+        user_has_monitor = UserHasMonitorBase(User_idUser=id_user, Monitor_idMonitor=self.idMonitor, token=token)
         db.session.add(user_has_monitor)
         db.session.commit()
 
-        return {'id_monitor': self.idMonitor, 'token': hash_monitor}
+        return {'id_monitor': self.idMonitor, 'token': token}
 
     @staticmethod
     def update_monitor(id_monitor, monitor_data):
@@ -35,3 +37,20 @@ class MonitorModel(MonitorBase):
         db.session.delete(MonitorModel.query.filter_by(idMonitor=id_monitor).first())
         db.session.commit()
         return {'msg': 'Monitor excluído com sucesso'}
+
+    @staticmethod
+    def monitoring(token):
+        result = UserHasMonitorBase.query.add_columns(
+            UserModel.name.label('name'), UserModel.email.label('email'),
+            UserModel.cel.label('cel'), UserModel.dateBirth.label('date_birth'),
+            DevicesModel.idHardware.label('whmid')
+        ).join(MonitorModel).join(UserModel).join(DevicesModel).filter(UserHasMonitorBase.token == token).first()
+
+        data_monitoring = {
+            'user_name': result.name,
+            'user_email': result.email,
+            'cel': result.cel,
+            'date_birth': result.date_birth.strftime("%d/%m/%Y"),
+            'device_id': result.whmid
+        }
+        return data_monitoring

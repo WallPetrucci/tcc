@@ -12,3 +12,7 @@ schema_update_monitor = Schema({
     'email': All(str, Length(min=1)),
     'telephone': All(str, Length(min=1))
 })
+
+schema_monitoring = Schema({
+    'token': All(str, Length(min=16, max=16)),
+})
