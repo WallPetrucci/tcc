@@ -21,7 +21,7 @@ class UserModel(UserBase):
         db.session.commit()
 
         if user:
-            return {'id': user.idUser, 'email': user.email, 'name ': user.name}
+            return {'id': user.idUser, 'email': user.email, 'name': user.name, 'logged_in': user.is_loggedin}
 
         return {'sucesso': False, "msg": "Usuário não encontrado"}
 
@@ -33,6 +33,6 @@ class UserModel(UserBase):
         db.session.commit()
 
         if user:
-            return {'id': user.idUser, 'email': user.email, 'name ': user.name}
+            return {'id': user.idUser, 'email': user.email, 'name': user.name, 'logged_in': user.is_loggedin}
 
         return {'sucesso': False, "msg": "Usuário não encontrado"}
