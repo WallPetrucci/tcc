@@ -7,36 +7,44 @@
 				<template v-slot:activator="{ on }">
 					<v-btn color="primary" dark class="mb-2" v-on="on">Cadastrar</v-btn>
 				</template>
-				<v-card>
-					<v-card-title>
-						<span class="headline">{{ formTitle }}</span>
-					</v-card-title>
+				<template>
+					<v-card class="elevation-12">
+						<v-toolbar dark color="primary">
+							<v-toolbar-title>{{formTitle}}</v-toolbar-title>
+							<v-spacer></v-spacer>
+						</v-toolbar>
+						<template>
+							<v-window>
+								<v-window-item>
+									<v-card-text>
+										<v-container grid-list-md>
+											<v-layout wrap>
+												<v-flex xs12 sm12 md12>
+													<v-text-field v-model="editedItem.name" label="Nome"></v-text-field>
+												</v-flex>
+												<v-flex xs12 sm12 md12>
+													<v-text-field v-model="editedItem.email" label="Email"></v-text-field>
+												</v-flex>
+												<v-flex xs12 sm12 md12>
+													<v-text-field v-model="editedItem.telephone" label="Telefone"></v-text-field>
+												</v-flex>
+											</v-layout>
+										</v-container>
+									</v-card-text>
+								</v-window-item>
+							</v-window>
 
-					<v-card-text>
-						<v-container grid-list-md>
-							<v-layout wrap>
-								<v-flex xs12 sm6 md4>
-									<v-text-field v-model="editedItem.nome" label="Nome"></v-text-field>
-								</v-flex>
-								<v-flex xs12 sm6 md4>
-									<v-text-field v-model="editedItem.email" label="Email"></v-text-field>
-								</v-flex>
-								<v-flex xs12 sm6 md4>
-									<v-text-field v-model="editedItem.tel" label="Telefone"></v-text-field>
-								</v-flex>
-								<v-flex xs12 sm6 md4>
-									<v-text-field v-model="editedItem.cel" label="Celular"></v-text-field>
-								</v-flex>
-							</v-layout>
-						</v-container>
-					</v-card-text>
+							<v-divider></v-divider>
 
-					<v-card-actions>
-						<v-spacer></v-spacer>
-						<v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
-						<v-btn color="blue darken-1" flat @click="save">Salvar</v-btn>
-					</v-card-actions>
-				</v-card>
+							<v-card-actions>
+								<v-spacer></v-spacer>
+								<v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
+								<v-btn color="blue darken-1" flat @click="save">Salvar</v-btn>
+							</v-card-actions>
+						</template>
+						<v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
+					</v-card>
+				</template>
 			</v-dialog>
 		</v-toolbar>
 		<v-data-table
@@ -48,10 +56,9 @@
 		no-data-text="Sem cadastro no momento"		
 		>
 		<template v-slot:items="props">
-			<td class="text-xs-center">{{ props.item.nome }}</td>
+			<td class="text-xs-center">{{ props.item.name }}</td>
 			<td class="text-xs-center">{{ props.item.email }}</td>
-			<td class="text-xs-center">{{ props.item.tel }}</td>
-			<td class="text-xs-center">{{ props.item.cel }}</td>
+			<td class="text-xs-center">{{ props.item.telephone }}</td>
 			<td class="justify-center layout px-0">
 				<v-icon
 				small
@@ -68,6 +75,7 @@
 		</v-icon>
 	</td>
 </template>
+
 </v-data-table>
 </v-flex>
 </template>
@@ -79,6 +87,7 @@
 </style>
 
 <script type="text/javascript">
+import axios from 'axios';
 export default {
 	data: () => ({
 		dialog: false,
@@ -87,7 +96,7 @@ export default {
 			text: 'Nome',
 			align: 'center',
 			sortable: false,
-			value: 'nome'
+			value: 'name'
 		},
 		{ 
 			text: 'Email', 
@@ -95,8 +104,7 @@ export default {
 			align: 'center',
 			sortable: false,
 		},
-		{ text: 'Telefone', value: 'tel', align: 'center', sortable: false },
-		{ text: 'Celular', value: 'cel', align: 'center', sortable: false },
+		{ text: 'Celular', value: 'telephone', align: 'center', sortable: false },
 		{ text: 'Ações', value: 'actions', align: 'center', sortable: false }
 		],
 		desserts: [],
@@ -104,7 +112,8 @@ export default {
 		editedItem: {
 		},
 		defaultItem: {
-		}
+		},
+		progressLinear: false
 	}),
 	props: {
 		qtdPages: {
@@ -127,24 +136,23 @@ export default {
 
 	created () {
 		this.initialize()
+		this.progressLinear = false
 	},
-
+	mounted(){
+		this.getAllMonitors()
+	},
 	methods: {
-		initialize () {
-			this.desserts = [
-			{
-				nome: 'Wallace P Neves',
-				email: 'wallacep@gmaiu.com',
-				tel: 35353535,
-				cel: 89279399
-			},
-			{
-				nome: 'Higao da Silva',
-				email: 'higaoss@gmaiu.com',
-				tel: 123123123,
-				cel: 123123123
-			}
-			]
+		getAllMonitors(){
+			axios.get("http://localhost:5000/api/monitor/"+this.$session.get('id_user'))
+			.then((response) => {
+				if(response.data.length > 0){
+					this.desserts = response.data
+				}
+			})
+			.catch(()=> {
+				this.progressLinear = false
+				this.error_message = "Email ou Senha inválido."
+			})
 		},
 
 		editItem (item) {
@@ -169,8 +177,37 @@ export default {
 		save () {
 			if (this.editedIndex > -1) {
 				Object.assign(this.desserts[this.editedIndex], this.editedItem)
+				axios.post("http://localhost:5000/api/monitor/", createUser)
+				.then((response) => {
+					if(!response.data.user.is_loggedin){
+						console.log(response.data)
+						this.$session.destroy()
+						this.$router.push(APP_ROUTERS.login)         
+					}
+				})
+				.catch(()=> {
+					this.progressLinear = false
+					this.error_message = "Email ou Senha inválido."
+				})
 			} else {
-				this.desserts.push(this.editedItem)
+				this.progressLinear = false
+				var createUser = {
+					name: this.editedItem.name,
+					email:this.editedItem.email,
+					telephone: this.editedItem.telephone,
+					id_user: this.$session.get('id_user')
+				}
+				axios.post("http://localhost:5000/api/monitor/", createUser)
+				.then((response) => {
+					console.log(response.data)
+					if(response.data.id_monitor){
+						this.getAllMonitors()     
+					}
+				})
+				.catch(()=> {
+					this.progressLinear = false
+					this.error_message = "Email ou Senha inválido."
+				})
 			}
 			this.close()
 		}

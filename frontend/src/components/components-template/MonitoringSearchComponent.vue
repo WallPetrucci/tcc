@@ -49,6 +49,16 @@
 		methods: {
 			searchUserForMonitoring(){
 				this.progressLinear = true
+				axios.post("http://localhost:5000/api/monitor/", createUser)
+				.then((response) => {
+					console.log(response.data)
+					if(response.data.id_monitor){   
+					}
+				})
+				.catch(()=> {
+					this.progressLinear = false
+					this.error_message = "Token inválido."
+				})
 			}
 		}
 	}

@@ -314,6 +314,7 @@ export default {
 					if(response.data.id){
 						this.$session.set('name', response.data.name)
 						this.$session.set('email', response.data.email)
+						this.$session.set('id_user', response.data.id)
 						this.$session.start()
 						this.$router.push(APP_ROUTERS.panel)
 						
