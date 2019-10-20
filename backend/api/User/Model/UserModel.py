@@ -3,7 +3,10 @@ from backend import db
 
 
 class UserModel(UserBase):
+
     def __init__(self, **kwargs):
+        super(UserModel, self).__init__(**kwargs)
+
     def insert_user(self):
         db.session.add(self)
         db.session.commit()
@@ -18,7 +21,7 @@ class UserModel(UserBase):
         db.session.commit()
 
         if user:
-            return {'id': user.idUser, 'email': user.email, 'name ': user.name}
+            return {'id': user.idUser, 'email': user.email, 'name': user.name, 'logged_in': user.is_loggedin}
 
         return {'sucesso': False, "msg": "Usuário não encontrado"}
 
@@ -30,6 +33,6 @@ class UserModel(UserBase):
         db.session.commit()
 
         if user:
-            return {'id': user.idUser, 'email': user.email, 'name': user.name}
+            return {'id': user.idUser, 'email': user.email, 'name': user.name, 'logged_in': user.is_loggedin}
 
         return {'sucesso': False, "msg": "Usuário não encontrado"}
