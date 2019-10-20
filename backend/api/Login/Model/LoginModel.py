@@ -1,5 +1,4 @@
 from backend.api.User.Model.UserModel import UserModel
-from flask import g
 
 
 class LoginModel:
@@ -17,6 +16,6 @@ class LoginModel:
     def do_logout(user_email, user_name):
         user = UserModel.do_logout(user_email=user_email, user_name=user_name, logged_in=0)
         if user:
-            return {'msg': "Logout efetuado com sucesso"}, 200
+            return {'is_loggedin': user.get('logged_in'), 'msg': "Logout efetuado com sucesso"}, 200
 
         return {'msg': "Não foi possível efetuar o logout"}, 200

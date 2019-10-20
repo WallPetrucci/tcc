@@ -34,7 +34,6 @@
 		<v-card>
 			<v-card-text>
 				<highcharts :options="chartOptionsFc">
-					{{text}}
 				</highcharts>
 			</v-card-text>
 		</v-card>
@@ -65,32 +64,98 @@ value="ox"
 </template>
 
 <script type="text/javascript">
+import axios from 'axios';
 export default {
 	name: "Reports",
+	mounted(){
+		var id_user = this.$session.get('id_user')
+		axios.get("http://localhost:5000/api/resultsmetrics/"+id_user)
+		.then((response) => {
+			// console.log(response.data)
+			var heart_data = []
+			var ox_data = []
+			var temp_data = []
+			console.log(response.data)
+			if(response.data){
+				// console.log(response.data)
+				response.data.heart.forEach((el, ind, array)=>{
+					heart_data.push({x: new Date(el.data), y: el.result})
+				})
+				response.data.oximetry.forEach((el, ind, array)=>{
+					ox_data.push({x: new Date(el.data), y: el.result})
+				})
+				response.data.temperature.forEach((el, ind, array)=>{
+					temp_data.push({x: new Date(el.data), y: el.result})
+				})
+				console.log(heart_data)
+				this.chartOptionsFc.series[0].data = heart_data
+				this.chartOptionsOx.series[0].data = ox_data
+				this.chartOptionsTemp.series[0].data = temp_data
+				// this.chartOptionsFc.series.addPoint([x, y], true, false)
+
+			}
+		})
+		.catch(()=> {
+			this.progressLinear = false
+			this.error_message = "Email ou Senha inválido."
+		})
+	},
 	data() {
 		return {
-			chartOptionsFc: {
+			chartOptionsFc: { 
 				title: {
 					text: 'Frequência Cardiaca'
 				},
+
+				xAxis: {
+					type: 'datetime',
+					tickPixelInterval: null,
+					pointInterval: 24 * 3600 * 1000,
+					dateTimeLabelFormats: {
+						day: '%e of %b'
+					}
+
+				},
+
 				series: [{
-					data: [1,2,3]
+					data: [	
+					],
+					name: "Frequência Cárdiaca"
 				}]
+
 			},
 			chartOptionsTemp: {
 				title: {
 					text: 'Temperatura Corporal'
 				},
+				xAxis: {
+					type: 'datetime',
+					tickPixelInterval: null,
+					// pointInterval: 24 * 3600 * 1000,
+					dateTimeLabelFormats: {
+						day: '%e of %b'
+					}
+
+				},
 				series: [{
-					data: [1,2,3]
+					data: []
 				}]
 			},
 			chartOptionsOx: {
 				title: {
 					text: 'Oximetria'
 				},
+				xAxis: {
+					type: 'datetime',
+					tickPixelInterval: null,
+					pointInterval: 24 * 3600 * 1000,
+					dateTimeLabelFormats: {
+						day: '%e of %b'
+					}
+
+				},
 				series: [{
-					data: [1,2,3]
+					data: []
 				}]
 			},
 			tabs: null,

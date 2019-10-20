@@ -5,7 +5,7 @@
     <SideBarAlertComponent></SideBarAlertComponent>
     <v-toolbar color="header-content" dark fixed app>
       <div>
-        <strong>Seja bem vindo, Wallace Petrucci Neves</strong>
+        <strong>Seja bem vindo, {{nameUser}}</strong>
       </div>
       <nav class="navigation-header">
         <ul>
@@ -84,26 +84,31 @@ export default {
   beforeMount(){
     if (this.$session.exists()) {
       this.show = true
+      
     } 
+  },
+  mounted(){
+    this.nameUser = this.$session.get('name')
   },
   data (){
     return{
       show: false,
+      nameUser: ''
     }
   },
   methods: {
     logOut()  {
       var dataLogOut = {
         user_name: this.$session.get('name'),
-        user_email: this.$session.get('email')
+        user_email: this.$session.get('email')  
       }
       axios.put("http://localhost:5000/api/login/", dataLogOut)
         .then((response) => {
           this.progressLinear = false
           console.log(response.data)
-          if(response.data.id){
+          if(!response.data.is_loggedin){
             this.$session.destroy()
-            this.$router.push(APP_ROUTERS.panel)         
+            this.$router.push(APP_ROUTERS.login)         
           }
         })
         .catch(()=> {
