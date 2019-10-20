@@ -7,14 +7,14 @@ from backend.api.User.Schema import schemas
 
 
 class UserController(MethodView):
-    def get(self, id_cliente=None):
-        user_model = UserModel()
-
-        if isinstance(id_cliente, int) and id_cliente:
-            result = user_model.get_user(id_cliente)
-            return result
-        else:
-            pass
+    def get(self, id):
+        try:
+            user = UserModel.query.get(id)
+            user_data = {'id': user.idUser, 'email': user.email, 'name': user.name,
+                         'date_birth': user.dateBirth.strftime("%d/%m/%Y"), 'cel': user.cel}
+            return user_data
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
 
     def post(self):
         try:
