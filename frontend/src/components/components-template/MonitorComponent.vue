@@ -41,8 +41,7 @@
 								<v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
 								<v-btn color="blue darken-1" flat @click="save">Salvar</v-btn>
 							</v-card-actions>
-						</template>
-						<v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
+						</template>						
 					</v-card>
 				</template>
 			</v-dialog>
@@ -75,14 +74,17 @@
 		</v-icon>
 	</td>
 </template>
-
 </v-data-table>
+	<v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
 </v-flex>
 </template>
 
 <style type="text/css">
 .monitoring-search{
 	padding: 20px !important;
+}
+.v-progress-linear {
+    margin: 0px;
 }
 </style>
 
@@ -147,6 +149,7 @@ export default {
 			.then((response) => {
 				if(response.data.length > 0){
 					this.desserts = response.data
+					this.progressLinear = false
 				}
 			})
 			.catch(()=> {
@@ -190,7 +193,7 @@ export default {
 					this.error_message = "Email ou Senha inválido."
 				})
 			} else {
-				this.progressLinear = false
+				this.progressLinear = true
 				var createUser = {
 					name: this.editedItem.name,
 					email:this.editedItem.email,
