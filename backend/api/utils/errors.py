@@ -1,4 +1,4 @@
-import constants as const
+from backend.api.utils import constants as const
 
 
 class ReadExceptionSmtp(Exception):
