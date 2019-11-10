@@ -34,9 +34,9 @@ class ResultsMetricsModel(ResultsMetricsBase):
         result_metrics = {'oximetry': [], 'heart': [], 'temperature': []}
 
         for result in database_result_metrics:
-            result_metrics.get('oximetry').append({'data': result[0].isoformat(), 'result': result[1]})
-            result_metrics.get('heart').append({'data': result[0].isoformat(), 'result': result[2]})
-            result_metrics.get('temperature').append({'data': result[0].isoformat(), 'result': result[3]})
+            result_metrics.get('oximetry').append({'data': result[0].isoformat(), 'result': round(result[1], 2)})
+            result_metrics.get('heart').append({'data': result[0].isoformat(), 'result': round(result[2], 2)})
+            result_metrics.get('temperature').append({'data': result[0].isoformat(), 'result': round(result[3], 2)})
 
         return result_metrics
 

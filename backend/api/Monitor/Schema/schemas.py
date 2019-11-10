@@ -10,7 +10,8 @@ schema_insert_monitor = Schema({
 schema_update_monitor = Schema({
     'name': All(str, Length(min=1)),
     'email': All(str, Length(min=1)),
-    'telephone': All(str, Length(min=1))
+    'telephone': All(str, Length(min=1)),
+    'idMonitor': int
 })
 
 schema_monitoring = Schema({

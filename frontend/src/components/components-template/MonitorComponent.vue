@@ -180,8 +180,16 @@ export default {
 		save () {
 			if (this.editedIndex > -1) {
 				Object.assign(this.desserts[this.editedIndex], this.editedItem)
-				axios.post("http://localhost:5000/api/monitor/", createUser)
+			    var userEdited = {
+			    	idMonitor: this.desserts[this.editedIndex].id,
+			    	name: this.desserts[this.editedIndex].name,
+			    	email: this.desserts[this.editedIndex].email,
+			    	telephone: this.desserts[this.editedIndex].telephone
+			    }
+			    console.log(userEdited)
+				axios.put("http://localhost:5000/api/monitor/"+userEdited.idMonitor, userEdited)
 				.then((response) => {
+					console.log(response.data)
 					if(!response.data.user.is_loggedin){
 						console.log(response.data)
 						this.$session.destroy()
