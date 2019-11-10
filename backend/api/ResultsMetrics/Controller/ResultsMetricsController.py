@@ -25,7 +25,6 @@ class ResultsMetricsController(MethodView):
     def post(self):
         try:
             metrics_data = request.get_json()
-            # self.__results_model.insert_results_metrics(metrics_data)
 
             return ResultsMetricsModel.has_alert(metrics_data)
 

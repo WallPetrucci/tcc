@@ -1,9 +1,9 @@
 import smtplib
-import constants as const
+from backend.api.utils import constants as const
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
-from errors import ReadExceptionSmtp
+from backend.api.utils.errors import ReadExceptionSmtp
 
 
 class Sender():

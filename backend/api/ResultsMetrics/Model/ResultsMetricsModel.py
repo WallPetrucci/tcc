@@ -1,10 +1,13 @@
 from backend.api.model_base import ResultsMetricsBase, ResultsMetricsHasAlertsBase
 from backend.api.UserSettings.Model.UserSettingsModel import UserSettingsModel
 from backend.api.Devices.Model.DevicesModel import DevicesModel
+from backend.api.User.Model.UserModel import UserModel
 from backend.api.Alerts.Model.AlertsModel import AlertsModel
 from backend import db
 from datetime import datetime, timedelta
 from backend.api.ResultsMetrics import constants as const
+from backend.api.utils.EmailSender import Sender
+from backend.api.utils import constants as const
 
 
 class ResultsMetricsModel(ResultsMetricsBase):
@@ -15,10 +18,9 @@ class ResultsMetricsModel(ResultsMetricsBase):
     def __init__(self, **kwargs):
         super(ResultsMetricsModel, self).__init__(**kwargs)
 
-    def insert_results_metrics(self, list_objects):
-        # db.session.
-        # db.session.commit()
-        db.engine.execute(self.__table__.insert(), list_objects)
+    @classmethod
+    def insert_results_metrics(cls, list_objects):
+        db.engine.execute(cls.__table__.insert(), list_objects)
 
     @staticmethod
     def get_result_metrics(id_user):
@@ -53,8 +55,13 @@ class ResultsMetricsModel(ResultsMetricsBase):
 
         user_settings = cls.__get_user_settings(metrics_list[0].get('whm_id'))
 
-        alert_list = cls.__check_metric_has_exceeded(user_settings)
+        for metric in metrics_list:
+            metric.update({'User_idUser': user_settings.get('user_id')})
 
+        cls.insert_results_metrics(list_objects=metrics_list)
+
+        alert_list = cls.__check_metric_has_exceeded(user_settings)
+        return alert_list
         if not alert_list:
             return {'msg': 'Não há alertas', 'alerts': alert_list}
 
@@ -74,12 +81,16 @@ class ResultsMetricsModel(ResultsMetricsBase):
             UserSettingsModel.heartRate.label('active_alert_heart_rate'),
             UserSettingsModel.heartRate.label('active_alert_oximetry'),
             UserSettingsModel.heartRate.label('active_alert_temperature'),
+            UserModel.email.label('email')
         ).join(
             UserSettingsModel, UserSettingsModel.User_idUser == DevicesModel.User_idUser
+        ).join(
+            UserModel, UserModel.idUser == DevicesModel.User_idUser
         ).filter(DevicesModel.idHardware == whm_id).first()
 
         user_settings = {
             'user_id': settings.user_id,
+            'user_email': settings.email,
             'heart_rate': settings.heart_rate,
             'oximetry': settings.oximetry,
             'temperature': settings.temperature,
@@ -93,6 +104,7 @@ class ResultsMetricsModel(ResultsMetricsBase):
     @classmethod
     def __check_metric_has_exceeded(cls, user_settings):
         alerts = []
+        email_sender = Sender()
 
         if user_settings.get('active_alert_heart_rate'):
             if cls.heart_rate_average > float(user_settings.get('heart_rate').get('max')):
@@ -147,5 +159,10 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+
+        if len(alerts) > 0:
+            email_sender.set_header(user_settings.get('user_email'), const.EMAIL_DEST, const.SUBJECT)
+            email_sender.set_msg(const.EMAIL_TEMPLATE, 'html/text')
+            return email_sender.send_message()
 
         return alerts
