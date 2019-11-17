@@ -163,6 +163,6 @@ class ResultsMetricsModel(ResultsMetricsBase):
         if len(alerts) > 0:
             email_sender.set_header(user_settings.get('user_email'), const.EMAIL_DEST, const.SUBJECT)
             email_sender.set_msg(const.EMAIL_TEMPLATE, 'html/text')
-            return email_sender.send_message()
+            email_sender.send_message()
 
         return alerts

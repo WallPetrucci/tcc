@@ -15,5 +15,5 @@ schema_update_monitor = Schema({
 })
 
 schema_monitoring = Schema({
-    'token': All(str, Length(min=16, max=16)),
+    'token': All(str, Length(min=15, max=16)),
 })

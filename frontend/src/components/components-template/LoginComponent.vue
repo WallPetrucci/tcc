@@ -209,7 +209,8 @@ export default {
 				emailRegistro: '',
 				senhaRegistro: '',
 				niverRegistro: '',
-				celRegistro: ''
+				celRegistro: '',
+				senhaConfirmaRegistro: ''
 			},		
 			progressLinear: false,
 			error_message: ''
@@ -274,7 +275,14 @@ export default {
 					this.progressLinear = false
 					return true
 				}
-				axios.post("http://localhost:5000/api/user/", this.dataRegister)
+				const mydataregister = {
+					nomeRegistro: this.dataRegister.nomeRegistro,
+					emailRegistro: this.dataRegister.emailRegistro,
+					senhaRegistro: this.dataRegister.senhaRegistro,
+					niverRegistro: this.dataRegister.niverRegistro,
+					celRegistro: this.dataRegister.celRegistro
+				} 
+				axios.post("http://localhost:5000/api/user/", mydataregister)
 				.then((response) => {
 					if(response.data.sucesso == false || response.data.sucesso){
 						this.progressLinear = false
@@ -310,7 +318,6 @@ export default {
 				axios.post("http://localhost:5000/api/login/", dataLogin)
 				.then((response) => {
 					this.progressLinear = false
-					console.log(response.data)
 					if(response.data.id){
 						this.$session.set('name', response.data.name)
 						this.$session.set('email', response.data.email)
