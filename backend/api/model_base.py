@@ -112,8 +112,7 @@ class ResultsMetricsHasAlertsBase(db.Model):
 
     __tablename__ = 'ResultsMetrics_has_Alerts'
 
-    IdResultsMetrics_has_Alerts = db.Column(db.Integer, db.ForeignKey(
-        'ResultsMetrics.idResultsMetrics'), primary_key=True)
+    IdResultsMetrics_has_Alerts = db.Column(db.Integer, primary_key=True)
     ResultsMetrics_idResultsMetrics = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.idResultsMetrics'))
     ResultsMetrics_User_idUser = db.Column(db.Integer, db.ForeignKey('ResultsMetrics.User_idUser'))
     Alerts_idAlerts = db.Column(db.Integer, db.ForeignKey('User.idUser'))
