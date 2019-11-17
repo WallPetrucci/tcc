@@ -63,7 +63,6 @@ export default {
 	mounted(){
 		axios.get("http://localhost:5000/api/user/"+this.$session.get('id_user'))
 		.then((response) => {
-			console.log(response.data)
 			if(response.data.id){
 				this.date = response.data.date_birth
 				this.name = response.data.name
