@@ -38,7 +38,7 @@ host: localhost:5000
 
 ------------------------
 
-#### client.py<br>
+#### client_local.py<br>
 Script responsável por enviar os dados.
 
 1 - Para conseguir acessar o servidor será preciso identificar para qual HOST:PORT o cliente está enviando informações, acesse o arquivo client.py com algum editor de sua preferẽncia e procure a linha onde tenha:<br>
