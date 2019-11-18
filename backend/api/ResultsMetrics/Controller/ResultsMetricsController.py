@@ -2,8 +2,6 @@ from flask.views import MethodView
 from flask import request
 
 from backend.api.ResultsMetrics.Model.ResultsMetricsModel import ResultsMetricsModel
-# from backend.api.Devices.Model.DevicesModel import DevicesModel
-# from backend.api.ResultsMetrics import constants as const
 from voluptuous import MultipleInvalid, Invalid
 
 

@@ -46,11 +46,13 @@ class MonitorModel(MonitorBase):
             DevicesModel.idHardware.label('whmid')
         ).join(MonitorModel).join(UserModel).join(DevicesModel).filter(UserHasMonitorBase.token == token).first()
 
-        data_monitoring = {
-            'user_name': result.name,
-            'user_email': result.email,
-            'cel': result.cel,
-            'date_birth': result.date_birth.strftime("%d/%m/%Y"),
-            'device_id': result.whmid
-        }
-        return data_monitoring
+        if result:
+            data_monitoring = {
+                'user_name': result.name,
+                'user_email': result.email,
+                'cel': result.cel,
+                'date_birth': result.date_birth.strftime("%d/%m/%Y"),
+                'device_id': result.whmid
+            }
+            return data_monitoring
+        return {'msg': 'Não há monitor cadastrado com esse token'}

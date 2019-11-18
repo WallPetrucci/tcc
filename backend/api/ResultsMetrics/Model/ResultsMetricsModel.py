@@ -7,7 +7,7 @@ from backend import db
 from datetime import datetime, timedelta
 from backend.api.ResultsMetrics import constants as const
 from backend.api.utils.EmailSender import Sender
-from backend.api.utils import constants as const
+from backend.api.utils import constants as const_email
 
 
 class ResultsMetricsModel(ResultsMetricsBase):
@@ -20,17 +20,20 @@ class ResultsMetricsModel(ResultsMetricsBase):
 
     @classmethod
     def insert_results_metrics(cls, list_objects):
-        db.engine.execute(cls.__table__.insert(), list_objects)
+        return db.engine.execute(cls.__table__.insert(), list_objects)
 
     @staticmethod
     def get_result_metrics(id_user):
         today_date = datetime.now()
 
         database_result_metrics = db.session.query(
-            ResultsMetricsModel.date_results, db.func.avg(ResultsMetricsModel.oximetry),
-            db.func.avg(ResultsMetricsModel.heart), db.func.avg(ResultsMetricsModel.temperature)
+            ResultsMetricsModel.date_results, db.func.avg(
+                ResultsMetricsModel.oximetry),
+            db.func.avg(ResultsMetricsModel.heart), db.func.avg(
+                ResultsMetricsModel.temperature)
         ).filter(
-            ResultsMetricsModel.date_results.between(today_date - timedelta(days=const.RESULT_METRICS_DAY), today_date)
+            ResultsMetricsModel.date_results.between(
+                today_date - timedelta(days=const.RESULT_METRICS_DAY), today_date)
         ).filter_by(User_idUser=id_user).group_by(db.func.cast(ResultsMetricsModel.date_results, db.Date)).all()
 
         result_metrics = {'oximetry': [], 'heart': [], 'temperature': []}
@@ -44,30 +47,40 @@ class ResultsMetricsModel(ResultsMetricsBase):
 
     @classmethod
     def has_alert(cls, metrics_list):
-        for metric in metrics_list:
-            cls.heart_rate_average += metric.get('heart')
-            cls.oximetry_average += metric.get('oximetry')
-            cls.temperature_average += metric.get('temperature')
-
-        cls.heart_rate_average /= len(metrics_list)
-        cls.oximetry_average /= len(metrics_list)
-        cls.temperature_average /= len(metrics_list)
-
+        alert_list = []
         user_settings = cls.__get_user_settings(metrics_list[0].get('whm_id'))
-
         for metric in metrics_list:
             metric.update({'User_idUser': user_settings.get('user_id')})
 
-        cls.insert_results_metrics(list_objects=metrics_list)
+        if len(metrics_list) == 1:
+            for metric in metrics_list:
+                cls.heart_rate_average += metric.get('heart')
+                cls.oximetry_average += metric.get('oximetry')
+                cls.temperature_average += metric.get('temperature')
 
-        alert_list = cls.__check_metric_has_exceeded(user_settings)
-        return alert_list
-        if not alert_list:
-            return {'msg': 'Não há alertas', 'alerts': alert_list}
+            cls.heart_rate_average /= len(metrics_list)
+            cls.oximetry_average /= len(metrics_list)
+            cls.temperature_average /= len(metrics_list)
 
-        for alert in alert_list:
-            alerts_model = AlertsModel(messages=alert.get('message'), typeAlerts=alert.get('alert_type'))
-            alerts_model.insert_alert()
+            result_metrics = cls.insert_results_metrics(list_objects=metrics_list)
+            alert_list = cls.__check_metric_has_exceeded(user_settings)
+
+            if not alert_list:
+                return {'msg': 'Não há alertas', 'alerts': alert_list}
+
+            for alert in alert_list:
+                alerts_model = AlertsModel(messages=alert.get(
+                    'message'), typeAlerts=alert.get('alert_type'))
+                alerts_model.insert_alert()
+                result_metrics_has_alert = ResultsMetricsHasAlertsBase(
+                    ResultsMetrics_idResultsMetrics=result_metrics.inserted_primary_key[0],
+                    ResultsMetrics_User_idUser=user_settings.get('user_id'),
+                    Alerts_idAlerts=alerts_model.idAlerts
+                )
+                db.session.add(result_metrics_has_alert)
+                db.session.commit()
+        else:
+            cls.insert_results_metrics(list_objects=metrics_list)
 
         return {'msg': 'Verifique seus alertas', 'alerts': alert_list}
 
@@ -161,8 +174,8 @@ class ResultsMetricsModel(ResultsMetricsBase):
                 })
 
         if len(alerts) > 0:
-            email_sender.set_header(user_settings.get('user_email'), const.EMAIL_DEST, const.SUBJECT)
-            email_sender.set_msg(const.EMAIL_TEMPLATE, 'html/text')
+            email_sender.set_header([user_settings.get('user_email')], const_email.EMAIL_DEST, const_email.SUBJECT)
+            email_sender.set_msg(const_email.EMAIL_TEMPLATE, 'html/text')
             email_sender.send_message()
 
         return alerts
