@@ -69,7 +69,7 @@ export default {
 	name: "Reports",
 	mounted(){
 		var id_user = this.$session.get('id_user')
-		axios.get("http://localhost:5000/api/resultsmetrics/"+id_user)
+		axios.get("http://localhost:5000/api/resultsmetrics/"+this.$session.get('id_user'))
 		.then((response) => {
 			// console.log(response.data)
 			var heart_data = []
@@ -79,13 +79,13 @@ export default {
 			if(response.data){
 				// console.log(response.data)
 				response.data.heart.forEach((el, ind, array)=>{
-					heart_data.push({x: new Date(el.data), y: el.result})
+					heart_data.push({x: new Date(el.data).getTime(), y: el.result})
 				})
 				response.data.oximetry.forEach((el, ind, array)=>{
-					ox_data.push({x: new Date(el.data), y: el.result})
+					ox_data.push({x: new Date(el.data).getTime(), y: el.result})
 				})
 				response.data.temperature.forEach((el, ind, array)=>{
-					temp_data.push({x: new Date(el.data), y: el.result})
+					temp_data.push({x: new Date(el.data).getTime(), y: el.result})
 				})
 				console.log(heart_data)
 				this.chartOptionsFc.series[0].data = heart_data
@@ -106,14 +106,14 @@ export default {
 				title: {
 					text: 'Frequência Cardiaca'
 				},
-
 				xAxis: {
 					type: 'datetime',
 					tickPixelInterval: null,
 					pointInterval: 24 * 3600 * 1000,
+					minTickInterval: 24 * 3600 * 1000,
 					dateTimeLabelFormats: {
 						day: '%e of %b'
-					}
+					},
 
 				},
 
@@ -131,14 +131,16 @@ export default {
 				xAxis: {
 					type: 'datetime',
 					tickPixelInterval: null,
-					// pointInterval: 24 * 3600 * 1000,
+					pointInterval: 24 * 3600 * 1000,
+					minTickInterval: 24 * 3600 * 1000,
 					dateTimeLabelFormats: {
 						day: '%e of %b'
 					}
 
 				},
 				series: [{
-					data: []
+					data: [],
+					name: 'Temperatura Corporal'
 				}]
 			},
 			chartOptionsOx: {
@@ -149,13 +151,15 @@ export default {
 					type: 'datetime',
 					tickPixelInterval: null,
 					pointInterval: 24 * 3600 * 1000,
+					minTickInterval: 24 * 3600 * 1000,
 					dateTimeLabelFormats: {
 						day: '%e of %b'
 					}
 
 				},
 				series: [{
-					data: []
+					data: [],
+					name: 'Oximetria'
 				}]
 			},
 			tabs: null,

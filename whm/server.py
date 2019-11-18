@@ -9,10 +9,17 @@ app = socketio.WSGIApp(sio, static_files={
 })
 
 
+@sio.on('enter_room', namespace="/whm")
+def enter_room(sid, room_name):
+    print("ENTER ROOM")
+    sio.enter_room(sid, room_name)
+    print('connectINGGGGG', room_name)
+    print("Enter Room")
+
+
 @sio.on('connect', namespace="/whm")
 def connect(sid, environ):
     print('connect', sid)
-    pass
 
 
 @sio.on('message_db', namespace="/whm")

@@ -8,18 +8,18 @@
     <div class="dados">{{data_client[0][type]}} {{measure}}</div>
    <!--  
    <div class="dados">{{data_client[0][type]}} {{measure}}</div>
-    <div>Ultima alteração: {{data_client[0]['date']}}</div> -->
-  </div>
+   <div>Ultima alteração: {{data_client[0]['date']}}</div> -->
+ </div>
 </template>
 <style type="text/css">
-  .dados{
-    font-size:35px;
-    font-weight: 400;
-  }
-  .inner-listen-socket{
-    margin-top:10px;
-    text-align:center;
-  }
+.dados{
+  font-size:35px;
+  font-weight: 400;
+}
+.inner-listen-socket{
+  margin-top:10px;
+  text-align:center;
+}
 </style>
 <script>
   // var socket = null
@@ -33,6 +33,10 @@
       measure: {
         type: String,
         default: ''
+      },
+      deviceID: {
+        type: String,
+        default: ''
       }
     },
     data () {
@@ -43,8 +47,8 @@
     },
     created() {      
       var socket = this.$socket
-    },
-    mounted() {
+
+      
     },
     sockets:{
       connect(){
@@ -54,7 +58,7 @@
         this.status_conn = true
         if(data.length > 0){
           console.log(data)
-         this.data_client = data
+          this.data_client = data
         }else{
           this.data_client = []
         }
@@ -64,4 +68,4 @@
       },
     },
   }
-</script>
+  </script>
