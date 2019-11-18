@@ -73,7 +73,7 @@ Agora para visualizarmos os dados sendo apresentado em tempo real na página. Va
 ```
 Será instalado automaticamente todas as dependências necessárias para rodar o projeto.
 
-8- Execute o comando no terminal:
+4- Execute o comando no terminal:
 
 ```
 # npm run serve
