@@ -80,6 +80,6 @@ Será instalado automaticamente todas as dependências necessárias para rodar o
 ```
 
 Com esse comando irá subir o servidor local do Vue.JS, por padrão irá subir nas portas 8080. Abra seu navegador e acesse
-http://localhost:8080 , irá aparecer a tela padrão do painel com os 3 cards simulando os dados dos sensores, e pegando informação em tempo real.
+http://localhost:8080 , irá aparecer a tela inicial, faça o cadastro e o login, assim acessando o painel e vendo os cards simulados.
 
 ===================================================
