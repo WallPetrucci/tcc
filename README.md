@@ -53,7 +53,7 @@ Script responsável por enviar os dados.
 1 - Digite no terminal:
 
 ```
-# python client.py
+# python client_local.py
 ```
 
 Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após isso será iniciado o laço de envio de informações. <b>Lembrando que o servidor da etapa anterior precisa estar conectado</b>
