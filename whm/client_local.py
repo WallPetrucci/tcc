@@ -8,7 +8,7 @@ from uuid import getnode as get_mac
 import constants as const
 import sqlite3
 import json
-from random import randint
+from random import randrange
 
 
 # Objects and Variables for using in Main
@@ -40,8 +40,6 @@ def on_connect():
     print('CONNECT ON')
     status_message = True
     conn_status = True
-    # print("MAC in CLIENT {}".format(mac))
-    # sio.emit('enter_room', mac, namespace="/whm")
 
 
 @sio.on('disconnect', namespace="/whm")
@@ -59,10 +57,9 @@ def connect_socket(host=const.HOST_LOCAL, port=const.PORT_LOCAL):
     except WHMConnectionError:
         pass
 
-
-def send_message(sensor_data):
+def send_message_local(sensor_data):
     try:
-        sio.emit('message', sensor_data, namespace="/whm")
+        sio.emit('message_local', sensor_data, namespace="/whm")
     except WHMConnectionError as e:
         print("Disconnect Error: ", e)
 
@@ -77,7 +74,7 @@ def send_message_db(sensor_data):
 # WHM - Application
 if __name__ == '__main__':
     while True:
-        sleep(2)
+        # sleep(2)
         current_date = datetime.now()
 
         # Controll Buffer Sensor
@@ -99,24 +96,23 @@ if __name__ == '__main__':
 
             else:
                 print("Send Data Online DB and Real Time")
-                sio.start_background_task(send_message([{'whm_id': mac,
-                                                         'heart': randint(50, 160),
-                                                         'oximetry': randint(80, 10000),
-                                                         'temperature': randint(34, 40),
-                                                         'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
-
                 sio.start_background_task(send_message_db([{'whm_id': mac,
-                                                            'heart': randint(50, 160),
-                                                            'oximetry': randint(80, 10000),
-                                                            'temperature': randint(34, 40),
+                                                            'heart': randrange(50, 160),
+                                                            'oximetry': randrange(80, 100),
+                                                            'temperature': randrange(35, 40),
                                                             'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
+
+                sio.start_background_task(send_message_local([{'whm_id': mac,
+                                                               'heart': randrange(50, 160),
+                                                               'oximetry': randrange(80, 100),
+                                                               'temperature': randrange(35, 40),
+                                                               'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}]))
         else:
 
             print("Save in Database Local")
-
-            # conn_local.execute(''' INSERT INTO whm_local VALUES(?)''', (json.dumps({'whm_id': mac,
-            #                                                                         'heart': randint(50, 160),
-            #                                                                         'oximetry': randint(80, 100),
-            #                                                                         'temperature': randint(34, 40),
-            #                                                                         'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}),))
-            # conn_local.commit()
+            conn_local.execute(''' INSERT INTO whm_local VALUES(?)''', (json.dumps({'whm_id': mac,
+                                                                                    'heart': randrange(50, 160),
+                                                                                    'oximetry': randrange(80, 100),
+                                                                                    'temperature': randrange(35, 40),
+                                                                                    'date_results': current_date.strftime("%Y-%m-%d %H:%M:%S")}),))
+            conn_local.commit()
