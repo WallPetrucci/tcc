@@ -8,5 +8,5 @@ EMAIL_DEST = "whmtccemail@gmail.com"
 ERROR_SEND_MAIL = "Error Send Email: "
 ERROR_MESSAGE_EMAIL = "Email, was not sent successfully"
 ERROR_INFO_EMAIL = "Error sender"
-EMAIL_TEMPLATE = """<body>Olá, venho dizer que deu ruim !<body>"""
+EMAIL_TEMPLATE = """Olá, venho dizer que deu ruim !"""
 RESULT_METRICS_DAY = 30
