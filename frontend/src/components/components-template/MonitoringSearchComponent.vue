@@ -18,6 +18,7 @@
 			<v-text-field
 			:counter="30"
 			label="Token de Monitoramento"
+			v-model="token_user"
 			required
 			></v-text-field>
 
@@ -38,27 +39,33 @@
 </style>
 
 <script type="text/javascript">
+import {APP_ROUTERS} from '../constants.js';
+import axios from 'axios';
 	export default {
 		name: "MonitoringSearch",
 		data(){
 			return {
-				progressLinear: false
+				progressLinear: false,
+				token_user: ''
 				// valid: ''
 			}
 		},
 		methods: {
 			searchUserForMonitoring(){
 				this.progressLinear = true
-				axios.post("http://localhost:5000/api/monitor/", createUser)
-				.then((response) => {
-					console.log(response.data)
-					if(response.data.id_monitor){   
+				console.log(this.token_user)
+				// axios.post("http://localhost:5000/api/monitoring/", {token: this.token_user})
+				// .then((response) => {
+					if(this.token_user){
+						// this.$session.start()
+						this.$router.push(APP_ROUTERS.monitoring + "/" + this.token_user)
+						
 					}
-				})
-				.catch(()=> {
-					this.progressLinear = false
-					this.error_message = "Token inválido."
-				})
+				// })
+				// .catch(()=> {
+				// 	this.progressLinear = false
+				// 	this.error_message = "Token inválido."
+				// })
 			}
 		}
 	}

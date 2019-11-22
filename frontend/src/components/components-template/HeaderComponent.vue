@@ -105,7 +105,6 @@ export default {
       axios.put("http://localhost:5000/api/login/", dataLogOut)
         .then((response) => {
           this.progressLinear = false
-          console.log(response.data)
           if(!response.data.is_loggedin){
             this.$session.destroy()
             this.$router.push(APP_ROUTERS.login)         
