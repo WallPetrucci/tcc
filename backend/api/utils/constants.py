@@ -9,3 +9,4 @@ ERROR_SEND_MAIL = "Error Send Email: "
 ERROR_MESSAGE_EMAIL = "Email, was not sent successfully"
 ERROR_INFO_EMAIL = "Error sender"
 EMAIL_TEMPLATE = """<body>Olá, venho dizer que deu ruim !<body>"""
+RESULT_METRICS_DAY = 30

@@ -39,9 +39,12 @@ class ResultsMetricsModel(ResultsMetricsBase):
         result_metrics = {'oximetry': [], 'heart': [], 'temperature': []}
 
         for result in database_result_metrics:
-            result_metrics.get('oximetry').append({'data': result[0].isoformat(), 'result': round(result[1], 2)})
-            result_metrics.get('heart').append({'data': result[0].isoformat(), 'result': round(result[2], 2)})
-            result_metrics.get('temperature').append({'data': result[0].isoformat(), 'result': round(result[3], 2)})
+            result_metrics.get('oximetry').append(
+                {'data': result[0].isoformat(), 'result': round(result[1], 2)})
+            result_metrics.get('heart').append(
+                {'data': result[0].isoformat(), 'result': round(result[2], 2)})
+            result_metrics.get('temperature').append(
+                {'data': result[0].isoformat(), 'result': round(result[3], 2)})
 
         return result_metrics
 
@@ -175,7 +178,7 @@ class ResultsMetricsModel(ResultsMetricsBase):
 
         if len(alerts) > 0:
             email_sender.set_header([user_settings.get('user_email')], const_email.EMAIL_DEST, const_email.SUBJECT)
-            email_sender.set_msg(const_email.EMAIL_TEMPLATE, 'html/text')
+            email_sender.set_msg(const_email.EMAIL_TEMPLATE, 'html')
             email_sender.send_message()
 
         return alerts
