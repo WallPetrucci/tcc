@@ -34,3 +34,26 @@ class UserController(MethodView):
 
         except Exception as e:
             return {'sucesso': False, 'msg': str(e)}, 400
+
+    def put(self, id):
+        try:
+            user_data = request.get_json()
+            schemas.schema_insert_user(user_data)
+            update_data = {
+                'name': user_data.get('nomeRegistro'),
+                'dateBirth': user_data.get('niverRegistro'),
+                'email': user_data.get('emailRegistro'),
+                'password': user_data.get('senhaRegistro'),
+                'cel': user_data.get('celRegistro')
+            }
+
+            return UserModel.update_user(id, update_data)
+
+        except MultipleInvalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Invalid as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
+
+        except Exception as e:
+            return {'sucesso': False, 'msg': str(e)}, 400
