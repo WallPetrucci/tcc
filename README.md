@@ -17,6 +17,15 @@ Ao receber os dados o servidor dispara em evento chamado "response_front".<br>
 Dentro do painel web, um socket é aberto com o servidor assinando e 'escutando' o evento "response_front", pegando os dados que o servidor dispara para o evento.
 
 ===================================================
+### Pré-Requisitos.
+
+Python3.6+
+https://www.python.org/downloads/release/python-360/
+
+Virtual Enviroment
+https://robbinespu.gitlab.io/blog/2019/07/23/Python-36-with-VirtualEnv/
+
+=====================================================
 
 ### Não tem Raspberry? - Simulando o envio de dados localmente.
 Para simular o projeto geral é necessário rodar 2 scripts e o servidor local do vue.js.<br>
@@ -38,43 +47,13 @@ host: localhost:5000
 
 ------------------------
 
-#### client.py<br>
+#### client_local.py<br>
 Script responsável por enviar os dados.
 
-1 - Para conseguir acessar o servidor será preciso identificar para qual HOST:PORT o cliente está enviando informações, acesse o arquivo client.py com algum editor de sua preferẽncia e procure a linha onde tenha:<br>
-```
-socketobj = SocketWhm(const.HOST, const.PORT)
-```
-- Mude a constante const.HOST para const.HOST_LOCAL
-- Mude a constante const.PORT para const.PORT_LOCAL
-
-2 - Agora vamos remover no cdigo as chamadas para os pacotes do raspberry, como  uma simulação sem a placa, então no será necessário eles.
-
-*Remova ou comente essa linha.
-```
-from temp import MLX90614
-```
-
-*Remova ou comente essa linha.
-```
-sensor_temperatura = MLX90614()
-```
-
-* Neste bloco de código altere somente o código "sensor_temperatura.get_obj_temp" para "random.randrange(35, 39)" , ficará assim:
-```
-sio.start_background_task(socketobj.send_message({'whm_id': "09123901823902",
-                                                              'fc': random.randrange(60, 120),
-                                                              'ox': random.randrange(96, 100),
-                                                              'temp': random.randrange(35, 39),
-                                                              'date': current_date.strftime('%d/%m/%Y %H:%M')}))
-```
-
-
-
-3 - Pronto, após as alteraçes para rodar o cliente, digite no terminal:
+1 - Digite no terminal:
 
 ```
-# python client.py
+# python client_local.py
 ```
 
 Obs: O script será iniciado com a mensagem na tela <b>"CONNECT ON" </b>. Após isso será iniciado o laço de envio de informações. <b>Lembrando que o servidor da etapa anterior precisa estar conectado</b>
@@ -94,25 +73,13 @@ Agora para visualizarmos os dados sendo apresentado em tempo real na página. Va
 ```
 Será instalado automaticamente todas as dependências necessárias para rodar o projeto.
 
-4- acesse a pasta /tcc/frontend/src
-
-5- Abra o arquivo main.js com seu editor de preferência.
-
-6- Na linha abaixo troque o servidor '34.232.109.146', para 'localhost' ficando assim:
-
-```
-const SocketInstance = io.connect('http://localhost:5000');
-```
-
-7- Salve o arquivo e volte para a pasta 'frontend'
-
-8- Execute o comando no terminal:
+4- Execute o comando no terminal:
 
 ```
 # npm run serve
 ```
 
 Com esse comando irá subir o servidor local do Vue.JS, por padrão irá subir nas portas 8080. Abra seu navegador e acesse
-http://localhost:8080 , irá aparecer a tela padrão do painel com os 3 cards simulando os dados dos sensores, e pegando informação em tempo real.
+http://localhost:8080 , irá aparecer a tela inicial, faça o cadastro e o login, assim acessando o painel e vendo os cards simulados.
 
 ===================================================

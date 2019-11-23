@@ -17,3 +17,6 @@ MONITOR = """<body>
                         Olá {}, somos da WHM. O usuário {} solicitou que você monitore os sinais vitais dele.
                         Para começar a monitorar, basta <a href='http://localhost:8080/monitoring/{}'>clicar aqui</a>!
                     <body>"""
+
+RESULT_METRICS_DAY = 30
+

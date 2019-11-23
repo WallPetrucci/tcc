@@ -9,14 +9,6 @@ app = socketio.WSGIApp(sio, static_files={
 })
 
 
-@sio.on('enter_room', namespace="/whm")
-def enter_room(sid, room_name):
-    print("ENTER ROOM")
-    sio.enter_room(sid, room_name)
-    print('connectINGGGGG', room_name)
-    print("Enter Room")
-
-
 @sio.on('connect', namespace="/whm")
 def connect(sid, environ):
     print('connect', sid)
@@ -63,6 +55,14 @@ def message(sid, data):
 
         except Exception as e:
             print("Error Sensors not measure: " + e)
+
+    sio.emit('response_front', data)
+
+
+@sio.on('message_local', namespace="/whm")
+def message_local(sid, data):
+    print("DB DATA ONLINE")
+    print(data[0])
 
     sio.emit('response_front', data)
 
