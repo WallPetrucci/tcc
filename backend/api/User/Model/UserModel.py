@@ -36,3 +36,12 @@ class UserModel(UserBase):
             return {'id': user.idUser, 'email': user.email, 'name': user.name, 'logged_in': user.is_loggedin}
 
         return {'sucesso': False, "msg": "Usuário não encontrado"}
+
+    @staticmethod
+    def update_user(id, user_data):
+        try:
+            UserModel.query.filter_by(idUser=id).update(user_data)
+            db.session.commit()
+            return {'idUser': id, 'msg': 'Informações atualizadas com sucesso !'}
+        except Exception as e:
+            return {'msg': str(e)}

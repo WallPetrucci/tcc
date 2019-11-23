@@ -122,6 +122,7 @@ class ResultsMetricsModel(ResultsMetricsBase):
         alerts = []
         email_sender = Sender()
 
+        email_sender.set_header([user_settings.get('user_email')], const_email.EMAIL_DEST, const_email.SUBJECT)
         if user_settings.get('active_alert_heart_rate'):
             if cls.heart_rate_average > float(user_settings.get('heart_rate').get('max')):
                 alerts.append({
@@ -131,6 +132,11 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(
+                    const_email.EMAIL_TEMPLATE.format('Frequência Cardíaca', 'Frequência Cardíaca Alta'),
+                    'html'
+                )
+                email_sender.send_message()
             elif cls.heart_rate_average < float(user_settings.get('heart_rate').get('min')):
                 alerts.append({
                     'alert_type': 'Frequência Cardíaca',
@@ -139,6 +145,11 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(
+                    const_email.EMAIL_TEMPLATE.format('Frequência Cardíaca', 'Frequência Cardíaca Baixa'),
+                    'html'
+                )
+                email_sender.send_message()
 
         if user_settings.get('active_alert_oximetry'):
             if cls.oximetry_average > float(user_settings.get('oximetry').get('max')):
@@ -149,6 +160,11 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(
+                    const_email.EMAIL_TEMPLATE.format('Oximetria', 'Oximetria Alta'),
+                    'html'
+                )
+                email_sender.send_message()
             elif cls.oximetry_average < float(user_settings.get('oximetry').get('min')):
                 alerts.append({
                     'alert_type': 'Oximetria',
@@ -157,6 +173,11 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(
+                    const_email.EMAIL_TEMPLATE.format('Oximetria', 'Oximetria Baixa'),
+                    'html'
+                )
+                email_sender.send_message()
 
         if user_settings.get('active_alert_temperature'):
             if cls.temperature_average > float(user_settings.get('temperature').get('max')):
@@ -167,18 +188,18 @@ class ResultsMetricsModel(ResultsMetricsBase):
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(const_email.EMAIL_TEMPLATE.format('Temperatura', 'Temperatura Alta'), 'html')
+                email_sender.send_message()
             elif cls.temperature_average < float(user_settings.get('temperature').get('min')):
                 alerts.append({
-                    'alert_type': 'Temperatura Baixa',
-                    'alert_type': 'Temperatura Baixa',
+                    'alert_type': 'Temperatura',
+                    'message': 'Temperatura Baixa',
                     'heart_rate': cls.heart_rate_average,
                     'oximetry': cls.oximetry_average,
                     'temperature': cls.temperature_average,
                 })
+                email_sender.set_msg(const_email.EMAIL_TEMPLATE.format('Temperatura', 'Temperatura Baixa'), 'html')
+                email_sender.send_message()
 
-        if len(alerts) > 0:
-            email_sender.set_header([user_settings.get('user_email')], const_email.EMAIL_DEST, const_email.SUBJECT)
-            email_sender.set_msg(const_email.EMAIL_TEMPLATE, 'html')
-            email_sender.send_message()
 
         return alerts
