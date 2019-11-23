@@ -177,6 +177,7 @@ class ResultsMetricsModel(ResultsMetricsBase):
                 })
 
         if len(alerts) > 0:
+
             email_sender.set_header([user_settings.get('user_email')], const_email.EMAIL_DEST, const_email.SUBJECT)
             email_sender.set_msg(const_email.EMAIL_TEMPLATE, 'html')
             email_sender.send_message()
