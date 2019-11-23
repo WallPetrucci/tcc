@@ -2,14 +2,14 @@
 	<v-card>
 		<v-tabs v-model="tab" background-color="white accent-4" center-active dark
 		color="#00b9b4" centered>
-		<v-tab>Editar Meus Dados</v-tab>
-		<v-tab>Editar Meu Email</v-tab>
-		<v-tab>Editar Minha Senha</v-tab>
+		<v-tab>Editar Dados</v-tab>
+		<v-tab>Editar Senha</v-tab>
 
 		<v-tabs-items>
 			<v-tab-item>
 				<v-card-text>
 					<v-text-field label="Nome Completo" v-model="name"></v-text-field>
+					<v-text-field label="Email" value="" v-model="email"></v-text-field>
 					<v-menu ref="menu" :close-on-content-click="false" :nudge-right="40" lazy
 					transition="scale-transition" offset-y full-width min-width="290px" max-heigth="100px">
 					<template v-slot:activator="{ on }">
@@ -23,12 +23,6 @@
 		</v-tab-item>
 		<v-tab-item>
 			<v-card-text>
-				<v-text-field label="Email" value="" v-model="email"></v-text-field>
-				<v-text-field label="Confirmar Email" value="" v-model="email_confirm"></v-text-field>
-			</v-card-text>
-		</v-tab-item>
-		<v-tab-item>
-			<v-card-text>
 				<v-text-field label="Senha" type="password"></v-text-field>
 				<v-text-field label="Confirmar Senha" type="password"></v-text-field>
 			</v-card-text>
@@ -37,10 +31,11 @@
 </v-tabs>
 <v-card-actions>
 	<v-spacer></v-spacer>
-	<v-btn color="primary">
+	<v-btn color="primary" @click="editDataUser">
 		Enviar
 	</v-btn>
 </v-card-actions>
+<v-progress-linear :indeterminate="true" :active="progressLinear"></v-progress-linear>
 </v-card>
 </template>
 
@@ -58,9 +53,11 @@ export default {
 			email_confirm: '',
 			date: null,
 			step:0,
+			progressLinear: false,
 		}
 	},
 	mounted(){
+		console.log("Teste")
 		axios.get("http://localhost:5000/api/user/"+this.$session.get('id_user'))
 		.then((response) => {
 			if(response.data.id){
@@ -72,7 +69,7 @@ export default {
 		})
 		.catch(()=> {
 			this.progressLinear = false
-			this.error_message = "Email ou Senha inválido."
+			this.error_message = "Email ao carregar usuario."
 		})
 	},
 	methods : {
@@ -83,6 +80,25 @@ export default {
 			this.date = datereverse
 			this.$refs.menu.save(datereverse)
 		},
+		editDataUser(){
+			const userdata = {
+				nomeRegistro: this.date,
+				niverRegistro: this.name,
+				celRegistro: this.cel,
+				emailRegistro: this.email
+			}
+			this.progressLinear = true
+			axios.put("http://localhost:5000/api/user/"+this.$session.get('id_user'), userdata)
+			.then((response) => {
+				if(response.data.idUser){
+					console.log(response.data)
+				}
+			})
+			.catch(()=> {
+				this.progressLinear = false
+				this.error_message = "Erro ao carregar info de usuarios."
+			})
+		}
 	}
 }
 </script>

@@ -1,6 +1,8 @@
 from backend.api.model_base import MonitorBase, UserHasMonitorBase
 from backend.api.User.Model.UserModel import UserModel
 from backend.api.Devices.Model.DevicesModel import DevicesModel
+from backend.api.utils.EmailSender import Sender
+from backend.api.utils import constants as const_email
 from backend import db
 import random
 import string
@@ -19,6 +21,11 @@ class MonitorModel(MonitorBase):
                                 self.idMonitor)
 
         user_has_monitor = UserHasMonitorBase(User_idUser=id_user, Monitor_idMonitor=self.idMonitor, token=token)
+        user = UserModel.query.filter_by(idUser=id_user).first()
+        email_sender = Sender()
+        email_sender.set_header([self.email], const_email.EMAIL_DEST, const_email.SUBJECT)
+        email_sender.set_msg(const_email.MONITOR.format(self.name, user.name, token), 'html')
+        email_sender.send_message()
         db.session.add(user_has_monitor)
         db.session.commit()
 

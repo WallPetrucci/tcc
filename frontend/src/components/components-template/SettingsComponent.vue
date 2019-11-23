@@ -12,17 +12,17 @@
             <v-spacer></v-spacer>
             <SliderComponent
             title="Frequência Cardíaca" 
-            v-bind:minMaxRange="data_settings.fc"
+            v-bind:minMaxRange="dataSettings.fc"
             v-bind:step="0.5"
             />
             <SliderComponent 
             title="Oximetria"  
-            v-bind:minMaxRange="data_settings.ox" 
+            v-bind:minMaxRange="dataSettings.ox" 
             v-bind:step="1" 
             />
             <SliderComponent
             title="Temperatura Corporal"  
-            v-bind:minMaxRange="data_settings.temp" 
+            v-bind:minMaxRange="dataSettings.temp" 
             v-bind:step="0.5" 
             />
           </v-card-text>
@@ -70,37 +70,35 @@
     },
     data: () => ({
       title: 'Configurações do Dispositivo',
-      data_settings: {
-        fc: [50, 150],
-        ox: [70, 100],
+      dataSettings: {
+        fc: [48,160],
+        ox: [60, 100],
         temp: [34.5, 37]
+      },
+      beforeUpdate(){
+        this.getUserSettings()
+      },
+      methods:{
+        getUserSettings(){
+          console.log("Clicou Teste")
+          axios.get("http://localhost:5000/api/usersettings/"+this.user_id)
+          .then((response) => {
+            console.log(response)
+            const userdata = response.data
+            if(userdata.id_Settings){
+              this.dataSettings = {
+                ox: [userdata.oximetry.min, userdata.oximetry.max],
+                temp: [userdata.temperature.min, userdata.temperature.max],
+                fc: [userdata.heartRate.min, userdata.heartRate.max]
+              }
+            }
+          })
+          .catch(()=> {
+            this.progressLinear = false
+            this.error_message = "Erro ao carregar info de usuarios."
+          })
+        }
       }
     }),
-
-    mounted(){
-      this.getAllSettings()
-    },
-
-    methods: {
-      getAllSettings(){
-        axios.get("http://localhost:5000/api/usersettings/"+this.$session.get('id_user'))
-        .then((response) => {
-         if(response.data.id_Settings){
-          const my_settings = response.data
-          console.log("My log " + my_settings)
-          this.data_settings = {
-            fc: [my_settings.heartRate.min, my_settings.heartRate.max],
-            ox: [my_settings.oximetry.min, my_settings.oximetry.max],
-            temp: [my_settings.temperature.min, my_settings.temperature.max]
-          }
-         }
-       })
-        .catch(()=> {
-          this.progressLinear = false
-          this.error_message = "Email ou Senha inválido."
-        })
-      },
-    }
-
   };
 </script>

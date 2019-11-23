@@ -154,7 +154,7 @@ export default {
 			})
 			.catch(()=> {
 				this.progressLinear = false
-				this.error_message = "Email ou Senha inválido."
+				this.error_message = "Erro ao carregar monitores."
 			})
 		},
 
@@ -166,7 +166,20 @@ export default {
 
 		deleteItem (item) {
 			const index = this.desserts.indexOf(item)
-			confirm('Tem certeza que deseja deletar o monitor?') && this.desserts.splice(index, 1)
+			this.progressLinear = true
+			if(confirm('Tem certeza que deseja deletar o monitor?')){
+				axios.delete("http://localhost:5000/api/monitor/"+item.id)
+				.then((response) => {					
+					if(response.data.msg){
+						this.desserts.splice(index, 1)
+						this.progressLinear = false
+					}
+				})
+				.catch(()=> {
+					this.progressLinear = false
+					this.error_message = "Erro ao Deletar Monitor"
+				})				
+			}
 		},
 
 		close () {
@@ -198,7 +211,7 @@ export default {
 				})
 				.catch(()=> {
 					this.progressLinear = false
-					this.error_message = "Email ou Senha inválido."
+					this.error_message = "Erro ao editar monitor."
 				})
 			} else {
 				this.progressLinear = true
@@ -217,7 +230,7 @@ export default {
 				})
 				.catch(()=> {
 					this.progressLinear = false
-					this.error_message = "Email ou Senha inválido."
+					this.error_message = "Erro ao salvar monitor."
 				})
 			}
 			this.close()

@@ -28,7 +28,7 @@
       <ModalComponent icone='fas fa-user-cog' title='Editar Meus Dados' :showTitle=falses>     
         <EditDataComponent />
       </ModalComponent>
-      <ModalComponent icone='fas fa-sliders-h' title='Configurar WHM'>     
+      <ModalComponent icone='fas fa-sliders-h' title='Configurar WHM' v-on:getSettingsMethod="getUserSettings" :getSettings="true">     
         <SettingsComponent />
       </ModalComponent>
       <template>
@@ -89,11 +89,14 @@ export default {
   },
   mounted(){
     this.nameUser = this.$session.get('name')
+    this.user_id = this.$session.get('id_user')
   },
   data (){
     return{
       show: false,
-      nameUser: ''
+      nameUser: '',
+      userSettings: {},
+      user_id: ''
     }
   },
   methods: {
@@ -103,18 +106,20 @@ export default {
         user_email: this.$session.get('email')  
       }
       axios.put("http://localhost:5000/api/login/", dataLogOut)
-        .then((response) => {
-          this.progressLinear = false
-          if(!response.data.is_loggedin){
-            this.$session.destroy()
-            this.$router.push(APP_ROUTERS.login)         
-          }
-        })
-        .catch(()=> {
-          this.progressLinear = false
-          this.error_message = "Email ou Senha inválido."
-        })     
-    }
+      .then((response) => {
+        this.progressLinear = false
+        if(!response.data.is_loggedin){
+          this.$session.destroy()
+          this.$router.push(APP_ROUTERS.login)         
+        }
+      })
+      .catch(()=> {
+        this.progressLinear = false
+        this.error_message = "Email ou Senha inválido."
+      })     
+    },
+    
+
   }
 };
 </script>

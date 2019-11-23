@@ -1,7 +1,7 @@
 <template>
   <v-dialog v-model="dialog" width="500">
     <template v-slot:activator="{ on }">
-      <v-icon  v-on="on">{{icone}}</v-icon> 
+      <v-icon @click="getUserSettings()" v-on="on">{{icone}}</v-icon> 
       <a href="#"  v-on="on" v-if="showTitle">
         <span>{{title}}</span>
       </a>
@@ -31,6 +31,17 @@ export default {
     showTitle:{
       type: Boolean,
       default: false,
+    },
+    getSettings: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    getUserSettings (event) {
+      if(this.getSettings){
+        this.$emit('getSettingsMethod')
+      }
     }
   }
 
