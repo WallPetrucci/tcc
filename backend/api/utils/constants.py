@@ -15,5 +15,5 @@ EMAIL_TEMPLATE = """<body>
 RECOVERY = """<body>Olá, recebemos sua solicitação de recuperação de senha, e viemos informá-la: {}!<body>"""
 MONITOR = """<body>
                         Olá {}, somos da WHM. O usuário {} solicitou que você monitore os sinais vitais dele.
-                        Para começar a monitorar, basta <a href='http://localhost:8089/monitoring/{}'>clicar aqui</a>!
+                        Para começar a monitorar, basta <a href='http://localhost:8080/monitoring/{}'>clicar aqui</a>!
                     <body>"""
