@@ -38,7 +38,6 @@ class UserController(MethodView):
     def put(self, id):
         try:
             user_data = request.get_json()
-            schemas.schema_insert_user(user_data)
             update_data = {
                 'name': user_data.get('nomeRegistro'),
                 'dateBirth': user_data.get('niverRegistro'),

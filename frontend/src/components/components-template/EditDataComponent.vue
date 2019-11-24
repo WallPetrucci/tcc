@@ -13,7 +13,7 @@
 					<v-menu ref="menu" :close-on-content-click="false" :nudge-right="40" lazy
 					transition="scale-transition" offset-y full-width min-width="290px" max-heigth="100px">
 					<template v-slot:activator="{ on }">
-						<v-text-field v-model="date" label="Data de Nascimento" readonly v-on="on"></v-text-field>
+						<v-text-field v-model="date" label="Data de Nascimento" v-on="on"></v-text-field>
 					</template>
 					<v-date-picker ref="picker" v-model="date" @change="displaySaveDate" :max="new Date().toISOString().substr(0, 10)"
 					min="1950-01-01"></v-date-picker>
@@ -57,7 +57,6 @@ export default {
 		}
 	},
 	mounted(){
-		console.log("Teste")
 		axios.get("http://localhost:5000/api/user/"+this.$session.get('id_user'))
 		.then((response) => {
 			if(response.data.id){
@@ -80,18 +79,37 @@ export default {
 			this.date = datereverse
 			this.$refs.menu.save(datereverse)
 		},
+		convertDateObj(dateString){
+			const arrSplitDate = dateString.split('/').reverse()
+			return new Date(arrSplitDate[0], arrSplitDate[1], arrSplitDate[2])
+		},
 		editDataUser(){
 			const userdata = {
-				nomeRegistro: this.date,
-				niverRegistro: this.name,
+				nomeRegistro: this.name,
+				niverRegistro: this.convertDateObj(this.date),
 				celRegistro: this.cel,
 				emailRegistro: this.email
 			}
 			this.progressLinear = true
+			console.log(userdata)
 			axios.put("http://localhost:5000/api/user/"+this.$session.get('id_user'), userdata)
 			.then((response) => {
 				if(response.data.idUser){
 					console.log(response.data)
+					axios.get("http://localhost:5000/api/user/"+response.data.idUser)
+					.then((response) => {
+						this.$session.set('name', response.data.name)
+						this.$session.set('email', response.data.email)
+					})
+					.catch(()=> {
+						this.progressLinear = false
+						this.error_message = "Erro ao carregar info de usuarios."
+					})
+
+
+					
+					this.progressLinear = false
+					alert(response.data.msg)
 				}
 			})
 			.catch(()=> {

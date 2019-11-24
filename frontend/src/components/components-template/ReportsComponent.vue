@@ -82,6 +82,11 @@ export default {
 					heart_data.push({x: new Date(el.data).getTime(), y: el.result})
 				})
 				response.data.oximetry.forEach((el, ind, array)=>{
+
+					
+					if (el.result > 100){
+		                el.result = 100;
+		            }
 					ox_data.push({x: new Date(el.data).getTime(), y: el.result})
 				})
 				response.data.temperature.forEach((el, ind, array)=>{
